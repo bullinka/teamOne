@@ -62,9 +62,11 @@ public class GameController implements Runnable {
     
     
     public void setInputStream(InputStream s){
+        System.out.println(" Set Input Stream");
         dataIn = new DataInputStream(s);
     }
     public void setOutputStream(OutputStream o){
+        System.out.println("Set Output Stream");
         dataOut = new DataOutputStream(o);
     }
 
@@ -77,7 +79,7 @@ public class GameController implements Runnable {
     }
 
     public void newGame() {
-        worker = new Thread();
+        worker = new Thread(this);
         worker.start();
 
     }
@@ -108,7 +110,7 @@ public class GameController implements Runnable {
     public void sendMove(int x, int y) {
         try {
             String move = "move " + x + " " + y;
-            System.out.println(move);
+            System.out.println("Send move: " + move);
             dataOut.write(move.getBytes());
             dataOut.flush();
         } catch (IOException ex) {
@@ -130,13 +132,14 @@ public class GameController implements Runnable {
     }
     @Override
     public void run() {
+        System.out.println("Thread started");
         while (true) {
             try {
                 int len = dataIn.read(msg);
 
                 if (len > 0) {
                     returnedMsg = new String(msg, 0, len);
-                    System.out.println(returnedMsg);
+                    System.out.println("Msg received: " + returnedMsg);
                     String[] msgArray;
                     msgArray = returnedMsg.split("[ ]+");
                     processMessage(msgArray);
