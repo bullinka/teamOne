@@ -124,7 +124,9 @@ public class GameController implements Runnable {
         int y = Integer.parseInt(s[2]);
         switch (m) {
             case MOVE:
-                gameModel.validateOpponent(x, y);
+                if(gameModel.validateOpponent(x, y)){
+                    view.displayMove(x,y);
+                }
                 break;
             default:
                 break;
