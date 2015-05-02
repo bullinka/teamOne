@@ -49,6 +49,7 @@ public class GameView extends javax.swing.JPanel {
             {
                 pressedButton.setBackground(Color.BLUE);
                 pressedButton.setEnabled(false);
+                
             }
             else
             {
