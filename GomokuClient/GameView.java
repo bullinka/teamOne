@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
@@ -35,15 +36,24 @@ public class GameView extends javax.swing.JPanel {
     private JPanel game = new JPanel();
     private JPanel quit = new JPanel();
     private JLabel gomoku;
+    private String[] coordinates;
    
     private final ActionListener listener = new ActionListener() {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             JButton pressedButton = (JButton)e.getSource();
-            //System.out.println(buttonMap.get(pressedButton));
-            pressedButton.setBackground(Color.BLUE);
-            pressedButton.setEnabled(false);
+            System.out.println(buttonMap.get(pressedButton));
+            coordinates = buttonMap.get(pressedButton).split(" ");
+            if(controller.validateSelf(coordinates[0], coordinates[1]))
+            {
+                pressedButton.setBackground(Color.BLUE);
+                pressedButton.setEnabled(false);
+            }
+            else
+            {
+                displayErrorMessage("It is not your turn.");
+            }
         }
     };
 
@@ -96,6 +106,23 @@ public class GameView extends javax.swing.JPanel {
     private void quitBActionPerformed(ActionEvent evt){
         System.exit(0);
     }
+    
+    public void displayMove(int x, int y)
+    {
+        grid[x][y].setBackground(Color.RED);
+        grid[x][y].setEnabled(false);
+    }
+    
+    /**
+     * Error message pop up box.
+     *
+     * @param errorMessage
+     */
+    void displayErrorMessage(String errorMessage) {
+
+        JOptionPane.showMessageDialog(this, errorMessage);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -117,9 +144,9 @@ public class GameView extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void setController( GameController cont){
-        this.controller = cont;
-    }
+//    public void setController( GameController cont){
+//        this.controller = cont;
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

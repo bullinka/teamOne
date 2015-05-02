@@ -38,10 +38,7 @@ public class ClientModel implements Runnable{
     public ServerSocket ss;
     public Frame frame;
     public String username;
-    private OutputStream outStream;
-    private InputStream inStream;
-    private DataInputStream dataIn;
-    private DataOutputStream dataOut;
+  
     public final int gameHeight = 30;
     public final int gameWidth = 30;
     private Thread worker;
@@ -150,11 +147,7 @@ public class ClientModel implements Runnable{
          try {
             ss = new ServerSocket(port);
             challengeeSocket = ss.accept(); //
-            inStream = challengeeSocket.getInputStream();
-            dataIn = new DataInputStream(inStream);
-            outStream = challengeeSocket.getOutputStream();
-            dataOut = new DataOutputStream(outStream);
-            gameController.newGame();
+            gameController.setupIOStreams();
             
         } catch (IOException ex) {
             Logger.getLogger(ClientModel.class.getName()).log(Level.SEVERE, null, ex);
