@@ -108,6 +108,7 @@ public class GameController implements Runnable {
     public void sendMove(int x, int y) {
         try {
             String move = "move " + x + " " + y;
+            System.out.println(move);
             dataOut.write(move.getBytes());
             dataOut.flush();
         } catch (IOException ex) {
@@ -135,6 +136,7 @@ public class GameController implements Runnable {
 
                 if (len > 0) {
                     returnedMsg = new String(msg, 0, len);
+                    System.out.println(returnedMsg);
                     String[] msgArray;
                     msgArray = returnedMsg.split("[ ]+");
                     processMessage(msgArray);
