@@ -27,22 +27,43 @@ public class GameBoard {
     public GameBoard(int x, int y)
     {
         board = new int[x][y];
-        Arrays.fill(board, 0);
+        for(int i = 0; i < x; i++){
+    		for(int k = 0; k <y; k++){
+    		board[i][k]=0;
+    		}
+    	}
         
     }
     
+    public GameBoard(){
+    	board = new int[30][30];
+    	for(int i = 0; i < 30; i++){
+    		for(int k = 0; k <30; k++){
+    		board[i][k]=0;
+    		}
+    	}
+    }
     /**
-     * Makes a move on the board for one of the two players active in a game.
-     * If player is true, the user is making the move.
-     * If player is false, an opponent is making the move.
+     * Makes a move on the board for one of the user player active in a game.
      * @param x
      * @param y
-     * @param player 
      */
-    public void moveMade(int x, int y, int player)
+    public void moveMadeSelf(int x, int y)
     {
-        board[x][y] = player;
-        printBoard();
+        	board[x][y] = 1;
+        
+    }
+    
+    
+    /**
+     * Makes a move on the board for one of the opponent player active in a game.
+     * @param x
+     * @param y
+     */
+    public void moveMadeOpponent(int x, int y)
+    {
+        	board[x][y] = 2;
+        
     }
     
     /**
@@ -64,6 +85,25 @@ public class GameBoard {
     }
     public void printBoard()
     {
-        Arrays.toString(board);
+    	for(int i = 0; i < 30; i++){
+    		for(int k = 0; k <30; k++){
+    		System.out.print(board[i][k]);
+    		}
+    		System.out.println();
+    	}
     }
+    
+    
+    /**
+     * Checks to see if a selected move is a valid move.
+     * @param x
+     * @param y
+     */
+	public boolean validate(int x, int y) {
+		if(board[x][y] == 0){
+        	return true;
+        }else{
+        	return false;
+        }
+	}
 }

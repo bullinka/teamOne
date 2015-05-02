@@ -9,28 +9,48 @@
  * @author PLUCSCE
  */
 public class GameModel {
-    
+	
+	private GameBoard board;
+	private GameAI ai;
     private GameController controller;
-    private Game gomoku;
-    
-    public GameModel()
-    {
-        gomoku = new Game();
+   
+   
+    public GameModel(){
+    	board = new GameBoard();
     }
     
-    public void moveMade(int x, int y, int player)
-    {
-        gomoku.moveMade(x, y, player);
-    }
+    public boolean validateSelf(int x, int y) {
+    	 if (board.validate(x, y)){
+      	   board.moveMadeSelf(x, y);
+      	   return true;
+         }else{
+      	   return false; 
+         }
+		
+	}
     
-    public void setGame(Game gomoku)
-    {
-        this.gomoku = gomoku;
-    }
-    
-    public void setController(GameController gc)
+    public boolean validateOpponent(int x, int y) {
+   	 if (board.validate(x, y)){
+     	   board.moveMadeOpponent(x, y);
+     	   return true;
+        }else{
+     	   return false; 
+        }
+		
+	}
+
+	public void setController(GameController gc)
     {
         this.controller = gc;
     }
     
+    public void setGameBoard(GameBoard gb)
+    {
+        this.board = gb;
+    }
+    
+    public void setAI(GameAI ai)
+    {
+        this.ai = ai;
+    }
 }

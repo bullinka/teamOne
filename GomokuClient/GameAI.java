@@ -38,8 +38,8 @@ public class GameAI {
      * @param x
      * @param y 
      */
-    public void makeMove(int x, int y, int player)
+    public void makeMove(int x, int y)
     {
-        board.moveMade(x, y, player);
+        
     }
 }
