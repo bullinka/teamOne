@@ -45,7 +45,7 @@ public class GameView extends javax.swing.JPanel {
             JButton pressedButton = (JButton)e.getSource();
             System.out.println(buttonMap.get(pressedButton));
             coordinates = buttonMap.get(pressedButton).split(" ");
-            if(controller.validateSelf(coordinates[0], coordinates[1]))
+            if(controller.validateSelf(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1])))
             {
                 pressedButton.setBackground(Color.BLUE);
                 pressedButton.setEnabled(false);
@@ -144,9 +144,9 @@ public class GameView extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-//    public void setController( GameController cont){
-//        this.controller = cont;
-//    }
+   public void setController( GameController cont){
+       this.controller = cont;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

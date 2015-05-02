@@ -69,9 +69,9 @@ public class GameController implements Runnable {
         this.ai = ai;
     }
 
-    public boolean validateMove(int x, int y) {
+    public boolean validateSelf(int x, int y) {
 
-        if (gameModel.validateMove(x, y)) {
+        if (gameModel.validateSelf(x, y)) {
             return true;
         } else {
             return false;
