@@ -38,7 +38,11 @@ public class Main {
              gameController.setView(gameView);
              gameView.setController(gameController);
              
+             GameModel gameModel = new GameModel();
              
+             gameController.setGameModel(gameModel);
+             
+             gameModel.setController(gameController);
 
              model.setLoginController(loginController);
              model.setLobbyController(lobbyController);

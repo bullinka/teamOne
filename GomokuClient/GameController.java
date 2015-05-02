@@ -56,7 +56,7 @@ public class GameController implements Runnable {
         worker.start();
 
     }
-
+  
     public void setGameModel(GameModel gm) {
         this.gameModel = gm;
     }
