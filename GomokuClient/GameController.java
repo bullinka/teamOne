@@ -31,7 +31,12 @@ public class GameController implements Runnable {
     private String returnedMsg;
     private final String MOVE = "move";
     
-    public void setupIOStreams() {
+    private OutputStream outStreamOp;
+    private InputStream inStreamOp;
+    private DataInputStream dataInOp;
+    private DataOutputStream dataOutOp;
+   
+    /*public void setupIOStreams() {
         try {
             inStream = model.challengeeSocket.getInputStream();
             dataIn = new DataInputStream(inStream);
@@ -41,6 +46,26 @@ public class GameController implements Runnable {
         } catch (IOException ex) {
             Logger.getLogger(ClientModel.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }*/
+    
+    /*public void setupIOStreamsOpponent(){
+        try {
+            inStreamOp = model.opponent.getInputStream();
+            dataInOp = new DataInputStream(inStreamOp);
+            outStreamOp = model.opponent.getOutputStream();
+            dataOutOp = new DataOutputStream(outStreamOp);
+        } catch (IOException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+           
+    }*/
+    
+    
+    public void setInputStream(InputStream s){
+        dataIn = new DataInputStream(s);
+    }
+    public void setOutputStream(OutputStream o){
+        dataOut = new DataOutputStream(o);
     }
 
     public void setModel(ClientModel m) {

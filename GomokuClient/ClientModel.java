@@ -146,8 +146,10 @@ public class ClientModel implements Runnable{
     public void run() {
          try {
             ss = new ServerSocket(port);
-            challengeeSocket = ss.accept(); //
-            gameController.setupIOStreams();
+            challengeeSocket = ss.accept();
+            System.out.println("Accepting connection from opponent." );//
+            gameController.setInputStream(challengeeSocket.getInputStream());
+            gameController.setOutputStream(challengeeSocket.getOutputStream());
             
         } catch (IOException ex) {
             Logger.getLogger(ClientModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -160,6 +162,9 @@ public class ClientModel implements Runnable{
     void connectToOpponent(String m) {
         try {
             opponent = new Socket( m, port );
+            System.out.println("Connect to opponnent");
+            gameController.setInputStream(opponent.getInputStream());
+            gameController.setOutputStream(opponent.getOutputStream());
         } catch (UnknownHostException ex) {
             Logger.getLogger(ClientModel.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
