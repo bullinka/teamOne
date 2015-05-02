@@ -72,6 +72,7 @@ public class GameController implements Runnable {
     public boolean validateSelf(int x, int y) {
 
         if (gameModel.validateSelf(x, y)) {
+            sendMove(x , y);
             return true;
         } else {
             return false;
