@@ -37,7 +37,8 @@ public class GameView extends javax.swing.JPanel {
     private JPanel quit = new JPanel();
     private JLabel gomoku;
     private String[] coordinates;
-   
+    private JButton resignB;
+    private Constants consts = new Constants();
     private final ActionListener listener = new ActionListener() {
 
         @Override
@@ -92,6 +93,13 @@ public class GameView extends javax.swing.JPanel {
         quitB = new JButton("Quit");
         quitB.setPreferredSize(new Dimension(70 , 25));
         
+        resignB = new JButton("Resign");
+        resignB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resignBActionPerformed(evt);
+            }
+        });
+        
         quitB.setText("Quit");
         quitB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,6 +121,11 @@ public class GameView extends javax.swing.JPanel {
     private void quitBActionPerformed(ActionEvent evt){
         System.exit(0);
     }
+    private void resignBActionPerformed(ActionEvent evt){
+            controller.sendResign(consts.RESIGN);
+            controller.resign();
+            
+    }
     
     public void displayMove(int x, int y)
     {
@@ -125,7 +138,7 @@ public class GameView extends javax.swing.JPanel {
      *
      * @param errorMessage
      */
-    void displayErrorMessage(String errorMessage) {
+    public void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
     

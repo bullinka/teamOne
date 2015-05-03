@@ -4,6 +4,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,9 +37,19 @@ public class GameController implements Runnable {
     private DataInputStream dataInOp;
     private DataOutputStream dataOutOp;
     private Constants consts = new Constants();
+    private Socket captainCarl;
+    private ServerSocket ss;
+    private boolean server;
 
-    public GameController(){
-    	System.out.println("A BRAND NEW GAME CONTROLLER");
+   
+    public void setSocket(Socket sock){
+        this.s = sock;
+        server = false;
+    }
+    
+    public void setServerSocket( ServerSocket sock){
+        this.ss = sock;
+        server = true;
     }
     public void setInputStream(InputStream s) {
         System.out.println(" Set Input Stream");
@@ -92,7 +104,15 @@ public class GameController implements Runnable {
 
 
     }
-
+    public void sendResign(String res){
+        try {
+            dataOut.write(res.getBytes());
+            dataOut.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     public void sendMove(int x, int y) {
         try {
             String move = "move " + x + " " + y;
@@ -122,6 +142,32 @@ public class GameController implements Runnable {
                 else if(jonsajerk.equals(consts.NOTTURN)){
                     //should this do something?
                 }
+                else if(jonsajerk.equals(consts.RESIGN)){
+            try {
+                view.displayErrorMessage("Opponent has resigned.");
+                view.win();
+                
+                if(server){
+                    try {
+                        ss.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                else
+                    captainCarl.close();
+                
+                model.gameLobbyTrans();
+            }
+            //break;
+            // default:
+            // break;
+            //}
+            catch (IOException ex) {
+                Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                }
+                
                 
                //break;
            
@@ -160,4 +206,21 @@ public class GameController implements Runnable {
 		gameModel.setTurnOrder(b);
 		
 	}
+        
+        public void resign(){
+            if(server){
+                try {
+                    ss.close();
+                    model.gameLobbyTrans();
+                } catch (IOException ex) {
+                    Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else try {
+                captainCarl.close();
+                model.gameLobbyTrans();
+            } catch (IOException ex) {
+                Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 }

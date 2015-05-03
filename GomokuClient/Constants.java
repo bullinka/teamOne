@@ -8,8 +8,8 @@ public class Constants
     public final String WIN  = "win";
     public final String INVALID = "invalid";
     public final String NOTTURN = "notTurn";
+    public final String RESIGN = "resign";
     /*private final String  = "";
-    private final String  = "";
     private final String  = "";
     private final String  = "";
     private final String  = "";

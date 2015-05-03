@@ -155,6 +155,7 @@ public class ClientModel implements Runnable {
         try {
             ss = new ServerSocket(port);
             challengeeSocket = ss.accept();
+            gameController.setServerSocket(ss);
             System.out.println("Accepting connection from opponent.");//
             gameController.setInputStream(challengeeSocket.getInputStream());
             gameController.setOutputStream(challengeeSocket.getOutputStream());
@@ -175,6 +176,7 @@ public class ClientModel implements Runnable {
         try {
             opponent = new Socket(m, port);
             System.out.println("Connect to opponnent");
+            gameController.setSocket(opponent);
             gameController.setInputStream(opponent.getInputStream());
             gameController.setOutputStream(opponent.getOutputStream());
             gameController.newGame();
