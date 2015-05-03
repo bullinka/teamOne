@@ -43,7 +43,7 @@ public class GameController implements Runnable {
 
    
     public void setSocket(Socket sock){
-        this.s = sock;
+        this.captainCarl = sock;
         server = false;
     }
     
@@ -126,8 +126,10 @@ public class GameController implements Runnable {
 
     private void processMessage(String[] s) {
         String m = s[0];
-        int x = Integer.parseInt(s[1]);
-        int y = Integer.parseInt(s[2]);
+        if(s.length > 1 ){
+            int x = Integer.parseInt(s[1]);
+            int y = Integer.parseInt(s[2]);
+        
         String jonsajerk = gameModel.validateOpponent(x, y);
         //switch (m) {
             //case MOVE:
@@ -142,7 +144,8 @@ public class GameController implements Runnable {
                 else if(jonsajerk.equals(consts.NOTTURN)){
                     //should this do something?
                 }
-                else if(jonsajerk.equals(consts.RESIGN)){
+            }
+                else if(m.equals(consts.RESIGN)){
             try {
                 view.displayErrorMessage("Opponent has resigned.");
                 view.win();

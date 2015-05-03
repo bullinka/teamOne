@@ -107,6 +107,7 @@ public class GameView extends javax.swing.JPanel {
             }
         });
         quit.add(quitB);
+        quit.add(resignB);
         
         quit.setSize(25 ,80);
         this.add(quit, BorderLayout.PAGE_END);
