@@ -153,6 +153,7 @@ public class GameView extends javax.swing.JPanel {
    public void win()
    {
        displayErrorMessage("You Win!");
+       controller.switchToLobby();
    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

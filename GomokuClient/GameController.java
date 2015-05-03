@@ -148,4 +148,8 @@ public class GameController implements Runnable {
             }
         }
     }
+    
+    public void switchToLobby() {
+        gameModel.gameLobbyTrans();
+    }
 }
