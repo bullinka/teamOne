@@ -16,27 +16,45 @@ public class GameModel {
    
    
     public GameModel(){
+    	System.out.println("A BRAND NEW GAMEMODEL");
     	board = new GameBoard();
     }
     
-    public boolean validateSelf(int x, int y) {
-    	 if (board.validate(x, y)){
-      	   board.moveMadeSelf(x, y);
-      	   return true;
-         }else{
-      	   return false; 
-         }
+    public String validateSelf(int x, int y) {
+    	 if(board.getTurnOrder()){	
+    	   	 	if (board.validate(x, y)){
+    	   	 		board.moveMadeSelf(x, y);
+    	   	 		if(board.isFiveInARowSelf(x,y)){
+    	   	 			System.out.println("win");
+    	   	 			return "win";
+    	   	 		}else{ 
+    	   	 			System.out.println("valid");
+    	   	 			return "valid";
+    	   	 		}
+    	        }else{
+    	        System.out.println("invalid");
+    	     	   return "invalid"; 
+    	        }
+    	    }else{
+    	    	System.out.println("notTurn");
+    	    	return "notTurn";
+    	    }
+    		
 		
 	}
     
-    public boolean validateOpponent(int x, int y) {
-   	 if (board.validate(x, y)){
-     	   board.moveMadeOpponent(x, y);
-     	   return true;
+    public String validateOpponent(int x, int y) {	
+   	 	if (board.validate(x, y)){
+   	 		board.moveMadeOpponent(x, y);
+   	 		if(board.isFiveInARowOpponent(x,y)){
+   	 			return "win";
+   	 		}else{ 
+   	 			return "valid";
+   	 		}
         }else{
-     	   return false; 
+     	   return "invalid"; 
         }
-		
+    
 	}
 
 	public void setController(GameController gc)
@@ -53,4 +71,9 @@ public class GameModel {
     {
         this.ai = ai;
     }
+
+	public void setTurnOrder(boolean b) {
+		board.setTurnOrder(b);
+		
+	}
 }

@@ -34,8 +34,11 @@ public class GameController implements Runnable {
     private InputStream inStreamOp;
     private DataInputStream dataInOp;
     private DataOutputStream dataOutOp;
-    private Constants consts;
+    private Constants consts = new Constants();
 
+    public GameController(){
+    	System.out.println("A BRAND NEW GAME CONTROLLER");
+    }
     public void setInputStream(InputStream s) {
         System.out.println(" Set Input Stream");
         dataIn = new DataInputStream(s);
@@ -73,14 +76,15 @@ public class GameController implements Runnable {
     }
 
     public String validateSelf(int x, int y) {
-
-        if (gameModel.validateSelf(x, y).equals(consts.VALID)) {
-            sendMove(x, y);
-            return consts.VALID;
-        } else if (gameModel.validateSelf(x, y).equals(consts.WIN)) {
+    	String karrensmean = gameModel.validateSelf(x, y);
+        if (karrensmean.equals(consts.WIN)) {
             sendMove(x, y);
             return consts.WIN;
-        } else if (gameModel.validateSelf(x, y).equals(consts.INVALID)) {
+        } else if (karrensmean.equals(consts.VALID)) {
+        	System.out.println("Did you reall win?");
+            sendMove(x, y);
+            return consts.VALID;
+        } else if (karrensmean.equals(consts.INVALID)) {
             return consts.INVALID;
         } else {
             return consts.NOTTURN;
@@ -104,28 +108,27 @@ public class GameController implements Runnable {
         String m = s[0];
         int x = Integer.parseInt(s[1]);
         int y = Integer.parseInt(s[2]);
-        switch (m) {
-            case consts.MOVE:
-                if (gameModel.validateOpponent(x, y).equals(consts.WIN)) {
-                    view.displayMove(x, y);
-                    view.win(); 
-                }
-                else if(gameModel.validateSelf(x, y).equals(consts.VALID)){
+        String jonsajerk = gameModel.validateOpponent(x, y);
+        //switch (m) {
+            //case MOVE:
+              if(jonsajerk.equals(consts.VALID)){
                     view.displayMove(x,y);
-                }
-                else if(gameModel.validateSelf(x, y).equals(consts.INVALID)){
+                } else if (jonsajerk.equals(consts.WIN)) {
+                    view.displayMove(x, y);
+                    view.lose(); 
+                }else if(jonsajerk.equals(consts.INVALID)){
                    //should this do something?
                 }
-                else if(gameModel.validateSelf(x, y).equals(consts.NOTTURN)){
+                else if(jonsajerk.equals(consts.NOTTURN)){
                     //should this do something?
                 }
                 
-                break;
+               //break;
            
 
-            default:
-                break;
-        }
+           // default:
+               // break;
+        //}
     }
 
     @Override
@@ -150,6 +153,11 @@ public class GameController implements Runnable {
     }
     
     public void switchToLobby() {
-        gameModel.gameLobbyTrans();
+        model.gameLobbyTrans();
     }
+
+	public void setTurnOrder(boolean b) {
+		gameModel.setTurnOrder(b);
+		
+	}
 }

@@ -17,6 +17,7 @@ public class GameBoard {
     private final int NOTPLAYED = 0;
     private final int PLAYERONE = 1;
     private final int PLAYERTWO = 2;
+    private boolean turnOrder;
     
     /**
      * GameBoard constructor.
@@ -33,6 +34,8 @@ public class GameBoard {
     		}
     	}
         
+        turnOrder = true;
+        
     }
     
     public GameBoard(){
@@ -42,6 +45,16 @@ public class GameBoard {
     		board[i][k]=0;
     		}
     	}
+    	turnOrder = true;
+    }
+    
+    
+    public void setTurnOrder(boolean to){
+    	turnOrder = to;
+    }
+    
+    public boolean getTurnOrder(){
+    	return turnOrder;
     }
     /**
      * Makes a move on the board for one of the user player active in a game.
@@ -51,6 +64,7 @@ public class GameBoard {
     public void moveMadeSelf(int x, int y)
     {
         	board[x][y] = 1;
+        	turnOrder = false;
         
     }
     
@@ -63,6 +77,7 @@ public class GameBoard {
     public void moveMadeOpponent(int x, int y)
     {
         	board[x][y] = 2;
+        	turnOrder = true;
         
     }
     
@@ -79,11 +94,141 @@ public class GameBoard {
      * Returns if there is a five in a row on the board.
      * @return 
      */
-    public boolean isFiveInARow()
+    public boolean isFiveInARowSelf(int x, int y)
     {
-        return false; // not yet made
+    	
+    	if(horizontalSearch(x, y, 1)){
+    		return true;
+    	}else if(verticalSearch(x, y, 1)){
+    		return true;
+    	}else if(diagonalFowardlSearch(x, y, 1)){
+    		return true;
+    	}else if(diagonalBackSearch(x, y, 1)){
+    		return true;
+    	}else{
+    		return false;
+    	}
+    	
+        
     }
-    public void printBoard()
+    
+    public boolean isFiveInARowOpponent(int x, int y)
+    {
+    	
+    	if(horizontalSearch(x, y, 2)){
+    		return true;
+    	}else if(verticalSearch(x, y, 2)){
+    		return true;
+    	}else if(diagonalFowardlSearch(x, y, 2)){
+    		return true;
+    	}else if(diagonalBackSearch(x, y, 2)){
+    		return true;
+    	}else{
+    		return false;
+    	}
+    	
+        
+    }
+    
+
+	private boolean diagonalBackSearch(int x, int y, int z) {
+		int count = 0;
+    	int result = 1;
+    	boolean flag = false;
+    	int i = x-1;
+    	int j = y-1;
+		while (count < 5 && i > 0 && j > 0 && board[i][j] == z){
+    		result ++;
+    		i--;
+    		j--;
+    	}
+    	count = 0;
+    	i = x+1;
+    	j = y+1;
+    	while (count < 5 && i < 30 && j <30 && board[i][y] == z){
+    		result ++;
+    		i++;
+    		j++;
+    	}
+    	
+    	if(result >= 5){
+    		flag = true;
+    	}
+    	return flag; 
+	}
+
+	private boolean diagonalFowardlSearch(int x, int y, int z) {
+		int count = 0;
+    	int result = 1;
+    	boolean flag = false;
+    	int i = x-1;
+    	int j = y+1;
+		while (count < 5 && i > 0 && j < 30 && board[i][j] == z){
+    		result ++;
+    		i--;
+    		j ++;
+    	}
+    	count = 0;
+    	i = x+1;
+    	j = y-1;
+    	while (count < 5 && i < 30 && i > 0 && board[i][y] == z){
+    		result ++;
+    		i++;
+    		j++;
+    	}
+    	
+    	if(result >= 5){
+    		flag = true;
+    	}
+    	return flag; 
+	}
+
+	private boolean verticalSearch(int x, int y, int z) {
+		int count = 0;
+    	int result = 1;
+    	boolean flag = false;
+    	int i = y-1;
+		while (count < 5 && i > 0 && board[x][i] == z){
+    		result ++;
+    		i--;
+    	}
+    	count = 0;
+    	i = y+1;
+    	while (count < 5 && i < 30 && board[x][i] == z){
+    		result ++;
+    		i++;
+    	}
+    	
+    	if(result >= 5){
+    		flag = true;
+    	}
+    	
+    	return flag; 
+	}
+
+	private boolean horizontalSearch(int x, int y, int z) {
+		int count = 0;
+    	int result = 1;
+    	boolean flag = false;
+    	int i = x-1;
+		while (count < 5 && i > 0 && board[i][y] == z){
+    		result ++;
+    		i--;
+    	}
+    	count = 0;
+    	i = x+1;
+    	while (count < 5 && i < 30 && board[i][y] == z){
+    		result ++;
+    		i++;
+    	}
+    	
+    	if(result >= 5){
+    		flag = true;
+    	}
+    	return flag; 
+	}
+
+	public void printBoard()
     {
     	for(int i = 0; i < 30; i++){
     		for(int k = 0; k <30; k++){

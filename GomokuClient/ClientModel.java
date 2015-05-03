@@ -158,8 +158,8 @@ public class ClientModel implements Runnable {
             System.out.println("Accepting connection from opponent.");//
             gameController.setInputStream(challengeeSocket.getInputStream());
             gameController.setOutputStream(challengeeSocket.getOutputStream());
-            turn = true;
             gameController.newGame();
+            gameController.setTurnOrder(true);
 
         } catch (IOException ex) {
             Logger.getLogger(ClientModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -177,8 +177,8 @@ public class ClientModel implements Runnable {
             System.out.println("Connect to opponnent");
             gameController.setInputStream(opponent.getInputStream());
             gameController.setOutputStream(opponent.getOutputStream());
-            turn = false;
             gameController.newGame();
+            gameController.setTurnOrder(true);
         } catch (UnknownHostException ex) {
             Logger.getLogger(ClientModel.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

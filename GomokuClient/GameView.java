@@ -56,6 +56,11 @@ public class GameView extends javax.swing.JPanel {
             {
                 displayErrorMessage("That move is invalid.");
             }
+            else if(response.equals("win")){
+            	pressedButton.setBackground(Color.BLUE);
+                pressedButton.setEnabled(false);
+            	win();
+            }
         }
     };
 
@@ -121,7 +126,6 @@ public class GameView extends javax.swing.JPanel {
      * @param errorMessage
      */
     void displayErrorMessage(String errorMessage) {
-
         JOptionPane.showMessageDialog(this, errorMessage);
     }
     
@@ -155,6 +159,11 @@ public class GameView extends javax.swing.JPanel {
        displayErrorMessage("You Win!");
        controller.switchToLobby();
    }
+public void lose() {
+	displayErrorMessage("You Lose!");
+    controller.switchToLobby();
+	
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
