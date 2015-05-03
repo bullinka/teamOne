@@ -45,15 +45,16 @@ public class GameView extends javax.swing.JPanel {
             JButton pressedButton = (JButton)e.getSource();
             System.out.println(buttonMap.get(pressedButton));
             coordinates = buttonMap.get(pressedButton).split(" ");
-            if(controller.validateSelf(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1])))
+            String response = controller.validateSelf(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]));
+            if(response.equals("valid"))
             {
                 pressedButton.setBackground(Color.BLUE);
                 pressedButton.setEnabled(false);
                 
             }
-            else
+            else if(response.equals("invalid"))
             {
-                displayErrorMessage("It is not your turn.");
+                displayErrorMessage("That move is invalid.");
             }
         }
     };
@@ -148,6 +149,11 @@ public class GameView extends javax.swing.JPanel {
    public void setController( GameController cont){
        this.controller = cont;
     }
+   
+   public void win()
+   {
+       displayErrorMessage("You Win!");
+   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

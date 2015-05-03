@@ -30,42 +30,18 @@ public class GameController implements Runnable {
     private byte[] msg = new byte[1024];
     private String returnedMsg;
     private final String MOVE = "move";
-    
     private OutputStream outStreamOp;
     private InputStream inStreamOp;
     private DataInputStream dataInOp;
     private DataOutputStream dataOutOp;
-   
-    /*public void setupIOStreams() {
-        try {
-            inStream = model.challengeeSocket.getInputStream();
-            dataIn = new DataInputStream(inStream);
-            outStream = model.challengeeSocket.getOutputStream();
-            dataOut = new DataOutputStream(outStream);
-            newGame();
-        } catch (IOException ex) {
-            Logger.getLogger(ClientModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }*/
-    
-    /*public void setupIOStreamsOpponent(){
-        try {
-            inStreamOp = model.opponent.getInputStream();
-            dataInOp = new DataInputStream(inStreamOp);
-            outStreamOp = model.opponent.getOutputStream();
-            dataOutOp = new DataOutputStream(outStreamOp);
-        } catch (IOException ex) {
-            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-           
-    }*/
-    
-    
-    public void setInputStream(InputStream s){
+    private Constants consts;
+
+    public void setInputStream(InputStream s) {
         System.out.println(" Set Input Stream");
         dataIn = new DataInputStream(s);
     }
-    public void setOutputStream(OutputStream o){
+
+    public void setOutputStream(OutputStream o) {
         System.out.println("Set Output Stream");
         dataOut = new DataOutputStream(o);
     }
@@ -83,7 +59,7 @@ public class GameController implements Runnable {
         worker.start();
 
     }
-  
+
     public void setGameModel(GameModel gm) {
         this.gameModel = gm;
     }
@@ -96,14 +72,20 @@ public class GameController implements Runnable {
         this.ai = ai;
     }
 
-    public boolean validateSelf(int x, int y) {
+    public String validateSelf(int x, int y) {
 
-        if (gameModel.validateSelf(x, y)) {
-            sendMove(x , y);
-            return true;
+        if (gameModel.validateSelf(x, y).equals(consts.VALID)) {
+            sendMove(x, y);
+            return consts.VALID;
+        } else if (gameModel.validateSelf(x, y).equals(consts.WIN)) {
+            sendMove(x, y);
+            return consts.WIN;
+        } else if (gameModel.validateSelf(x, y).equals(consts.INVALID)) {
+            return consts.INVALID;
         } else {
-            return false;
+            return consts.NOTTURN;
         }
+
 
     }
 
@@ -117,21 +99,35 @@ public class GameController implements Runnable {
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void processMessage(String[] s){
+
+    private void processMessage(String[] s) {
         String m = s[0];
         int x = Integer.parseInt(s[1]);
         int y = Integer.parseInt(s[2]);
         switch (m) {
-            case MOVE:
-                if(gameModel.validateOpponent(x, y)){
+            case consts.MOVE:
+                if (gameModel.validateOpponent(x, y).equals(consts.WIN)) {
+                    view.displayMove(x, y);
+                    view.win(); 
+                }
+                else if(gameModel.validateSelf(x, y).equals(consts.VALID)){
                     view.displayMove(x,y);
                 }
+                else if(gameModel.validateSelf(x, y).equals(consts.INVALID)){
+                   //should this do something?
+                }
+                else if(gameModel.validateSelf(x, y).equals(consts.NOTTURN)){
+                    //should this do something?
+                }
+                
                 break;
+           
+
             default:
                 break;
         }
     }
+
     @Override
     public void run() {
         System.out.println("Thread started");
@@ -145,7 +141,7 @@ public class GameController implements Runnable {
                     String[] msgArray;
                     msgArray = returnedMsg.split("[ ]+");
                     processMessage(msgArray);
-                    
+
                 }
             } catch (IOException ex) {
                 Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
