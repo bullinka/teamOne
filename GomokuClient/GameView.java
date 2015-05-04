@@ -1,3 +1,4 @@
+
 /**
  * This class manages the GameView.
  */
@@ -23,12 +24,12 @@ import javax.swing.border.Border;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author PLUCSCE
  */
 public class GameView extends javax.swing.JPanel {
+
     private final JButton[][] grid;
     private Map<JButton, String> buttonMap = new HashMap<JButton, String>();
     private GameController controller;
@@ -39,67 +40,66 @@ public class GameView extends javax.swing.JPanel {
     private String[] coordinates;
     private JButton resignB;
     private Constants consts = new Constants();
+    private final int width;
+    private final int length;
     private final ActionListener listener = new ActionListener() {
-
         @Override
         public void actionPerformed(ActionEvent e) {
-            JButton pressedButton = (JButton)e.getSource();
+            JButton pressedButton = (JButton) e.getSource();
             System.out.println(buttonMap.get(pressedButton));
             coordinates = buttonMap.get(pressedButton).split(" ");
             String response = controller.validateSelf(Integer.parseInt(coordinates[0]), Integer.parseInt(coordinates[1]));
-            if(response.equals("valid"))
-            {
+            if (response.equals("valid")) {
                 pressedButton.setBackground(Color.BLUE);
                 pressedButton.setEnabled(false);
-                
-            }
-            else if(response.equals("invalid"))
-            {
+
+            } else if (response.equals("invalid")) {
                 displayErrorMessage("That move is invalid.");
-            }
-            else if(response.equals("win")){
-            	pressedButton.setBackground(Color.BLUE);
+            } else if (response.equals("win")) {
+                pressedButton.setBackground(Color.BLUE);
                 pressedButton.setEnabled(false);
-            	win();
+                win();
             }
         }
     };
 
     /**
      * Creates new form GameView
+     *
      * @param width
      * @param length
      */
-    public GameView(int width, int length){ //constructor
-        
+    public GameView(int w, int l) { //constructor
+        this.length = l;
+        this.width = w;
         this.setLayout(new BorderLayout());
         game.setLayout(new GridLayout(width, length));
         this.add(game, BorderLayout.CENTER);
-   
-        grid=new JButton[width][length]; //allocate the size of grid
-        for(int y=0; y<length; y++){
-                for(int x=0; x<width; x++){
-                        grid[x][y]=new JButton(); //creates new button 
-                        grid[x][y].addActionListener(listener);
-                        //grid[x][y].setPreferredSize(new java.awt.Dimension(20,20));
-                        game.add(grid[x][y]); //adds button to grid
-                        buttonMap.put(grid[x][y], Integer.toString(x) + " " + Integer.toString(y));
-                }
+
+        grid = new JButton[width][length]; //allocate the size of grid
+        for (int y = 0; y < length; y++) {
+            for (int x = 0; x < width; x++) {
+                grid[x][y] = new JButton(); //creates new button 
+                grid[x][y].addActionListener(listener);
+                //grid[x][y].setPreferredSize(new java.awt.Dimension(20,20));
+                game.add(grid[x][y]); //adds button to grid
+                buttonMap.put(grid[x][y], Integer.toString(x) + " " + Integer.toString(y));
+            }
         }
-        
+
         gomoku = new JLabel("Gomoku");
         gomoku.setFont(new java.awt.Font("Tahoma", 1, 24));
         this.add(gomoku, BorderLayout.NORTH);
         quitB = new JButton("Quit");
-        quitB.setPreferredSize(new Dimension(70 , 25));
-        
+        quitB.setPreferredSize(new Dimension(70, 25));
+
         resignB = new JButton("Resign");
         resignB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 resignBActionPerformed(evt);
             }
         });
-        
+
         quitB.setText("Quit");
         quitB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,32 +108,33 @@ public class GameView extends javax.swing.JPanel {
         });
         quit.add(quitB);
         quit.add(resignB);
-        
-        quit.setSize(25 ,80);
+
+        quit.setSize(25, 80);
         this.add(quit, BorderLayout.PAGE_END);
-      
+
         this.setSize(500, 500);
     }
+
     /**
-     * Method is called when quit button is clicked.  
-     * Closes application.
-     * @param evt 
+     * Method is called when quit button is clicked. Closes application.
+     *
+     * @param evt
      */
-    private void quitBActionPerformed(ActionEvent evt){
+    private void quitBActionPerformed(ActionEvent evt) {
         System.exit(0);
     }
-    private void resignBActionPerformed(ActionEvent evt){
-            controller.sendResign(consts.RESIGN);
-            controller.resign();
-            
+
+    private void resignBActionPerformed(ActionEvent evt) {
+        controller.sendResign(consts.RESIGN);
+        controller.resign();
+
     }
-    
-    public void displayMove(int x, int y)
-    {
+
+    public void displayMove(int x, int y) {
         grid[x][y].setBackground(Color.RED);
         grid[x][y].setEnabled(false);
     }
-    
+
     /**
      * Error message pop up box.
      *
@@ -142,7 +143,7 @@ public class GameView extends javax.swing.JPanel {
     public void displayErrorMessage(String errorMessage) {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -164,21 +165,29 @@ public class GameView extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-   public void setController( GameController cont){
-       this.controller = cont;
+    public void setController(GameController cont) {
+        this.controller = cont;
     }
-   
-   public void win()
-   {
-       displayErrorMessage("You Win!");
-       controller.switchToLobby();
-   }
-public void lose() {
-	displayErrorMessage("You Lose!");
-    controller.switchToLobby();
-	
-}
 
+    public void win() {
+        displayErrorMessage("You Win!");
+        controller.switchToLobby();
+    }
+
+    public void lose() {
+        displayErrorMessage("You Lose!");
+        controller.switchToLobby();
+
+    }
+
+    public void resetBoard() {
+        for (int y = 0; y < length; y++) {
+            for (int x = 0; x < width; x++) {
+                grid[x][y].setBackground(null);
+                grid[x][y].setEnabled(true);
+            }
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

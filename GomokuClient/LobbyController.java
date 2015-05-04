@@ -165,6 +165,7 @@ public class LobbyController implements Runnable {
      */
     private void challengeAccepted(String m) {
         model.lobbyGameTrans();
+        model.createGameView();
         model.connectToOpponent(m);
         sendRescindResponse(lobby.getSentList());
 
@@ -215,6 +216,7 @@ public class LobbyController implements Runnable {
             String accept = ACCEPT + " " + challengee + " " + model.username;
             dataOut.write(accept.getBytes());
             dataOut.flush();
+            model.createGameView();
             model.lobbyGameTrans();
             newChallengeGame();
             sendRescindResponse(lobby.getSentList());
@@ -279,5 +281,9 @@ public class LobbyController implements Runnable {
             //Add error handling
         }
 
+    }
+    
+    public void lobbyLeaderTrans(){
+        model.lobbyLeaderTrans();
     }
 }

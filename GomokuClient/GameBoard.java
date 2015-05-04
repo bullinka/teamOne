@@ -158,10 +158,11 @@ public class GameBoard {
         count = 0;
         i = x + 1;
         j = y - 1;
-        while (count < 5 && i < 30 && i > 0 && board[i][j] == z) {
+        while (count < 5 && i < 30 && j > 0 && board[i][j] == z) {
             result++;
             i++;
             j++;
+            //System.out.println()
         }
 
         if (result >= 5) {
