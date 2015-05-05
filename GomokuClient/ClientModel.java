@@ -13,6 +13,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.JFrame;
 
 /**
@@ -113,7 +114,7 @@ public class ClientModel implements Runnable {
         this.gameController = cont;
     }
     
-    public void setLeaderboardController(Leaderboard cont){
+    public void setLeaderboardController(LeaderboardController cont){
         this.leaderController = cont;
     }
 
@@ -160,7 +161,11 @@ public class ClientModel implements Runnable {
     
     public void lobbyLeaderTrans(){
         frame.updateView(consts.LEADERBOARD);
-        leaderController.setIOStreams(socket.getInputStream(), socket.getOutputStream());
+        try {
+			leaderController.setIOStreams(socket.getInputStream(), socket.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         
     }
 
@@ -198,7 +203,7 @@ public class ClientModel implements Runnable {
             gameController.setInputStream(opponent.getInputStream());
             gameController.setOutputStream(opponent.getOutputStream());
             gameController.newGame();
-            gameController.setTurnOrder(true);
+            gameController.setTurnOrder(false);
         } catch (UnknownHostException ex) {
             Logger.getLogger(ClientModel.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -212,7 +217,10 @@ public class ClientModel implements Runnable {
      * @param difficulty
      */
     public void aiGameTrans(String difficulty) {
-        frame.updateView(GAME);
+        gameController.newGame();
+        gameController.setTurnOrder(true);
+        gameController.setaiGame(true, difficulty);
+    	frame.updateView(GAME);
 
     }
 }

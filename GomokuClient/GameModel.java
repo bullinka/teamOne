@@ -74,4 +74,16 @@ public class GameModel {
         board.setTurnOrder(b);
 
     }
+    
+    public boolean isValid(int x, int y){
+    	return board.isValid( x,  y);
+    	
+    }
+
+	public void makeMove(int x, int y) {
+		board.moveMadeSelf(x, y);
+		
+	}
+	
+	
 }

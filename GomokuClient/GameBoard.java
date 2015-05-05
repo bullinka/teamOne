@@ -122,7 +122,7 @@ public class GameBoard {
         int i = x - 1;
         int j = y - 1;
 
-        while (count < 5 && i > 0 && j > 0 && board[i][j] == z) {
+        while (count < 5 && i >= 0 && j >= 0 && board[i][j] == z) {
             result++;
             i--;
             j--;
@@ -150,7 +150,7 @@ public class GameBoard {
         int i = x - 1;
         int j = y + 1;
 
-        while (count < 5 && i > 0 && j < 30 && board[i][j] == z) {
+        while (count < 5 && i >= 0 && j < 30 && board[i][j] == z) {
             result++;
             i--;
             j++;
@@ -158,10 +158,10 @@ public class GameBoard {
         count = 0;
         i = x + 1;
         j = y - 1;
-        while (count < 5 && i < 30 && j > 0 && board[i][j] == z) {
+        while (count < 5 && i < 30 && j >= 0 && board[i][j] == z) {
             result++;
             i++;
-            j++;
+            j--;
             //System.out.println()
         }
 
@@ -177,7 +177,7 @@ public class GameBoard {
         boolean flag = false;
         int i = y - 1;
 
-        while (count < 5 && i > 0 && board[x][i] == z) {
+        while (count < 5 && i >= 0 && board[x][i] == z) {
             result++;
             i--;
         }
@@ -202,7 +202,7 @@ public class GameBoard {
         boolean flag = false;
         int i = x - 1;
 
-        while (count < 5 && i > 0 && board[i][y] == z) {
+        while (count < 5 && i >= 0 && board[i][y] == z) {
             result++;
             i--;
         }
@@ -250,5 +250,15 @@ public class GameBoard {
                 board[i][j] = 0;
             }
         }
+    }
+    
+    public boolean isValid(int x, int y) {
+		System.out.println("Checking Validty" + board[x][y]);
+		if(board[x][y] == 0){
+			System.out.println("Is Valid");
+			return true;
+		}else{
+		return false;
+		}
     }
 }

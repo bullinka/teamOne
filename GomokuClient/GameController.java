@@ -40,7 +40,13 @@ public class GameController implements Runnable {
     private Socket captainCarl;
     private ServerSocket ss;
     private boolean server;
+    private boolean aiGame; //if true it is an ai game. If false it is not. 
 
+    public void setaiGame(boolean isAI, String difficulty){
+ 	   aiGame = isAI;
+ 	   ai = new GameAI(difficulty, this);
+ 	   gameModel.setTurnOrder(true);
+    }
    
     public void setSocket(Socket sock){
         this.captainCarl = sock;
@@ -94,13 +100,22 @@ public class GameController implements Runnable {
     public String validateSelf(int x, int y) {
     	String karrensmean = gameModel.validateSelf(x, y);
         if (karrensmean.equals(consts.WIN)) {
+        	if(aiGame){
+            	return "win";	
+            }else{
             sendMove(x, y);
             sendWin();
             closeSockets();
             return consts.WIN;
+            }
         } else if (karrensmean.equals(consts.VALID)) {
+        	if(aiGame){
+            	ai.sendMove(x, y);	
+            	return consts.VALID;
+            	}else{
             sendMove(x, y);
             return consts.VALID;
+            }
         } else if (karrensmean.equals(consts.INVALID)) {
             return consts.INVALID;
         } else {
@@ -112,8 +127,13 @@ public class GameController implements Runnable {
     
     public void sendWin(){
         String win = "stats " + model.username + " win";
-        dataOut.write(win.getBytes());
-        dataOut.flush();
+        try {
+			dataOut.write(win.getBytes());
+			dataOut.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
     }
     public void sendResign(String res){
         try {
@@ -257,5 +277,20 @@ public class GameController implements Runnable {
             } catch (IOException ex) {
                 //Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        
+    public void aiMove(int x, int y){
+        	String jonsajerk = gameModel.validateOpponent(x, y);
+                  if(jonsajerk.equals(consts.VALID)){
+                        view.displayMove(x,y);
+                    } else if (jonsajerk.equals(consts.WIN)) {
+                        view.displayMove(x, y);
+                        view.lose(); 
+                    }else if(jonsajerk.equals(consts.INVALID)){
+                       //should this do something?
+                    }
+                    else if(jonsajerk.equals(consts.NOTTURN)){
+                        //should this do something?
+                    }
         }
 }
