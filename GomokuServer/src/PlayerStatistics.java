@@ -1,5 +1,6 @@
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -24,7 +25,7 @@ import java.util.logging.Logger;
  */
 public class PlayerStatistics {
     
-    private Map<String, String> stats = new HashMap<String, String>();
+    private final Map<String, String> stats = new HashMap<String, String>();
     private final File f = new File("stats.gmk");
     private FileWriter fw;
     private PrintWriter pw;
@@ -53,14 +54,11 @@ public class PlayerStatistics {
     public void addPlayerStats(String name)
     {
         stats.put(name, "0 0");
-        try {
-                fw = new FileWriter(f, true);
-                pw = new PrintWriter(fw);
-                pw.println(name + ",0,0");
-                pw.close();
-            } catch (IOException ex) {
-                Logger.getLogger(RegisteredPlayers.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f, true)))) {
+            out.println(name + ",0,0");
+        }catch (IOException e) {
+            Logger.getLogger(RegisteredPlayers.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
     
     public void addWin(String user)
@@ -79,9 +77,15 @@ public class PlayerStatistics {
         losses++;
         stats.put(user, winLoss[1] + " " + String.valueOf(losses));
         updateLine(user + "," + winLoss[0] + "," + winLoss[1], user + "," + winLoss[0] + "," + String.valueOf(losses));
-        
     }
     
+    
+    /**
+     * used to update a specific line in a file
+     * @param toUpdate
+     * @param updated 
+     */
+    @SuppressWarnings("null")
     private void updateLine(String toUpdate, String updated){
         try {
             BufferedReader file = null;
@@ -96,7 +100,7 @@ public class PlayerStatistics {
             try {
                 while ((line = file.readLine()) != null)
                     input += line + System.lineSeparator();
-            } catch (IOException ex) {
+            } catch (IOException|NullPointerException ex){
                 Logger.getLogger(PlayerStatistics.class.getName()).log(Level.SEVERE, null, ex);
             }
             
@@ -112,10 +116,23 @@ public class PlayerStatistics {
             
             file.close();
             os.close();
-        } catch (IOException ex) {
+        } catch (IOException|NullPointerException ex) {
             Logger.getLogger(PlayerStatistics.class.getName()).log(Level.SEVERE, null, ex);
         }
-}
+    }
+    
+    public String getAllStats()
+    {
+        StringBuilder sb = new StringBuilder();
+        for(Map.Entry<String, String> entry : stats.entrySet())
+        {
+            sb.append(entry.getKey());
+            sb.append(" ");
+            sb.append(entry.getValue());
+            sb.append(" ");
+        }
+        return sb.toString();
+    }
     
     
     

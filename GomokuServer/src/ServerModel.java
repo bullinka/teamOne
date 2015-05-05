@@ -22,7 +22,7 @@ public class ServerModel {
    private final RegisteredPlayers registeredPlayers;
    private final MatchMaking matchmaker;
    
-   private PlayerStatistics playerStats;
+   private final PlayerStatistics playerStats;
    /**
     * sets number of connections to 0
     */
@@ -176,13 +176,35 @@ public class ServerModel {
 	matchmaker.respond(challenger, response);
     }
     
+    /**
+     * adds a win for the specified user to the statistics data stored on the server
+     * @param user 
+     */
     public void addWinToPlayerStats(String user)
     {
         playerStats.addWin(user);
     }
     
+    /**
+     * adds a loss for the specified user to the statistics data stored on the server
+     * @param user 
+     */
     public void addLossToPlayerStats(String user)
     {
         playerStats.addLoss(user);
+    }
+    
+    /**
+     * adds the specified user to the statistics data stored with the server
+     * @param username
+     */
+    public void addPlayerToStats(String username)
+    {
+        playerStats.addPlayerStats(username);
+    }
+    
+    public String getAllStatistics()
+    {
+        return playerStats.getAllStats();
     }
 }
