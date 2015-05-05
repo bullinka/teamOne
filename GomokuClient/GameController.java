@@ -44,12 +44,16 @@ public class GameController implements Runnable {
    
     public void setSocket(Socket sock){
         this.captainCarl = sock;
+        
         server = false;
+        System.out.println("SetSocket Method: " + server);
     }
     
     public void setServerSocket( ServerSocket sock){
         this.ss = sock;
+        
         server = true;
+        System.out.println("SetServerSocket: " + server);
     }
     public void setInputStream(InputStream s) {
         System.out.println(" Set Input Stream");
@@ -91,9 +95,10 @@ public class GameController implements Runnable {
     	String karrensmean = gameModel.validateSelf(x, y);
         if (karrensmean.equals(consts.WIN)) {
             sendMove(x, y);
+            sendWin();
+            closeSockets();
             return consts.WIN;
         } else if (karrensmean.equals(consts.VALID)) {
-        	System.out.println("Did you reall win?");
             sendMove(x, y);
             return consts.VALID;
         } else if (karrensmean.equals(consts.INVALID)) {
@@ -103,6 +108,12 @@ public class GameController implements Runnable {
         }
 
 
+    }
+    
+    public void sendWin(){
+        String win = "stats " + model.username + " win";
+        dataOut.write(win.getBytes());
+        dataOut.flush();
     }
     public void sendResign(String res){
         try {
@@ -138,6 +149,7 @@ public class GameController implements Runnable {
                 } else if (jonsajerk.equals(consts.WIN)) {
                     view.displayMove(x, y);
                     view.lose(); 
+                    closeSockets();
                 }else if(jonsajerk.equals(consts.INVALID)){
                    //should this do something?
                 }
@@ -196,7 +208,9 @@ public class GameController implements Runnable {
 
                 }
             } catch (IOException ex) {
-                Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+                return;
+                
             }
         }
     }
@@ -216,14 +230,32 @@ public class GameController implements Runnable {
                     ss.close();
                     model.gameLobbyTrans();
                 } catch (IOException ex) {
-                    Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+                    //Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             else try {
                 captainCarl.close();
                 model.gameLobbyTrans();
             } catch (IOException ex) {
-                Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        public void closeSockets()
+        {
+            if(server){
+                try {
+                    ss.close();
+                    model.gameLobbyTrans();
+                } catch (IOException ex) {
+                    //Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else try {
+                captainCarl.close();
+                model.gameLobbyTrans();
+            } catch (IOException ex) {
+                //Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 }

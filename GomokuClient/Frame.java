@@ -13,10 +13,11 @@ public class Frame extends javax.swing.JFrame {
     /**
      * Creates new form frame
      */
-    public Frame(LoginView login, LobbyView lobby, GameView game) {
+    public Frame(LoginView login, LobbyView lobby, GameView game, LeaderboardView leader) {
         loginView1 = login;
         lobbyView1 = lobby;
         gameView1 = game;
+        leaderView1 = leader;
         initComponents();
         this.setTitle("Gomoku");
     }
@@ -36,6 +37,7 @@ public class Frame extends javax.swing.JFrame {
         lobbyPane = new javax.swing.JPanel();
         gamePanel = new javax.swing.JPanel();
         PanThree = new javax.swing.JLabel();
+        leaderPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,6 +102,25 @@ public class Frame extends javax.swing.JFrame {
         );
 
         mainPane.add(gamePanel, "game");
+        
+         javax.swing.GroupLayout leaderPanelLayout = new javax.swing.GroupLayout(leaderPanel);
+        leaderPanel.setLayout(leaderPanelLayout);
+        leaderPanelLayout.setHorizontalGroup(
+            leaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(leaderPanelLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+				.addComponent(leaderView1, 400,400,400)
+                .addContainerGap(551, Short.MAX_VALUE))
+        );
+        leaderPanelLayout.setVerticalGroup(
+            leaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(leaderPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(leaderView1, 400,400,400)
+                .addContainerGap(375, Short.MAX_VALUE))
+        );
+
+        mainPane.add(leaderPanel, "leaderboard");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,9 +142,22 @@ public class Frame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
+     public void updateView(String l) {
+        CardLayout card = (CardLayout)mainPane.getLayout();
+        card.show(mainPane, l);
+        
+    }
+
+    void updateOnlinePlayers(String[] online) {
+        lobbyView1.updateOnlinePlayerList(online);
+    }
+    
+    public void newGame()
+    {
+        //gameView1 = new GameView(30, 30);
+        gameView1.resetBoard();
+    }
+ 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel PanThree;
@@ -135,15 +169,8 @@ public class Frame extends javax.swing.JFrame {
     private javax.swing.JPanel mainPane;
     // End of variables declaration//GEN-END:variables
     private GameView gameView1;
+    private LeaderboardView leaderView1;
+    private javax.swing.JPanel leaderPanel;
 	
-   public void updateView(String l) {
-        CardLayout card = (CardLayout)mainPane.getLayout();
-        card.show(mainPane, l);
-        
-    }
-
-    void updateOnlinePlayers(String[] online) {
-        lobbyView1.updateOnlinePlayerList(online);
-    }
- 
+  
 }

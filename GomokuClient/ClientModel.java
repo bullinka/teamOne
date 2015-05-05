@@ -28,6 +28,7 @@ public class ClientModel implements Runnable {
     private LobbyController lobbyController;
     private LoginController loginController;
     private GameController gameController;
+    private LeaderboardController leaderController;
     public Socket socket;
     public Socket challengeeSocket;
     public Socket opponent;
@@ -41,7 +42,8 @@ public class ClientModel implements Runnable {
     private final String LOBBY = "lobby";
     private int port = 27200;
     public boolean turn;
-
+    public GameView gameView;
+    private Constants consts = new Constants();
     /**
      * Creates a new frame to hold each needed view.
      *
@@ -49,8 +51,14 @@ public class ClientModel implements Runnable {
      * @param lobby instance of lobby view
      * @param game instance of game view
      */
-    public void createFrame(LoginView login, LobbyView lobby, GameView game) {
-        frame = new Frame(login, lobby, game);
+    public void createFrame(LoginView login, LobbyView lobby, GameView game, LeaderboardView leader) {
+        frame = new Frame(login, lobby, game, leader);
+    }
+    
+    public void createGameView()
+    {
+        System.out.println("create new game.");
+        frame.newGame();
     }
 
     /**
@@ -104,6 +112,10 @@ public class ClientModel implements Runnable {
     public void setGameController(GameController cont) {
         this.gameController = cont;
     }
+    
+    public void setLeaderboardController(Leaderboard cont){
+        this.leaderController = cont;
+    }
 
     /**
      * Updates frame to display lobby view. Also updates frame title bar to
@@ -139,11 +151,17 @@ public class ClientModel implements Runnable {
      * Transitions from lobby view to game view.
      */
     public void lobbyGameTrans() {
-        frame.updateView(GAME);
+        frame.updateView(consts.GAME);
     }
 
     public void gameLobbyTrans() {
-        frame.updateView(LOBBY);
+        frame.updateView(consts.LOBBY);
+    }
+    
+    public void lobbyLeaderTrans(){
+        frame.updateView(consts.LEADERBOARD);
+        leaderController.setIOStreams(socket.getInputStream(), socket.getOutputStream());
+        
     }
 
     /**
