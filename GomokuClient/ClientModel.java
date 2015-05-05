@@ -182,6 +182,7 @@ public class ClientModel implements Runnable {
             System.out.println("Accepting connection from opponent.");//
             gameController.setInputStream(challengeeSocket.getInputStream());
             gameController.setOutputStream(challengeeSocket.getOutputStream());
+            gameController.setMainInputStreams(socket.getInputStream(), socket.getOutputStream());
             gameController.newGame();
             gameController.setTurnOrder(true);
 
@@ -202,6 +203,7 @@ public class ClientModel implements Runnable {
             gameController.setSocket(opponent);
             gameController.setInputStream(opponent.getInputStream());
             gameController.setOutputStream(opponent.getOutputStream());
+            gameController.setMainInputStreams(socket.getInputStream(), socket.getOutputStream());
             gameController.newGame();
             gameController.setTurnOrder(false);
         } catch (UnknownHostException ex) {

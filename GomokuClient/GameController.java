@@ -34,8 +34,8 @@ public class GameController implements Runnable {
     private final String MOVE = "move";
     private OutputStream outStreamOp;
     private InputStream inStreamOp;
-    private DataInputStream dataInOp;
-    private DataOutputStream dataOutOp;
+    private DataInputStream dataInOp, mainServerIn;
+    private DataOutputStream dataOutOp, mainServerOut;
     private Constants consts = new Constants();
     private Socket captainCarl;
     private ServerSocket ss;
@@ -71,6 +71,12 @@ public class GameController implements Runnable {
         dataOut = new DataOutputStream(o);
     }
 
+     public void setMainInputStreams(InputStream s, OutputStream o){
+        this.mainServerIn = new DataInputStream(s);
+        this.mainServerOut = new DataOutputStream(o);
+    
+    }
+     
     public void setModel(ClientModel m) {
         this.model = m;
     }
@@ -100,7 +106,7 @@ public class GameController implements Runnable {
     public String validateSelf(int x, int y) {
     	String karrensmean = gameModel.validateSelf(x, y);
         if (karrensmean.equals(consts.WIN)) {
-        	if(aiGame){
+            if(aiGame){
             	return "win";	
             }else{
             sendMove(x, y);
@@ -109,10 +115,10 @@ public class GameController implements Runnable {
             return consts.WIN;
             }
         } else if (karrensmean.equals(consts.VALID)) {
-        	if(aiGame){
+            if(aiGame){
             	ai.sendMove(x, y);	
             	return consts.VALID;
-            	}else{
+            }else{
             sendMove(x, y);
             return consts.VALID;
             }
@@ -125,15 +131,26 @@ public class GameController implements Runnable {
 
     }
     
-    public void sendWin(){
-        String win = "stats " + model.username + " win";
+   public void sendWin(){
         try {
-			dataOut.write(win.getBytes());
-			dataOut.flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        
+            String win = "game " + model.username + " win";
+            System.out.println(win);
+            mainServerOut.write(win.getBytes());
+            dataOut.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void sendLose(){
+        try {
+            String lose = "game " + model.username + " lose";
+            System.out.println(lose);
+            mainServerOut.write(lose.getBytes());
+            dataOut.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void sendResign(String res){
         try {
@@ -169,6 +186,7 @@ public class GameController implements Runnable {
                 } else if (jonsajerk.equals(consts.WIN)) {
                     view.displayMove(x, y);
                     view.lose(); 
+                    sendLose();
                     closeSockets();
                 }else if(jonsajerk.equals(consts.INVALID)){
                    //should this do something?
