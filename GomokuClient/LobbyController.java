@@ -94,7 +94,7 @@ public class LobbyController implements Runnable {
 
                 if (len > 0) {
                     receivedMsg = new String(msg, 0, len);
-                    System.out.println("Message from server in LobbyController: " + receivedMsg);
+                    //System.out.println("Message from server in LobbyController: " + receivedMsg);
                     String[] msgArray;
                     msgArray = receivedMsg.split("[ ]+");
 
@@ -114,6 +114,9 @@ public class LobbyController implements Runnable {
      * @param msg message to be routed
      */
     private void processMessage(String[] msg) {
+        if(msg[0].equals("stats")){
+            model.processStats(msg);
+        }
         if(msg.length >= 2){
         String temp = msg[0];
         String name = msg[1];
@@ -288,5 +291,6 @@ public class LobbyController implements Runnable {
     
     public void lobbyLeaderTrans(){
         model.lobbyLeaderTrans();
+        
     }
 }

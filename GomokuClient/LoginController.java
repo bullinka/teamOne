@@ -154,7 +154,7 @@ public class LoginController {
                 if (len > 0) {
                     returnedMsg = new String(msg, 0, len);
                     String[] msgArray;
-                    msgArray = returnedMsg.split("[ ]");
+                    msgArray = returnedMsg.split("[ ]+");
                     if (msgArray[0].equals(success)) {
                         waiting = false;
                         model.loginLobbyTrans(view.usernameTF.getText());

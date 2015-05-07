@@ -45,6 +45,7 @@ public class ClientModel implements Runnable {
     public boolean turn;
     public GameView gameView;
     private Constants consts = new Constants();
+
     /**
      * Creates a new frame to hold each needed view.
      *
@@ -55,9 +56,8 @@ public class ClientModel implements Runnable {
     public void createFrame(LoginView login, LobbyView lobby, GameView game, LeaderboardView leader) {
         frame = new Frame(login, lobby, game, leader);
     }
-    
-    public void createGameView()
-    {
+
+    public void createGameView() {
         System.out.println("create new game.");
         frame.newGame();
     }
@@ -113,8 +113,8 @@ public class ClientModel implements Runnable {
     public void setGameController(GameController cont) {
         this.gameController = cont;
     }
-    
-    public void setLeaderboardController(LeaderboardController cont){
+
+    public void setLeaderboardController(LeaderboardController cont) {
         this.leaderController = cont;
     }
 
@@ -158,15 +158,18 @@ public class ClientModel implements Runnable {
     public void gameLobbyTrans() {
         frame.updateView(consts.LOBBY);
     }
-    
-    public void lobbyLeaderTrans(){
+
+    public void lobbyLeaderTrans() {
         frame.updateView(consts.LEADERBOARD);
-        try {
-			leaderController.setIOStreams(socket.getInputStream(), socket.getOutputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
         
+        try {
+            leaderController.setIOStreams(socket.getInputStream(), socket.getOutputStream());
+           
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+         leaderController.getStats();
+
     }
 
     /**
@@ -222,7 +225,11 @@ public class ClientModel implements Runnable {
         gameController.newGame();
         gameController.setTurnOrder(true);
         gameController.setaiGame(true, difficulty);
-    	frame.updateView(GAME);
+        frame.updateView(GAME);
 
+    }
+    
+    public void processStats(String[] s){
+        leaderController.updateStatsBoard(s);
     }
 }

@@ -123,7 +123,7 @@ public class PlayerStatistics {
     
     public String getAllStats()
     {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder("stats ");
         for(Map.Entry<String, String> entry : stats.entrySet())
         {
             sb.append(entry.getKey());
@@ -131,6 +131,7 @@ public class PlayerStatistics {
             sb.append(entry.getValue());
             sb.append(" ");
         }
+        System.out.println(sb.toString());
         return sb.toString();
     }
     

@@ -148,7 +148,7 @@ public class Player implements Runnable {
      */
     @SuppressWarnings("ConvertToStringSwitch")
     public String processMessage(String msg) {
-        //System.out.println(msg);
+        System.out.println(msg);
         //String msg = removeFormattingCharacters(mssg); 
         String[] message = msg.split(" ");
         if (message[0].equals(constant.REGISTER)) {

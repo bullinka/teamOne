@@ -1,3 +1,11 @@
+
+import javax.swing.JTable;
+import javax.swing.JViewport;
+import javax.swing.RowSorter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  * Team One
  * GUI Implementation
@@ -11,7 +19,10 @@
  * 3/14/2015 - View created by Karen Bullinger.
  */
 public class LeaderboardView extends javax.swing.JPanel {
-
+DefaultTableModel model;
+LeaderboardController controller;
+String[] columnNames = {"Username","Wins","Losses"};
+Object[][] data = {};
     /**
      * Creates new form LeaderboardView
      */
@@ -30,8 +41,7 @@ public class LeaderboardView extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         quitB = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        topTenTable = new javax.swing.JTable();
+        board = new javax.swing.JScrollPane();
         jLabel2 = new javax.swing.JLabel();
         lobbyB = new javax.swing.JButton();
 
@@ -40,47 +50,20 @@ public class LeaderboardView extends javax.swing.JPanel {
         jLabel1.setText("Gomoku");
 
         quitB.setText("Quit");
+        
+        model = new DefaultTableModel(data, columnNames);
+        topTenTable = new JTable(model);
 
-        topTenTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"1.", null, null, null, null},
-                {"2.", null, null, null, null},
-                {"3.", null, null, null, null},
-                {"4.", null, null, null, null},
-                {"5.", null, null, null, null},
-                {"6.", null, null, null, null},
-                {"7.", null, null, null, null},
-                {"8.", null, null, null, null},
-                {"9.", null, null, null, null},
-                {"10.", null, null, null, null}
-            },
-            new String [] {
-                "Rank", "Username", "Wins", "Losses", "Win %"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        
         topTenTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         topTenTable.setRowHeight(25);
-        topTenTable.setShowHorizontalLines(false);
+        topTenTable.setShowHorizontalLines(true);
         topTenTable.getTableHeader().setResizingAllowed(false);
         topTenTable.getTableHeader().setReorderingAllowed(false);
         topTenTable.setUpdateSelectionOnSort(false);
         topTenTable.setVerifyInputWhenFocusTarget(false);
-        jScrollPane1.setViewportView(topTenTable);
+        board.getViewport().add(topTenTable);
+        
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("Leaderboard");
@@ -101,7 +84,7 @@ public class LeaderboardView extends javax.swing.JPanel {
                         .addComponent(lobbyB))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(board, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -119,17 +102,30 @@ public class LeaderboardView extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(board, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(quitB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lobbyB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
+    
+    public void updateTable(String[] m){
+        
+       for(int i = 1; i < m.length ; i+=3){
+         model.insertRow(topTenTable.getRowCount(), new Object[]{m[i], m[i+1], m[i+2]});
+        }
+       RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
+       topTenTable.setRowSorter(sorter);
+    
+    }
+    public void setController(LeaderboardController cont){
+     this.controller = cont;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane board;
     private javax.swing.JButton lobbyB;
     private javax.swing.JButton quitB;
     private javax.swing.JTable topTenTable;

@@ -42,6 +42,7 @@ public class Main {
              LeaderboardController leaderboard = new LeaderboardController();
              leaderboard.setView(leaderView);
              leaderboard.setModel(model);
+             leaderView.setController(leaderboard);
              
              GameModel gameModel = new GameModel();
              
@@ -52,6 +53,7 @@ public class Main {
              model.setLoginController(loginController);
              model.setLobbyController(lobbyController);
              model.setGameController(gameController);
+             model.setLeaderboardController(leaderboard);
 
              loginController.initLoginView();
               
