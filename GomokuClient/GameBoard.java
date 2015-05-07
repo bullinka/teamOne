@@ -261,4 +261,9 @@ public class GameBoard {
 		return false;
 		}
     }
+
+	public int getBoardValue(int x, int y) {
+		// TODO Auto-generated method stub
+		return board[x][y];
+	}
 }

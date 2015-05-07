@@ -57,40 +57,64 @@ public class GameAI {
      * @param x
      * @param y 
      */
-    public void makeMove()
+    public void makeMove(int x, int y)
     {
+    	String move;
+    	move = analyzeGameboardHard(x, y);
     	if(difficulty == 0){
-        int x = randomGenerator.nextInt(30);
-        int y = randomGenerator.nextInt(30);
-        boolean flag = model.isValid(x, y);
+        int i = randomGenerator.nextInt(30);
+        int j = randomGenerator.nextInt(30);
+        boolean flag = model.isValid(i, j);
         while(!flag){
-        	x = randomGenerator.nextInt(30);
-            y = randomGenerator.nextInt(30);
-            flag = model.isValid(x, y);
+        	i = randomGenerator.nextInt(30);
+            j = randomGenerator.nextInt(30);
+            flag = model.isValid(i, j);
         }
-        model.makeMove(x,y);
-        controller.aiMove(x, y);
+        model.makeMove(i,j);
+        controller.aiMove(i, j);
     	}else if (difficulty == 1){
-    		analyzeGameboardMedium();
+    		move = analyzeGameboardMedium(x, y);
     	}else if (difficulty == 2){
-    		analyzeGameboardHard();
+    	  move = analyzeGameboardHard(x , y);
     	}
     }
 
-	private void analyzeGameboardHard() {
+	private String analyzeGameboardHard(int x, int y) {
+		String direction = "";
+		int max = 0;
+		if(horizontalSearch(x,y)> max){
+			max = horizontalSearch(x,y);
+			direction = "h";
+		}
+		if(verticalSearch(x,y)> max){
 		
+			max = verticalSearch(x,y);
+			direction = "v";
+		}
+		if(diagonalFowardSearch(x,y)> max){
+			max = diagonalFowardSearch(x,y);
+			direction = "df";
+		}
+		if(diagonalBackSearch(x,y)> max){
+			max = diagonalBackSearch(x,y);
+			direction = "db";
+		}
+		
+		
+		System.out.println(direction);
+		return "";
 		
 	}
 
-	private void analyzeGameboardMedium() {
-		
+	private String analyzeGameboardMedium(int x, int y) {
+		return "";
 		
 	}
 
 	public void sendMove(int x, int y) {
 		 String jonsajerk = model.validateOpponent(x, y);
 	              if(jonsajerk.equals(consts.VALID)){
-	                    makeMove();
+	                    makeMove(x,y);
 	                } else if (jonsajerk.equals(consts.WIN)) {
 	                  
 	                }else if(jonsajerk.equals(consts.INVALID)){
@@ -101,4 +125,92 @@ public class GameAI {
 	                }
 		
 	}
+	
+	 private int horizontalSearch(int x, int y) {
+	        int result = 1;
+	        boolean flag = false;
+	        int i = x - 1;
+
+	        while ( i >= 0 && model.getBoardValue(i, y) == 2) {
+	            result++;
+	            i--;
+	        }
+	     
+	        i = x + 1;
+
+	        while (i < 30 && model.getBoardValue(i, y) == 2) {
+	            result++;
+	            i++;
+	        }
+
+	        if (result >= 5) {
+	            flag = true;
+	        }
+	        return result;
+	    }
+	 
+	 private int diagonalBackSearch(int x, int y) {
+	        int result = 1;
+	        int i = x - 1;
+	        int j = y - 1;
+
+	        while (i >= 0 && j >= 0 && model.getBoardValue(i, j) == 2) {
+	            result++;
+	            i--;
+	            j--;
+	        }
+
+	    
+	        i = x + 1;
+	        j = y + 1;
+	        while (i < 30 && j < 30 && model.getBoardValue(i,j)==2) {
+	            result++;
+	            i++;
+	            j++;
+	        }
+	        return result;
+	    }
+
+	    private int diagonalFowardSearch(int x, int y) {
+	        int result = 1;
+	        int i = x - 1;
+	        int j = y + 1;
+
+	        while (i >= 0 && j < 30 &&  model.getBoardValue(i,j) == 2) {
+	       
+	            result++;
+	            i--;
+	            j++;
+	        }
+	        i = x + 1;
+	        j = y - 1;
+	        while ( i < 30 && j >= 0 && model.getBoardValue(i,j) == 2) {
+	            result++;
+	            i++;
+	            j--;
+	        
+	        }
+
+	        return result;
+	    }
+
+	    private int verticalSearch(int x, int y) {
+	     
+	        int result = 1;
+	        int i = y - 1;
+
+	        while (i >= 0 && model.getBoardValue(x,i) == 2) {
+	            result++;
+	            i--;
+	        }
+
+	     
+	        i = y + 1;
+	        while (i < 30 && model.getBoardValue(x,i) == 2) {
+	            result++;
+	            i++;
+	        }  
+
+	        return result;
+	    }
 }
