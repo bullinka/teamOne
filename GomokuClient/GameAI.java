@@ -60,22 +60,32 @@ public class GameAI {
     public void makeMove(int x, int y)
     {
     	String move;
-    	move = analyzeGameboardHard(x, y);
+    	//System.out.println(analyzeGameboardHard(x, y));
     	if(difficulty == 0){
-        int i = randomGenerator.nextInt(30);
-        int j = randomGenerator.nextInt(30);
-        boolean flag = model.isValid(i, j);
-        while(!flag){
-        	i = randomGenerator.nextInt(30);
-            j = randomGenerator.nextInt(30);
-            flag = model.isValid(i, j);
-        }
-        model.makeMove(i,j);
-        controller.aiMove(i, j);
-    	}else if (difficulty == 1){
+    		/*System.out.println("Easy difficulty selected");
+	        int i = randomGenerator.nextInt(30);
+	        int j = randomGenerator.nextInt(30);
+	        boolean flag = model.isValid(i, j);
+	        while(!flag){
+	        	i = randomGenerator.nextInt(30);
+	            j = randomGenerator.nextInt(30);
+	            flag = model.isValid(i, j);
+	        }
+	        move = analyzeGameboardHard(x, y);
+	        System.out.println("x: " + x + ", y: " + y);
+	        System.out.println("move: " + move);
+	        model.makeMove(i,j);
+	        controller.aiMove(i, j);*/
+	        
+    		aiMakeMove(x, y);
+    	}
+    	if (difficulty == 1){
     		move = analyzeGameboardMedium(x, y);
-    	}else if (difficulty == 2){
-    	  move = analyzeGameboardHard(x , y);
+    	}
+    	if (difficulty == 2){
+    		System.out.println("hard difficulty selected.");
+	    	  //move = analyzeGameboardHard(x , y);
+	    	  //aiMakeMove(move);
     	}
     }
 
@@ -86,8 +96,7 @@ public class GameAI {
 			max = horizontalSearch(x,y);
 			direction = "h";
 		}
-		if(verticalSearch(x,y)> max){
-		
+		if(verticalSearch(x,y) > max) {
 			max = verticalSearch(x,y);
 			direction = "v";
 		}
@@ -99,11 +108,83 @@ public class GameAI {
 			max = diagonalBackSearch(x,y);
 			direction = "db";
 		}
+		return direction;
 		
+	}
+	
+	public void aiMakeMove(int x, int y)
+	{
+		boolean flag = true;
+		int temp = 1, i = x, j = y;
+		//System.out.println("x: " + x + ", y: " + y);
+		String move = analyzeGameboardHard(x, y);
+		System.out.println("Value of move: " + move + " at " + x + " " + y);
+		if(move.equals("h"))
+		{
+			int nextCell = model.getBoardValue(x+1, y);
+			while(flag)
+			{
+				if(nextCell == 2) {
+					System.out.println("nextCell = 2");
+					nextCell = model.getBoardValue(x+1, y);
+				}
+				else if(nextCell == 0) {
+					System.out.println("nextCell = 0");
+					model.makeMove(x, y);
+			        controller.aiMove(x+temp, y);
+			        flag = false;
+				}
+				else {
+					System.out.println("nextCell = 1");
+					nextCell = model.getBoardValue(x-1, y);
+					if(nextCell == 2) {
+						nextCell = model.getBoardValue(x-1, y);
+					}
+					else if(nextCell == 0) {
+						model.makeMove(x, y);
+				        controller.aiMove(x-temp, y);
+				        flag = false;
+					}
+					else {
+						break;
+					}
+				}
+			}
+		}
 		
-		System.out.println(direction);
-		return "";
-		
+		else if(move.equals("v"))
+		{
+			int nextCell = model.getBoardValue(x, y-1);
+			System.out.println("Got next cell.");
+			while(flag)
+			{
+				if(nextCell == 2) {
+					System.out.println("nextCell = 2");
+					nextCell = model.getBoardValue(x, y-1);
+				}
+				else if(nextCell == 0) {
+					System.out.println("nextCell = 0");
+					model.makeMove(x, y);
+			        controller.aiMove(x, y-temp);
+			        flag = false;
+				}
+				else {
+					System.out.println("nextCell = 1");
+					nextCell = model.getBoardValue(x, y+1);
+					if(nextCell == 2) {
+						nextCell = model.getBoardValue(x, y+1);
+					}
+					else if(nextCell == 0) {
+						model.makeMove(x, y);
+				        controller.aiMove(x, y+temp);
+				        flag = false;
+					}
+					else {
+						break;
+					}
+				}
+			}
+		}
 	}
 
 	private String analyzeGameboardMedium(int x, int y) {
