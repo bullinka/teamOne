@@ -253,9 +253,9 @@ public class GameBoard {
     }
     
     public boolean isValid(int x, int y) {
-		System.out.println("Checking Validty" + board[x][y]);
+		//System.out.println("Checking Validty" + board[x][y]);
 		if(board[x][y] == 0){
-			System.out.println("Is Valid");
+			//System.out.println("Is Valid");
 			return true;
 		}else{
 		return false;
