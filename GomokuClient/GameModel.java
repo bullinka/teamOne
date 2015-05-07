@@ -84,11 +84,6 @@ public class GameModel {
 		board.moveMadeSelf(x, y);
 		
 	}
-
-	public int getBoardValue(int x, int y) {
-		// TODO Auto-generated method stub
-		return board.getBoardValue(x, y);
-	}
 	
 	
 }
