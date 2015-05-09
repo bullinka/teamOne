@@ -27,11 +27,12 @@ public class GameAI {
      */
     public GameAI(String diff, GameController gc)
     {
-        if(diff.equals("easy")){
+    	System.out.println(diff);
+        if(diff.equals("Easy")){
         	difficulty = 0;
-        }else if(diff.equals("medium")){
+        }else if(diff.equals("Moderate")){
         	difficulty = 1;
-        }else if(diff.equals("hard")){
+        }else if(diff.equals("Hard")){
         	difficulty = 2;
         }
         model = new GameModel();
@@ -44,14 +45,7 @@ public class GameAI {
         this.board = board;
     }
     
-    /**
-     * Method to start the AI
-     */
-    public void playGame()
-    {
-        
-    }
-    
+   
     /**
      * Makes a move in the game board as an opponent player.
      * @param x
@@ -59,10 +53,10 @@ public class GameAI {
      */
     public void makeMove(int x, int y)
     {
-    	String move;
+    	
     	//System.out.println(analyzeGameboardHard(x, y));
     	if(difficulty == 0){
-    		/*System.out.println("Easy difficulty selected");
+    		System.out.println("Easy difficulty selected");
 	        int i = randomGenerator.nextInt(30);
 	        int j = randomGenerator.nextInt(30);
 	        boolean flag = model.isValid(i, j);
@@ -71,25 +65,21 @@ public class GameAI {
 	            j = randomGenerator.nextInt(30);
 	            flag = model.isValid(i, j);
 	        }
-	        move = analyzeGameboardHard(x, y);
-	        System.out.println("x: " + x + ", y: " + y);
-	        System.out.println("move: " + move);
-	        model.makeMove(i,j);
-	        controller.aiMove(i, j);*/
 	        
-    		aiMakeMove(x, y);
+	        model.makeMove(i,j);
+	        controller.aiMove(i, j);
+	     
     	}
     	if (difficulty == 1){
-    		move = analyzeGameboardMedium(x, y);
+    		analyzeGameboardMedium(x, y);
     	}
     	if (difficulty == 2){
-    		System.out.println("hard difficulty selected.");
-	    	  //move = analyzeGameboardHard(x , y);
-	    	  //aiMakeMove(move);
+	    	 analyzeGameboardHard(x , y);
+	    	 
     	}
     }
 
-	private String analyzeGameboardHard(int x, int y) {
+	private void analyzeGameboardHard(int x, int y) {
 		String direction = "";
 		int max = 0;
 		if(horizontalSearch(x,y)> max){
@@ -108,18 +98,135 @@ public class GameAI {
 			max = diagonalBackSearch(x,y);
 			direction = "db";
 		}
-		return direction;
+		System.out.println(direction);
+		
+		
+		aiMakeMove(x,y,direction);
 		
 	}
 	
-	public void aiMakeMove(int x, int y)
+	
+	public void aiMakeMove(int x, int y, String dir)
 	{
 		boolean flag = true;
-		int temp = 1, i = x, j = y;
-		//System.out.println("x: " + x + ", y: " + y);
-		String move = analyzeGameboardHard(x, y);
-		System.out.println("Value of move: " + move + " at " + x + " " + y);
-		if(move.equals("h"))
+		int i = x - 1, j = y;
+		if(dir.equals("h")){
+			while ( i >= 0 && model.getBoardValue(i, y) == 1) {
+				i--;
+        	}
+			if(i >= 0 && model.getBoardValue(i, y) == 0){
+				model.makeMove(i, y);
+				controller.aiMove(i, y);
+				flag = false;
+			}else{
+				i = x+1;
+				while(flag && i < 30 && model.getBoardValue(i, y) == 1){
+					i++;
+	        	}
+				if(i < 30 && model.getBoardValue(i, y) == 0){
+					model.makeMove(i, y);
+					controller.aiMove(i, y);
+					flag = false;
+				}
+			}
+		
+		}
+		i = x;
+		j = y-1;
+		if(dir.equals("v")){
+			while ( j >= 0 && model.getBoardValue(i, j) == 1) {
+				j--;
+        	}
+			if(i >= 0 && model.getBoardValue(i, j) == 0){
+				model.makeMove(i, j);
+				controller.aiMove(i, j);
+				flag = false;
+			}else{
+				j = y + 1;
+				while(flag && j < 30 && model.getBoardValue(i, j) == 1){
+					j++;
+	        	}
+				if(j < 30 && model.getBoardValue(i, j) == 0){
+					model.makeMove(i, j);
+					controller.aiMove(i, j);
+					flag = false;
+				}
+			}
+		
+		}
+		
+		i = x +1;
+		j = y - 1;
+		
+		if(dir.equals("df")){
+			while ( j >= 0 && i < 30 && model.getBoardValue(i, j) == 1) {
+				j--;
+				i++;
+        	}
+			if(j >= 0 && i < 30 && model.getBoardValue(i, j) == 0){
+				model.makeMove(i, j);
+				controller.aiMove(i, j);
+				flag = false;
+			}else{
+				i = x - 1;
+				j = y + 1;
+				while(flag && i >=0 && j < 30 && model.getBoardValue(i, j) == 1){
+					j++;
+					i--;
+	        	}
+				if(i >=0 && j < 30 && model.getBoardValue(i, j) == 0){
+					model.makeMove(i, j);
+					controller.aiMove(i, j);
+					flag = false;
+				}
+			}
+		
+		}
+		
+		i = x - 1;
+		j = y - 1;
+		
+		if(dir.equals("db")){
+			while ( j >= 0 && i >= 0 && model.getBoardValue(i, j) == 1) {
+				j--;
+				i--;
+        	}
+			if( j >= 0 && i >= 0 && model.getBoardValue(i, j) == 0){
+				model.makeMove(i, j);
+				controller.aiMove(i, j);
+				flag = false;
+			}else{
+				i = x + 1;
+				j = y + 1;
+				while(flag && i < 30 && j < 30 && model.getBoardValue(i, j) == 1){
+					j--;
+					i--;
+	        	}
+				if(i < 30 && j < 30 && model.getBoardValue(i, j) == 0){
+					model.makeMove(i, j);
+					controller.aiMove(i, j);
+					flag = false;
+				}
+			}
+		
+		}
+		
+		if(flag){
+			System.out.println("Easy difficulty selected");
+	        i = randomGenerator.nextInt(30);
+	        j = randomGenerator.nextInt(30);
+	        boolean valid = model.isValid(i, j);
+	        while(!valid){
+	        	i = randomGenerator.nextInt(30);
+	            j = randomGenerator.nextInt(30);
+	            valid = model.isValid(i, j);
+	        }
+	        
+	        model.makeMove(i,j);
+	        controller.aiMove(i, j);
+		}
+		
+		/*if(dir.equals("h"))
 		{
 			int nextCell = model.getBoardValue(x+1, y);
 			while(flag)
@@ -152,7 +259,7 @@ public class GameAI {
 			}
 		}
 		
-		else if(move.equals("v"))
+		if(dir.equals("v"))
 		{
 			int nextCell = model.getBoardValue(x, y-1);
 			System.out.println("Got next cell.");
@@ -184,12 +291,33 @@ public class GameAI {
 					}
 				}
 			}
-		}
+		}*/
 	}
 
-	private String analyzeGameboardMedium(int x, int y) {
-		return "";
+	private void analyzeGameboardMedium(int x, int y) {
+		String direction = "";
+		int max = 0;
+		int rand = randomGenerator.nextInt(4);
+		if(rand<3){
+		if(horizontalSearch(x,y)> max){
+			max = horizontalSearch(x,y);
+			direction = "h";
+		}
+		if(verticalSearch(x,y) > max) {
+			max = verticalSearch(x,y);
+			direction = "v";
+		}
+		if(diagonalFowardSearch(x,y)> max){
+			max = diagonalFowardSearch(x,y);
+			direction = "df";
+		}
+		if(diagonalBackSearch(x,y)> max){
+			max = diagonalBackSearch(x,y);
+			direction = "db";
+		}
+		}
 		
+		aiMakeMove(x,y,direction);
 	}
 
 	public void sendMove(int x, int y) {
