@@ -45,6 +45,7 @@ public class ClientModel implements Runnable {
     public boolean turn;
     public GameView gameView;
     private Constants consts = new Constants();
+    public boolean loggedIn = false;
     
     
     /**
@@ -54,6 +55,13 @@ public class ClientModel implements Runnable {
         this.username = u;
     }
 
+    /**
+     * 
+     */
+    public void setLoggedIn(boolean b){
+        loggedIn = b;
+    }
+    
     /**
      * Creates a new frame to hold each needed view.
      *
@@ -204,6 +212,10 @@ public class ClientModel implements Runnable {
         } catch (IOException ex) {
             Logger.getLogger(ClientModel.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+     public void gameLoginTrans(){
+        frame.updateView("loginPane");
     }
 
     /**

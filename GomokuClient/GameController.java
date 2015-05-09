@@ -42,6 +42,11 @@ public class GameController implements Runnable {
     private boolean server;
     public boolean aiGame; //if true it is an ai game. If false it is not. 
 
+    
+    public boolean loggedIn()
+    {
+        return model.loggedIn;
+    }
     public void setaiGame(boolean isAI, String difficulty){
  	   aiGame = isAI;
  	   ai = new GameAI(difficulty, this);
@@ -277,20 +282,17 @@ public class GameController implements Runnable {
      }
         
         public void resign(){
-            if(server){
-                try {
-                    ss.close();
-                    model.gameLobbyTrans();
-                } catch (IOException ex) {
-                    //Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            
+            if(model.loggedIn && aiGame){
+                switchToLobby();
             }
-            else try {
-                captainCarl.close();
-                model.gameLobbyTrans();
-            } catch (IOException ex) {
-                //Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            else if(model.loggedIn && !aiGame){
+                sendResign(consts.RESIGN);
+                switchToLogin();
+                closeSockets();
+             }
+             else
+                switchToLogin();
         }
         
         public void closeSockets()

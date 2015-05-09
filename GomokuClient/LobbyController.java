@@ -55,6 +55,10 @@ public class LobbyController implements Runnable {
 
     }
 
+    public void aiGame(String difficulty) {
+		model.aiGameTrans(difficulty);
+		
+	}
     /**
      * Updates list of online players in lobby view.
      *
