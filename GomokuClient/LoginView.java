@@ -80,6 +80,11 @@ public class LoginView extends javax.swing.JPanel {
         portL.setText("Port");
 
         quitB.setText("Quit");
+        quitB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitBActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -217,6 +222,10 @@ public class LoginView extends javax.swing.JPanel {
             controller.setUsername(usernameTF.getText());
         }
     }//GEN-LAST:event_loginBActionPerformed
+
+    private void quitBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitBActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_quitBActionPerformed
 
     /**
      * Associates view with controller.
