@@ -166,6 +166,10 @@ public class ClientModel implements Runnable {
     public void gameLobbyTrans() {
         frame.updateView(consts.LOBBY);
     }
+    
+    public void statsLobbytrans() {
+    	frame.updateView(consts.LOBBY);
+    }
 
     public void lobbyLeaderTrans() {
         frame.updateView(consts.LEADERBOARD);

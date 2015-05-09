@@ -159,14 +159,6 @@ public class GameView extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void updateTurnNotification(boolean b){
-        if(b){
-        gameNotificationL.setText("It's your turn!");
-        }
-        else
-        gameNotificationL.setText("It's not your turn.");
-    }
-    
     private void quitBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitBActionPerformed
         System.exit(0);
     }//GEN-LAST:event_quitBActionPerformed
@@ -196,20 +188,13 @@ public class GameView extends javax.swing.JPanel {
 
     public void win() {
         displayErrorMessage("You Win!");
-
-        if(controller.aiGame){
-           controller.switchToLogin();
-        }
-        else
         controller.switchToLobby();
     }
 
     public void lose() {
         displayErrorMessage("You Lose!");
-        if(controller.aiGame){
-                controller.switchToLogin();
-        } else
-            controller.switchToLobby();
+        controller.switchToLobby();
+
     }
 
     public void resetBoard() {
