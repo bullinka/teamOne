@@ -23,7 +23,7 @@ public class LobbyView extends javax.swing.JPanel {
     DefaultListModel<String> onlineModel, receivedModel, sentModel;
     LobbyController controller;
     String userSelected;
-    String userSelectedReceived;
+    String userSelectedReceived = "";
 
     /**
      * Creates new form Lobby view Creates ListModels for each of the three
@@ -58,6 +58,13 @@ public class LobbyView extends javax.swing.JPanel {
         onlineModel.clear();
         for (int i = 1; i < online.length; i++) {
             onlineModel.addElement(online[i]);
+            if(!receivedModel.contains(online[i-1])&&!receivedModel.isEmpty()){
+            	receivedModel.remove(i-1);
+            }
+            
+            if(!sentModel.contains(online[i-1])&& !sentModel.isEmpty()){
+            	sentModel.remove(i-1);
+            }
         }
 
     }
@@ -240,7 +247,10 @@ public class LobbyView extends javax.swing.JPanel {
      * @param evt 
      */
     private void acceptBActionPerformed(ActionEvent evt) {
-        controller.sendAcceptResponse(userSelectedReceived);
+    	String temp = userSelectedReceived;
+    	if(!temp.isEmpty()){
+        controller.sendAcceptResponse(temp);
+    	}
         
         
     }
