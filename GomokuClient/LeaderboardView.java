@@ -1,6 +1,4 @@
 
-import java.awt.event.ActionEvent;
-
 import javax.swing.JTable;
 import javax.swing.JViewport;
 import javax.swing.RowSorter;
@@ -52,13 +50,6 @@ Object[][] data = {};
         jLabel1.setText("Gomoku");
 
         quitB.setText("Quit");
-        quitB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                quitBActionPerformed(evt);
-            }
-
-			
-        });
         
         model = new DefaultTableModel(data, columnNames);
         topTenTable = new JTable(model);
@@ -79,11 +70,6 @@ Object[][] data = {};
         jLabel2.setToolTipText("");
 
         lobbyB.setText("Lobby");
-        lobbyB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lobbyBActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -124,15 +110,6 @@ Object[][] data = {};
         );
     }// </editor-fold>//GEN-END:initComponents
     
-    private void lobbyBActionPerformed(ActionEvent evt) {
-		controller.statsLobbyTrans();	
-	}
-    
-    private void quitBActionPerformed(ActionEvent evt) {
-		System.exit(0);
-		
-	}
-    
     public void updateTable(String[] m){
         double winLoss;
        for(int i = 1; i < m.length ; i+=3){
@@ -142,7 +119,7 @@ Object[][] data = {};
             winLoss = 0.0;
            }
            else
-             winLoss = ((double)win/((double)win+loss))*100.0;
+             winLoss = (win/(win+loss))*100;
            
          model.insertRow(topTenTable.getRowCount(), new Object[]{m[i], m[i+1], m[i+2], winLoss});
         }
