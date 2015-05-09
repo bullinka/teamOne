@@ -255,7 +255,7 @@ public class LoginView extends javax.swing.JPanel {
     private javax.swing.JButton loginB;
     private javax.swing.JLabel orL;
     private javax.swing.JLabel passwordL;
-    private javax.swing.JPasswordField passwordTF;
+    public javax.swing.JPasswordField passwordTF;
     private javax.swing.JLabel portL;
     private javax.swing.JTextField portTF;
     private javax.swing.JButton quitB;
