@@ -294,7 +294,7 @@ public class LobbyView extends javax.swing.JPanel {
         }
     }
     
-       /**
+    /**
      * Updates Challenges Sent list when user sends a new challenge.
      * @param userSelected 
      */
