@@ -40,7 +40,7 @@ public class GameController implements Runnable {
     private Socket captainCarl;
     private ServerSocket ss;
     private boolean server;
-    public boolean aiGame; //if true it is an ai game. If false it is not. 
+    private boolean aiGame; //if true it is an ai game. If false it is not. 
 
     public void setaiGame(boolean isAI, String difficulty){
  	   aiGame = isAI;
@@ -107,7 +107,7 @@ public class GameController implements Runnable {
     	String karrensmean = gameModel.validateSelf(x, y);
         if (karrensmean.equals(consts.WIN)) {
             if(aiGame){
-                return "win";	
+            	return "win";	
             }else{
             sendMove(x, y);
             sendWin();
@@ -166,7 +166,6 @@ public class GameController implements Runnable {
             String move = "move " + x + " " + y;
             System.out.println("Send move: " + move);
             dataOut.write(move.getBytes());
-            view.updateTurnNotification(false);
             dataOut.flush();
         } catch (IOException ex) {
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
@@ -184,7 +183,6 @@ public class GameController implements Runnable {
             //case MOVE:
               if(jonsajerk.equals(consts.VALID)){
                     view.displayMove(x,y);
-                    view.updateTurnNotification(true);
                 } else if (jonsajerk.equals(consts.WIN)) {
                     view.displayMove(x, y);
                     view.lose(); 
@@ -258,23 +256,11 @@ public class GameController implements Runnable {
     public void switchToLobby() {
         model.gameLobbyTrans();
     }
-    public void switchToLogin(){
-        model.gameLoginTrans();
-    }
 
 	public void setTurnOrder(boolean b) {
 		gameModel.setTurnOrder(b);
-                displayTurnNotice(b);
 		
 	}
-        
-    public void displayTurnNotice(boolean b){
-            if(b){
-                view.updateTurnNotification(true);
-            }
-            else
-                view.updateTurnNotification(false);
-     }
         
         public void resign(){
             if(server){
@@ -317,8 +303,7 @@ public class GameController implements Runnable {
                         view.displayMove(x,y);
                     } else if (jonsajerk.equals(consts.WIN)) {
                         view.displayMove(x, y);
-                        view.lose();
-                        System.out.println("Game controller aiMove lose");
+                        view.lose(); 
                     }else if(jonsajerk.equals(consts.INVALID)){
                        //should this do something?
                     }
