@@ -90,5 +90,9 @@ public class GameModel {
 		return board.getBoardValue(x, y);
 	}
 	
+	public void resetGameBoard(){
+		board.resetBoard();
+	}
+	
 	
 }

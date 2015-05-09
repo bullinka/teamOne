@@ -164,7 +164,7 @@ public class GameView extends javax.swing.JPanel {
     }//GEN-LAST:event_quitBActionPerformed
 
     private void resignBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resignBActionPerformed
-        controller.sendResign(consts.RESIGN);
+        
         controller.resign();
     }//GEN-LAST:event_resignBActionPerformed
 

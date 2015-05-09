@@ -293,4 +293,9 @@ public class LobbyController implements Runnable {
         model.lobbyLeaderTrans();
         
     }
+
+	public void aiGame(String difficulty) {
+		model.aiGameTrans(difficulty, true);
+		
+	}
 }

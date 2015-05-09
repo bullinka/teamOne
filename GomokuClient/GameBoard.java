@@ -266,4 +266,7 @@ public class GameBoard {
 		// TODO Auto-generated method stub
 		return board[x][y];
 	}
+
+	
+	
 }

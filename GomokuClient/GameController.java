@@ -40,12 +40,14 @@ public class GameController implements Runnable {
     private Socket captainCarl;
     private ServerSocket ss;
     private boolean server;
-    private boolean aiGame; //if true it is an ai game. If false it is not. 
+    private boolean aiGame; //if true it is an ai game. If false it is not.
+    private boolean online;
 
-    public void setaiGame(boolean isAI, String difficulty){
+    public void setaiGame(boolean isAI, String difficulty, boolean ol){
  	   aiGame = isAI;
  	   ai = new GameAI(difficulty, this);
  	   gameModel.setTurnOrder(true);
+ 	   online = ol;
     }
    
     public void setSocket(Socket sock){
@@ -86,6 +88,7 @@ public class GameController implements Runnable {
     }
 
     public void newGame() {
+    	aiGame = false;
         worker = new Thread(this);
         worker.start();
 
@@ -107,7 +110,7 @@ public class GameController implements Runnable {
     	String karrensmean = gameModel.validateSelf(x, y);
         if (karrensmean.equals(consts.WIN)) {
             if(aiGame){
-            	return "win";	
+            	return consts.WIN;	
             }else{
             sendMove(x, y);
             sendWin();
@@ -254,7 +257,18 @@ public class GameController implements Runnable {
     }
     
     public void switchToLobby() {
-        model.gameLobbyTrans();
+    	if(aiGame){
+    		if(online){
+    			model.gameLobbyTrans();
+    			gameModel.resetGameBoard();
+    		}else{
+    			model.gameLoginTrans();
+    			gameModel.resetGameBoard();
+    	}
+    	}else{
+    		model.gameLobbyTrans();
+    		gameModel.resetGameBoard();
+    	}
     }
 
 	public void setTurnOrder(boolean b) {
@@ -263,8 +277,17 @@ public class GameController implements Runnable {
 	}
         
         public void resign(){
+        	if(aiGame){
+        		if(online){
+        			model.gameLobbyTrans();
+        		}else{
+        			model.gameLoginTrans();
+        		}
+        			
+        	}else{
             if(server){
                 try {
+                	sendResign(consts.RESIGN);
                     ss.close();
                     model.gameLobbyTrans();
                 } catch (IOException ex) {
@@ -272,11 +295,13 @@ public class GameController implements Runnable {
                 }
             }
             else try {
+            	sendResign(consts.RESIGN);
                 captainCarl.close();
                 model.gameLobbyTrans();
             } catch (IOException ex) {
                 //Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        	}
         }
         
         public void closeSockets()
@@ -284,14 +309,14 @@ public class GameController implements Runnable {
             if(server){
                 try {
                     ss.close();
-                    model.gameLobbyTrans();
+                   
                 } catch (IOException ex) {
                     //Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             else try {
                 captainCarl.close();
-                model.gameLobbyTrans();
+            
             } catch (IOException ex) {
                 //Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
             }
