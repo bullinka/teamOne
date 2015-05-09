@@ -45,6 +45,14 @@ public class ClientModel implements Runnable {
     public boolean turn;
     public GameView gameView;
     private Constants consts = new Constants();
+    
+    
+    /**
+     * 
+     */
+    public void setUsername(String u){
+        this.username = u;
+    }
 
     /**
      * Creates a new frame to hold each needed view.
@@ -124,10 +132,10 @@ public class ClientModel implements Runnable {
      *
      * @param user
      */
-    public void loginLobbyTrans(String user) {
+    public void loginLobbyTrans() {
         loginController.closeView(LOBBY);
         lobbyController.setupIOStreams();
-        frame.setTitle("Gomoku || " + user);
+        frame.setTitle("Gomoku || " + username);
 
     }
 
@@ -222,7 +230,6 @@ public class ClientModel implements Runnable {
      * @param difficulty
      */
     public void aiGameTrans(String difficulty) {
-        gameController.newGame();
         gameController.setTurnOrder(true);
         gameController.setaiGame(true, difficulty);
         frame.updateView(GAME);

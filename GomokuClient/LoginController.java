@@ -102,7 +102,8 @@ public class LoginController {
                     if (msgArray[0].equals(success)) {
                         //  System.out.println("success");
                         waiting = false;
-                        model.loginLobbyTrans(view.usernameTF.getText()); /*if login successful, transition*/
+                        model.setUsername(user);
+                        model.loginLobbyTrans(/*view.usernameTF.getText()*/); /*if login successful, transition*/
                         model.updateLobbyPlayers(msgArray);
                         //  to lobby view.*/
                         return true;
@@ -157,7 +158,7 @@ public class LoginController {
                     msgArray = returnedMsg.split("[ ]+");
                     if (msgArray[0].equals(success)) {
                         waiting = false;
-                        model.loginLobbyTrans(view.usernameTF.getText());
+                        model.loginLobbyTrans();
                         model.updateLobbyPlayers(msgArray);
                         return true;
                     } else if (msgArray[0].equals(fail)) {
