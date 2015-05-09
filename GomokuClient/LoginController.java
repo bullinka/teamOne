@@ -106,8 +106,8 @@ public class LoginController {
                         model.setLoggedIn(true);
                         model.loginLobbyTrans(/*view.usernameTF.getText()*/); /*if login successful, transition*/
                         model.updateLobbyPlayers(msgArray);
-                        view.passwordTF.setText("");
-                        view.usernameTF.setText("");
+                        //view.passwordTF.setText("");
+                        //view.usernameTF.setText("");
                         //  to lobby view.*/
                         return true;
                     } else if (msgArray[0].equals(fail)) {

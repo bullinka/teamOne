@@ -255,4 +255,9 @@ public class ClientModel implements Runnable {
     public void processStats(String[] s){
         leaderController.updateStatsBoard(s);
     }
+    
+    public void lostConnection(){
+       // socket = null;
+        frame.updateView("loginPane");
+    }
 }
