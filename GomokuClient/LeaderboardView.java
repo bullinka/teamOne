@@ -21,7 +21,7 @@ import javax.swing.table.TableRowSorter;
 public class LeaderboardView extends javax.swing.JPanel {
 DefaultTableModel model;
 LeaderboardController controller;
-String[] columnNames = {"Username","Wins","Losses"};
+String[] columnNames = {"Username","Wins","Losses", "Win/Loss %"};
 Object[][] data = {};
     /**
      * Creates new form LeaderboardView
@@ -111,9 +111,17 @@ Object[][] data = {};
     }// </editor-fold>//GEN-END:initComponents
     
     public void updateTable(String[] m){
-        
+        double winLoss;
        for(int i = 1; i < m.length ; i+=3){
-         model.insertRow(topTenTable.getRowCount(), new Object[]{m[i], m[i+1], m[i+2]});
+           int win = Integer.parseInt(m[i+1]);
+           int loss = Integer.parseInt(m[i+2]);
+           if(win == 0 && loss == 0){
+            winLoss = 0.0;
+           }
+           else
+             winLoss = (win/(win+loss))*100;
+           
+         model.insertRow(topTenTable.getRowCount(), new Object[]{m[i], m[i+1], m[i+2], winLoss});
         }
        RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
        topTenTable.setRowSorter(sorter);

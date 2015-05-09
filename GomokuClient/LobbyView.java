@@ -1,4 +1,5 @@
 
+import java.awt.event.ActionEvent;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -111,6 +112,7 @@ public class LobbyView extends javax.swing.JPanel {
         rejectB = new javax.swing.JButton();
         quitB = new javax.swing.JButton();
         leaderboardB = new javax.swing.JButton();
+        aiList = new javax.swing.JComboBox();
 
         gomokuL.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         gomokuL.setText("Gomoku");
@@ -165,17 +167,19 @@ public class LobbyView extends javax.swing.JPanel {
             }
         });
 
+        aiList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select Difficulty", "Easy", "Medium Hard" }));
+        aiList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aiListActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(quitB)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(leaderboardB))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -206,7 +210,14 @@ public class LobbyView extends javax.swing.JPanel {
                                                     .addComponent(acceptB, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE))
                                                 .addGap(28, 28, 28)))
                                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(quitB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(aiList, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(leaderboardB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -231,7 +242,9 @@ public class LobbyView extends javax.swing.JPanel {
                     .addComponent(acceptB))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rejectB)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addComponent(aiList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(quitB)
                     .addComponent(leaderboardB))
@@ -258,21 +271,11 @@ public class LobbyView extends javax.swing.JPanel {
      *
      * @param evt
      */
-<<<<<<< HEAD
-    private void acceptBActionPerformed(ActionEvent evt) {
-    	String temp = userSelectedReceived;
-    	if(!temp.isEmpty()){
-        controller.sendAcceptResponse(temp);
-    	}
-        
-        
-    }
-=======
     private void acceptBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptBActionPerformed
-        controller.sendAcceptResponse(userSelectedReceived);
-    }//GEN-LAST:event_acceptBActionPerformed
-
->>>>>>> origin/master
+        String temp = userSelectedReceived;
+    	if(!temp.isEmpty()){
+        controller.sendAcceptResponse(temp);    }//GEN-LAST:event_acceptBActionPerformed
+}
     /**
      * Action listener for rejectB. Sends reject challenge response to server
      * via LobbyController.
@@ -295,6 +298,10 @@ public class LobbyView extends javax.swing.JPanel {
     private void leaderboardBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaderboardBActionPerformed
         controller.lobbyLeaderTrans();
     }//GEN-LAST:event_leaderboardBActionPerformed
+
+    private void aiListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aiListActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_aiListActionPerformed
 
     /**
      * List selection listener for onlinePlayersList. Keeps track of which
@@ -388,6 +395,7 @@ public class LobbyView extends javax.swing.JPanel {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton acceptB;
+    private javax.swing.JComboBox aiList;
     private javax.swing.JButton challengeB;
     private javax.swing.JList challengesReceivedList;
     private javax.swing.JList challengesSentList;
