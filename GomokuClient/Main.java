@@ -20,7 +20,7 @@ public class Main {
              
              LobbyView lobbyView = new LobbyView();
              LoginView loginView = new LoginView();
-             GameView gameView = new GameView(model.gameHeight, model.gameWidth);
+             GameView gameView = new GameView();
              LeaderboardView leaderView = new LeaderboardView();
              model.createFrame(loginView, lobbyView, gameView, leaderView);
  

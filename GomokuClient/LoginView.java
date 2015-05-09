@@ -237,13 +237,6 @@ public class LoginView extends javax.swing.JPanel {
         System.exit(0);
     }
 
-    private void aiListActionPerformed(ActionEvent evt) {
-        String difficulty = (String) aiList.getSelectedItem();
-        if (!difficulty.equals("Select Difficulty")) {
-            controller.aiGame(difficulty);
-        }
-    }
-
     /**
      * Error message pop up box.
      *
@@ -268,6 +261,6 @@ public class LoginView extends javax.swing.JPanel {
     private javax.swing.JButton quitB;
     private javax.swing.JButton registerB;
     private javax.swing.JLabel usernameL;
-    private javax.swing.JTextField usernameTF;
+    public javax.swing.JTextField usernameTF;
     // End of variables declaration//GEN-END:variables
 }
