@@ -152,7 +152,7 @@ public class Frame extends javax.swing.JFrame {
         lobbyView1.updateOnlinePlayerList(online);
     }
     
-    public void resetGame()
+    public void newGame()
     {
         //gameView1 = new GameView(30, 30);
         gameView1.resetBoard();

@@ -67,7 +67,7 @@ public class ClientModel implements Runnable {
 
     public void createGameView() {
         System.out.println("create new game.");
-
+        frame.newGame();
     }
 
     /**
@@ -165,7 +165,6 @@ public class ClientModel implements Runnable {
 
     public void gameLobbyTrans() {
         frame.updateView(consts.LOBBY);
-        frame.resetGame();
     }
 
     public void lobbyLeaderTrans() {
@@ -229,11 +228,10 @@ public class ClientModel implements Runnable {
      * Handles GUI transition from login view to game view.
      *
      * @param difficulty
-     * @param online 
      */
-    public void aiGameTrans(String difficulty, boolean online) {
+    public void aiGameTrans(String difficulty) {
         gameController.setTurnOrder(true);
-        gameController.setaiGame(true, difficulty, online);
+        gameController.setaiGame(true, difficulty);
         frame.updateView(GAME);
 
     }
@@ -241,10 +239,4 @@ public class ClientModel implements Runnable {
     public void processStats(String[] s){
         leaderController.updateStatsBoard(s);
     }
-
-	public void gameLoginTrans() {
-		frame.updateView("loginPane");
-        frame.resetGame();
-		
-	}
 }

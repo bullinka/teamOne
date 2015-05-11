@@ -1,6 +1,5 @@
 
 import java.awt.event.ActionEvent;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -168,7 +167,7 @@ public class LobbyView extends javax.swing.JPanel {
             }
         });
 
-        aiList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select Difficulty", "Easy", "Moderate", "Hard" }));
+        aiList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select Difficulty", "Easy", "Medium Hard" }));
         aiList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 aiListActionPerformed(evt);
@@ -301,10 +300,7 @@ public class LobbyView extends javax.swing.JPanel {
     }//GEN-LAST:event_leaderboardBActionPerformed
 
     private void aiListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aiListActionPerformed
-    	String difficulty = (String) aiList.getSelectedItem();
-        if (!difficulty.equals("Select Difficulty")) {
-            controller.aiGame(difficulty);
-        }   
+        // TODO add your handling code here:
     }//GEN-LAST:event_aiListActionPerformed
 
     /**
