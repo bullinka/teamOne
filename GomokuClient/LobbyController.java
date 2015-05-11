@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
+
 /**
  * Team One Gomoku CSCE 320 - Spring 2015 3/16/2015 Java - JVM Sources:
  *
@@ -36,6 +37,7 @@ public class LobbyController implements Runnable {
     final private String ACCEPT = "accept";
     final private String REJECT = "reject";
     final private String RESCIND = "rescind";
+    private boolean connected = true;
 
     /**
      * Sets model in controller.
@@ -55,6 +57,10 @@ public class LobbyController implements Runnable {
 
     }
 
+    public void aiGame(String difficulty) {
+		model.aiGameTrans(difficulty);
+		
+	}
     /**
      * Updates list of online players in lobby view.
      *
@@ -88,7 +94,7 @@ public class LobbyController implements Runnable {
      */
     @Override
     public void run() {
-        while (true) {
+        while (connected) {
             try {
                 int len = dataIn.read(msg);
 
@@ -101,7 +107,11 @@ public class LobbyController implements Runnable {
                     processMessage(msgArray);
                 }
             } catch (IOException ex) {
-                Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+                lobby.displayErrorMessage("Your connection to the server has been lost.");
+                model.lostConnection();
+                connected = false;
+                
+                //Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
                 //need to add error handling for server going offline while in lobby
             }
         }

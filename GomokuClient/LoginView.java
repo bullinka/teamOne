@@ -80,6 +80,11 @@ public class LoginView extends javax.swing.JPanel {
         portL.setText("Port");
 
         quitB.setText("Quit");
+        quitB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitBActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -218,6 +223,10 @@ public class LoginView extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_loginBActionPerformed
 
+    private void quitBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitBActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_quitBActionPerformed
+
     /**
      * Associates view with controller.
      *
@@ -255,7 +264,7 @@ public class LoginView extends javax.swing.JPanel {
     private javax.swing.JButton loginB;
     private javax.swing.JLabel orL;
     private javax.swing.JLabel passwordL;
-    private javax.swing.JPasswordField passwordTF;
+    public javax.swing.JPasswordField passwordTF;
     private javax.swing.JLabel portL;
     private javax.swing.JTextField portTF;
     private javax.swing.JButton quitB;

@@ -14,7 +14,9 @@ import javax.swing.event.ListSelectionEvent;
  */
 public class LobbyView extends javax.swing.JPanel {
 
-    DefaultListModel<String> onlineModel, receivedModel, sentModel;
+    DefaultListModel<String> onlineModel;
+    DefaultListModel<String> receivedModel;
+    DefaultListModel<String> sentModel;
     LobbyController controller;
     String userSelected;
     String userSelectedReceived = "";
@@ -31,9 +33,9 @@ public class LobbyView extends javax.swing.JPanel {
 
         initComponents();
 
-        onlinePlayersList.setPrototypeCellValue("Index 123567");
-        challengesReceivedList.setPrototypeCellValue("Index 1234567");
-        challengesSentList.setPrototypeCellValue("Index 1234567");
+        //onlinePlayersList.setPrototypeCellValue("Index 123567");
+        //challengesReceivedList.setPrototypeCellValue("Index 1234567");
+        //challengesSentList.setPrototypeCellValue("Index 1234567");
 
         onlinePlayersList.setModel(onlineModel);
         challengesReceivedList.setModel(receivedModel);
@@ -167,7 +169,7 @@ public class LobbyView extends javax.swing.JPanel {
             }
         });
 
-        aiList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select Difficulty", "Easy", "Medium Hard" }));
+        aiList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select Difficulty", "Easy", "Medium", "Hard" }));
         aiList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 aiListActionPerformed(evt);
@@ -300,7 +302,10 @@ public class LobbyView extends javax.swing.JPanel {
     }//GEN-LAST:event_leaderboardBActionPerformed
 
     private void aiListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aiListActionPerformed
-        // TODO add your handling code here:
+        String difficulty = (String) aiList.getSelectedItem();
+        if (!difficulty.equals("Select Difficulty")) {
+            controller.aiGame(difficulty);
+        }
     }//GEN-LAST:event_aiListActionPerformed
 
     /**

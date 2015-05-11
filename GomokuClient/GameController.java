@@ -40,8 +40,13 @@ public class GameController implements Runnable {
     private Socket captainCarl;
     private ServerSocket ss;
     private boolean server;
-    private boolean aiGame; //if true it is an ai game. If false it is not. 
+    public boolean aiGame; //if true it is an ai game. If false it is not. 
 
+    
+    public boolean loggedIn()
+    {
+        return model.loggedIn;
+    }
     public void setaiGame(boolean isAI, String difficulty){
  	   aiGame = isAI;
  	   ai = new GameAI(difficulty, this);
@@ -107,7 +112,7 @@ public class GameController implements Runnable {
     	String karrensmean = gameModel.validateSelf(x, y);
         if (karrensmean.equals(consts.WIN)) {
             if(aiGame){
-            	return "win";	
+                return "win";	
             }else{
             sendMove(x, y);
             sendWin();
@@ -166,6 +171,7 @@ public class GameController implements Runnable {
             String move = "move " + x + " " + y;
             System.out.println("Send move: " + move);
             dataOut.write(move.getBytes());
+            view.updateTurnNotification(false);
             dataOut.flush();
         } catch (IOException ex) {
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
@@ -183,6 +189,7 @@ public class GameController implements Runnable {
             //case MOVE:
               if(jonsajerk.equals(consts.VALID)){
                     view.displayMove(x,y);
+                    view.updateTurnNotification(true);
                 } else if (jonsajerk.equals(consts.WIN)) {
                     view.displayMove(x, y);
                     view.lose(); 
@@ -256,27 +263,36 @@ public class GameController implements Runnable {
     public void switchToLobby() {
         model.gameLobbyTrans();
     }
+    public void switchToLogin(){
+        model.gameLoginTrans();
+    }
 
 	public void setTurnOrder(boolean b) {
 		gameModel.setTurnOrder(b);
+                displayTurnNotice(b);
 		
 	}
         
+    public void displayTurnNotice(boolean b){
+            if(b){
+                view.updateTurnNotification(true);
+            }
+            else
+                view.updateTurnNotification(false);
+     }
+        
         public void resign(){
-            if(server){
-                try {
-                    ss.close();
-                    model.gameLobbyTrans();
-                } catch (IOException ex) {
-                    //Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            
+            if(model.loggedIn && aiGame){
+                switchToLobby();
             }
-            else try {
-                captainCarl.close();
-                model.gameLobbyTrans();
-            } catch (IOException ex) {
-                //Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            else if(model.loggedIn && !aiGame){
+                sendResign(consts.RESIGN);
+                switchToLogin();
+                closeSockets();
+             }
+             else
+                switchToLogin();
         }
         
         public void closeSockets()
@@ -303,7 +319,8 @@ public class GameController implements Runnable {
                         view.displayMove(x,y);
                     } else if (jonsajerk.equals(consts.WIN)) {
                         view.displayMove(x, y);
-                        view.lose(); 
+                        view.lose();
+                        System.out.println("Game controller aiMove lose");
                     }else if(jonsajerk.equals(consts.INVALID)){
                        //should this do something?
                     }

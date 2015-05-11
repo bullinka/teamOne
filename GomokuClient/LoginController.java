@@ -103,8 +103,11 @@ public class LoginController {
                         //  System.out.println("success");
                         waiting = false;
                         model.setUsername(user);
+                        model.setLoggedIn(true);
                         model.loginLobbyTrans(/*view.usernameTF.getText()*/); /*if login successful, transition*/
                         model.updateLobbyPlayers(msgArray);
+                        //view.passwordTF.setText("");
+                        //view.usernameTF.setText("");
                         //  to lobby view.*/
                         return true;
                     } else if (msgArray[0].equals(fail)) {
@@ -158,6 +161,7 @@ public class LoginController {
                     msgArray = returnedMsg.split("[ ]+");
                     if (msgArray[0].equals(success)) {
                         waiting = false;
+                        model.setLoggedIn(true);
                         model.loginLobbyTrans();
                         model.updateLobbyPlayers(msgArray);
                         return true;
