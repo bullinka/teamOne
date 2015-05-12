@@ -209,6 +209,7 @@ public class ClientModel implements Runnable {
             gameController.setMainInputStreams(socket.getInputStream(), socket.getOutputStream());
             gameController.newGame();
             gameController.setTurnOrder(true);
+            
 
         } catch (IOException ex) {
             Logger.getLogger(ClientModel.class.getName()).log(Level.SEVERE, null, ex);
@@ -235,6 +236,7 @@ public class ClientModel implements Runnable {
             gameController.setMainInputStreams(socket.getInputStream(), socket.getOutputStream());
             gameController.newGame();
             gameController.setTurnOrder(false);
+           
         } catch (UnknownHostException ex) {
             Logger.getLogger(ClientModel.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {

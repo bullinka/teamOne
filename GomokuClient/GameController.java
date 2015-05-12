@@ -200,6 +200,7 @@ public class GameController implements Runnable {
             try {
                 view.displayErrorMessage("Opponent has resigned.");
                 view.win();
+                sendWin();
                 
                 if(server){
                     try {
@@ -247,10 +248,12 @@ public class GameController implements Runnable {
     
     public void switchToLobby() {
         model.gameLobbyTrans();
+        aiGame = false;
     }
     public void switchToLogin(){
         model.gameLoginTrans();
         gameModel.resetBoard();
+        aiGame = false;
     }
 
 	public void setTurnOrder(boolean b) {
@@ -274,7 +277,7 @@ public class GameController implements Runnable {
             }
             else if(model.loggedIn && !aiGame){
                 sendResign(consts.RESIGN);
-                switchToLogin();
+                switchToLobby();
                 closeSockets();
              }
              else
@@ -309,4 +312,5 @@ public class GameController implements Runnable {
                         System.out.println("Game controller aiMove lose");
                     }
         }
+	
 }
