@@ -134,6 +134,7 @@ Object[][] data = {};
 	}
     
     public void updateTable(String[] m){
+    	    model.setRowCount(0);
         double winLoss;
        for(int i = 1; i < m.length ; i+=3){
            int win = Integer.parseInt(m[i+1]);
