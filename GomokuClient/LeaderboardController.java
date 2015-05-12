@@ -85,4 +85,9 @@ public class LeaderboardController implements Runnable {
         leaderboard.updateTable(m);
         
     }
+    
+    public void statsLobbyTrans()
+    {
+    	model.statsLobbytrans();
+    }
 }
