@@ -10,8 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author PLUCSCE
+ *  Representation of a player connection
+ * @author Joseph Bowley
  */
 public class Player implements Runnable {
 
