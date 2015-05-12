@@ -173,6 +173,7 @@ public class ClientModel implements Runnable {
 
     public void gameLobbyTrans() {
         frame.updateView(consts.LOBBY);
+        frame.newGame();
     }
     
     public void statsLobbytrans() {
@@ -216,6 +217,7 @@ public class ClientModel implements Runnable {
     
      public void gameLoginTrans(){
         frame.updateView("loginPane");
+        frame.newGame();
     }
 
     /**

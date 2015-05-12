@@ -109,8 +109,8 @@ public class GameController implements Runnable {
     }
 
     public String validateSelf(int x, int y) {
-    	String karrensmean = gameModel.validateSelf(x, y);
-        if (karrensmean.equals(consts.WIN)) {
+    	String validatedMove = gameModel.validateSelf(x, y);
+        if (validatedMove.equals(consts.WIN)) {
             if(aiGame){
                 return "win";	
             }else{
@@ -119,7 +119,7 @@ public class GameController implements Runnable {
             closeSockets();
             return consts.WIN;
             }
-        } else if (karrensmean.equals(consts.VALID)) {
+        } else if (validatedMove.equals(consts.VALID)) {
             if(aiGame){
             	ai.sendMove(x, y);	
             	return consts.VALID;
@@ -127,7 +127,7 @@ public class GameController implements Runnable {
             sendMove(x, y);
             return consts.VALID;
             }
-        } else if (karrensmean.equals(consts.INVALID)) {
+        } else if (validatedMove.equals(consts.INVALID)) {
             return consts.INVALID;
         } else {
             return consts.NOTTURN;
@@ -185,8 +185,7 @@ public class GameController implements Runnable {
             int y = Integer.parseInt(s[2]);
         
         String jonsajerk = gameModel.validateOpponent(x, y);
-        //switch (m) {
-            //case MOVE:
+        
               if(jonsajerk.equals(consts.VALID)){
                     view.displayMove(x,y);
                     view.updateTurnNotification(true);
@@ -195,11 +194,6 @@ public class GameController implements Runnable {
                     view.lose(); 
                     sendLose();
                     closeSockets();
-                }else if(jonsajerk.equals(consts.INVALID)){
-                   //should this do something?
-                }
-                else if(jonsajerk.equals(consts.NOTTURN)){
-                    //should this do something?
                 }
             }
                 else if(m.equals(consts.RESIGN)){
@@ -219,22 +213,13 @@ public class GameController implements Runnable {
                 
                 model.gameLobbyTrans();
             }
-            //break;
-            // default:
-            // break;
-            //}
+           
             catch (IOException ex) {
                 Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
             }
                 }
                 
-                
-               //break;
-           
-
-           // default:
-               // break;
-        //}
+               
     }
 
     @Override
@@ -265,6 +250,7 @@ public class GameController implements Runnable {
     }
     public void switchToLogin(){
         model.gameLoginTrans();
+        gameModel.resetBoard();
     }
 
 	public void setTurnOrder(boolean b) {
@@ -300,32 +286,27 @@ public class GameController implements Runnable {
             if(server){
                 try {
                     ss.close();
-                    model.gameLobbyTrans();
+                   
                 } catch (IOException ex) {
                     //Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             else try {
                 captainCarl.close();
-                model.gameLobbyTrans();
+              
             } catch (IOException ex) {
                 //Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
     public void aiMove(int x, int y){
-        	String jonsajerk = gameModel.validateOpponent(x, y);
-                  if(jonsajerk.equals(consts.VALID)){
+        	String validatedMove = gameModel.validateOpponent(x, y);
+                  if(validatedMove.equals(consts.VALID)){
                         view.displayMove(x,y);
-                    } else if (jonsajerk.equals(consts.WIN)) {
+                    } else if (validatedMove.equals(consts.WIN)) {
                         view.displayMove(x, y);
                         view.lose();
                         System.out.println("Game controller aiMove lose");
-                    }else if(jonsajerk.equals(consts.INVALID)){
-                       //should this do something?
-                    }
-                    else if(jonsajerk.equals(consts.NOTTURN)){
-                        //should this do something?
                     }
         }
 }

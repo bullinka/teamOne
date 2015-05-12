@@ -169,7 +169,7 @@ public class LobbyView extends javax.swing.JPanel {
             }
         });
 
-        aiList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select Difficulty", "Easy", "Medium", "Hard" }));
+        aiList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select Difficulty", "Easy", "Moderate", "Hard" }));
         aiList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 aiListActionPerformed(evt);
@@ -256,7 +256,7 @@ public class LobbyView extends javax.swing.JPanel {
 
     private void challengeBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_challengeBActionPerformed
         if (userSelected.equals(null)) {
-            return;
+            //return;
         }
         if (userSelected.equals(controller.getUsername())) {
             displayErrorMessage("User cannot challenge self.");

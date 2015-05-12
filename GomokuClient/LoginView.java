@@ -242,9 +242,7 @@ public class LoginView extends javax.swing.JPanel {
         controller.setView(this);
     }
 
-    private void quitBActionPerformed(java.awt.event.ActionEvent evt) {
-        System.exit(0);
-    }
+   
 
     /**
      * Error message pop up box.
