@@ -26,6 +26,14 @@ public class Constants {
     public final String VERTICAL = "v";
     public final String DIAGONALFOWARD = "df";
     public final String DIAGONALBACK = "db";
+    public final String ONLINE = "online";
+    public final String  RESCIND = "rescind";
+   /* public final String  = "";
+    public final String  = "";
+    public final String  = "";
+    public final String  = "";
+    public final String  = "";
+*/
 
     
     
