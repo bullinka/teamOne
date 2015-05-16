@@ -192,7 +192,7 @@ public class Player implements Runnable {
         }
         else if (msg.equals(constant.ANONYMOUS)) {
             username = "Anonymous" + Integer.toString(controller.getAnonNum());
-            controller.sendMessageToAll(constant.ONLINE + " " + controller.getAllUserNames() + " " + username);
+            controller.sendMessageToAll(constant.ONLINE + " " + controller.getAllUserNames());
             controller.addPlayer(username);
             addToMatchMaking(username, this);
             return constant.SUCCESS + " " + controller.getAllUserNames();
