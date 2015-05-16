@@ -60,7 +60,7 @@ public class Frame extends javax.swing.JFrame {
                 .addContainerGap(66, Short.MAX_VALUE))
         );
 
-        mainPane.add(loginPane, "loginPane");
+        mainPane.add(loginPane, "login");
 
         javax.swing.GroupLayout lobbyPaneLayout = new javax.swing.GroupLayout(lobbyPane);
         lobbyPane.setLayout(lobbyPaneLayout);

@@ -22,6 +22,7 @@ import javax.swing.JFrame;
  * Revisions: 3/14/2015 - Class created by Karen Bullinger. 4/5/2015 - Added
  * createFrame() method. 4/11/2015 - Updated newServerConnection to return
  * boolean
+ * 5/16/2015 - Commenting code.
  */
 public class ClientModel implements Runnable {
 
@@ -39,8 +40,6 @@ public class ClientModel implements Runnable {
     public final int gameHeight = 30;
     public final int gameWidth = 30;
     private Thread worker;
-    private final String GAME = "game";
-    private final String LOBBY = "lobby";
     private int port = 27200;
     public boolean turn;
     public GameView gameView;
@@ -49,14 +48,14 @@ public class ClientModel implements Runnable {
     
     
     /**
-     * 
+     * Stores session username.
      */
     public void setUsername(String u){
         this.username = u;
     }
 
     /**
-     * 
+     * Tracks whether user is logged in or not.
      */
     public void setLoggedIn(boolean b){
         loggedIn = b;
@@ -73,8 +72,10 @@ public class ClientModel implements Runnable {
         frame = new Frame(login, lobby, game, leader);
     }
 
+    /**
+     * Initializes new game.
+     */
     public void createGameView() {
-        System.out.println("create new game.");
         frame.newGame();
     }
 
@@ -130,6 +131,11 @@ public class ClientModel implements Runnable {
         this.gameController = cont;
     }
 
+    /**
+     * Associates model with leaderboardController
+     * 
+     * @param cont 
+     */
     public void setLeaderboardController(LeaderboardController cont) {
         this.leaderController = cont;
     }
@@ -141,14 +147,16 @@ public class ClientModel implements Runnable {
      * @param user
      */
     public void loginLobbyTrans() {
-        loginController.closeView(LOBBY);
+        loginController.closeView(consts.LOBBY);
         lobbyController.setupIOStreams();
         frame.setTitle("Gomoku || " + username);
 
     }
-
+    /**
+     * Updates
+     * @param online 
+     */
     void updateLobbyPlayers(String[] online) {
-        //System.out.println(online instanceof String[]);
         lobbyController.updateOnlinePlayers(online);
 
     }
@@ -170,16 +178,24 @@ public class ClientModel implements Runnable {
     public void lobbyGameTrans() {
         frame.updateView(consts.GAME);
     }
-
+    
+    /**
+     * Transitions from game view to lobby view.
+     */
     public void gameLobbyTrans() {
         frame.updateView(consts.LOBBY);
         frame.newGame();
     }
-    
+    /**
+     * Transitions from leaderboard view to lobby view.
+     */
     public void statsLobbytrans() {
     	frame.updateView(consts.LOBBY);
     }
-
+    
+    /**
+     * Transitions from lobby view to leaderboard view.
+     */
     public void lobbyLeaderTrans() {
         frame.updateView(consts.LEADERBOARD);
         
@@ -192,6 +208,13 @@ public class ClientModel implements Runnable {
          leaderController.getStats();
 
     }
+    /**
+     * Transitions from game view to login view.
+     */
+     public void gameLoginTrans(){
+        frame.updateView(consts.LOGIN);
+        frame.newGame();
+    }
 
     /**
      * Started by openGameConnection. Creates new serverSocket and waits for a
@@ -201,25 +224,22 @@ public class ClientModel implements Runnable {
     public void run() {
         try {
             ss = new ServerSocket(port);
+            
             challengeeSocket = ss.accept();
+            
             gameController.setServerSocket(ss);
-            System.out.println("Accepting connection from opponent.");//
             gameController.setInputStream(challengeeSocket.getInputStream());
             gameController.setOutputStream(challengeeSocket.getOutputStream());
             gameController.setMainInputStreams(socket.getInputStream(), socket.getOutputStream());
             gameController.newGame();
             gameController.setTurnOrder(true);
             
-
         } catch (IOException ex) {
             Logger.getLogger(ClientModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-     public void gameLoginTrans(){
-        frame.updateView("loginPane");
-        frame.newGame();
-    }
+    
 
     /**
      * Connects to opponents server socket.
@@ -229,7 +249,7 @@ public class ClientModel implements Runnable {
     void connectToOpponent(String m) {
         try {
             opponent = new Socket(m, port);
-            System.out.println("Connect to opponnent");
+
             gameController.setSocket(opponent);
             gameController.setInputStream(opponent.getInputStream());
             gameController.setOutputStream(opponent.getOutputStream());
@@ -252,16 +272,20 @@ public class ClientModel implements Runnable {
     public void aiGameTrans(String difficulty) {
         gameController.setTurnOrder(true);
         gameController.setaiGame(true, difficulty);
-        frame.updateView(GAME);
+        frame.updateView(consts.GAME);
 
     }
-    
+    /**
+     * Pass stats to leaderboard view to update leaderboard.
+     * @param s 
+     */
     public void processStats(String[] s){
         leaderController.updateStatsBoard(s);
     }
-    
+    /**
+     * If connection is lost to server, transitions back to login view.
+     */
     public void lostConnection(){
-       // socket = null;
-        frame.updateView("loginPane");
+        frame.updateView(consts.LOGIN);
     }
 }

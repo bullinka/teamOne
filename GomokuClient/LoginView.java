@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
  * JVM Sources:
  *
  * Revisions: 3/14/2015 - View created by Karen Bullinger.
+ * 5/16/2015 - Added play anonymous feature.
  */
 public class LoginView extends javax.swing.JPanel {
 
@@ -174,13 +175,20 @@ public class LoginView extends javax.swing.JPanel {
     private LoginController controller;
     byte[] input = new byte[1024];
     char[] passwordArray;
-
+    
+    /**
+     * Launches AI game when difficult is selected from drop down list.
+     * @param evt 
+     */
     private void aiListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aiListActionPerformed
         String difficulty = (String) aiList.getSelectedItem();
         if (!difficulty.equals("Select Difficulty")) {
             controller.aiGame(difficulty);
         }    }//GEN-LAST:event_aiListActionPerformed
-
+    /**
+     * Initializes registration process when Register button is clicked.
+     * @param evt 
+     */
     private void registerBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBActionPerformed
         if (!ipTF.getText().equals("")) {
             controller.host = ipTF.getText();
@@ -228,11 +236,17 @@ public class LoginView extends javax.swing.JPanel {
             controller.setUsername(usernameTF.getText());
         }
     }//GEN-LAST:event_loginBActionPerformed
-
+    /**
+     * Closes application when quit button is pressed.
+     * @param evt 
+     */
     private void quitBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitBActionPerformed
         System.exit(0);
     }//GEN-LAST:event_quitBActionPerformed
-
+    /**
+     * Logs user in as an anonymous player when Play Anonymous button is pressed.
+     * @param evt 
+     */
     private void playAnonBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playAnonBActionPerformed
         if (!ipTF.getText().equals("")) {
             controller.host = ipTF.getText();

@@ -14,6 +14,7 @@ import java.util.logging.Logger;
  * Implemented login and register methods 4/11/2015 - Corrected login method to
  * not create a new connection when one is already established. Added string
  * constants for Login/Register methods.
+ * 5/16/205 - Added play anonymous feature
  */
 public class LoginController {
 
@@ -32,7 +33,7 @@ public class LoginController {
     String host = "127.0.0.1";
     int port = 54321;
     private Constants consts = new Constants();
-    
+
     /**
      * Default constructor.
      */
@@ -40,17 +41,16 @@ public class LoginController {
     }
 
     /**
-     * Gets username and password from view. Sends output stream to server
-     * containing user and password for authentication.
-     *
-     * @param user
-     * @param password
-     * @return true if login is success, false if fail
+     * Associates model with controller.
+     * @param m     ClientModel
      */
     public void setModel(ClientModel m) {
         model = m;
     }
-
+    /**
+     * Associates view with controller
+     * @param v    LoginView
+     */
     public void setView(LoginView v) {
         view = v;
     }
@@ -77,7 +77,7 @@ public class LoginController {
      *
      * @param user
      * @param password
-     * @return
+     * @return true if login succeeds
      */
     public boolean login(String user, int password) {
 
@@ -107,10 +107,10 @@ public class LoginController {
                         model.setLoggedIn(true);
                         model.loginLobbyTrans(); /*if login successful, transition*/
                         model.updateLobbyPlayers(msgArray);
-                        
+
                         return true;
                     } else if (msgArray[0].equals(consts.FAIL)) {
-                                               waiting = false;
+                        waiting = false;
                         view.displayErrorMessage("Username/password incorrect.");
                         return false;
                     } else {
@@ -131,7 +131,7 @@ public class LoginController {
      *
      * @param user
      * @param password
-     * @return
+     * @return true if registration succeeds
      */
     public boolean register(String user, int password) {
 
@@ -206,20 +206,24 @@ public class LoginController {
 
     }
 
-	/**
+    /**
      * Transfers GUI from login to game GUI
      */
-	public void aiGame(String difficulty) {
-		model.aiGameTrans(difficulty);
-		
-	}
-        
-    public String loginAnon(){
-        
+    public void aiGame(String difficulty) {
+        model.aiGameTrans(difficulty);
+
+    }
+    /**
+     * Logs in user with anonymous username and no password.
+     * Returns string with anonymous username.
+     * @return username
+     */
+    public String loginAnon() {
+
         boolean waiting = true;
-        
+
         String info = consts.ANONYMOUS;
-        
+
 
         try {
             dataOut.write(info.getBytes());
@@ -243,7 +247,7 @@ public class LoginController {
                         model.setLoggedIn(true);
                         model.loginLobbyTrans(); /*if login successful, transition*/
                         model.updateLobbyPlayers(msgArray);
-                        
+
                         return msgArray[1];
                     } else if (msgArray[0].equals(consts.FAIL)) {
                         waiting = false;
@@ -258,6 +262,6 @@ public class LoginController {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "";
-    
+
     }
 }

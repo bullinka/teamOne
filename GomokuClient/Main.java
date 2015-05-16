@@ -47,9 +47,7 @@ public class Main {
              GameModel gameModel = new GameModel();
              
              gameController.setGameModel(gameModel);
-             
-             gameModel.setController(gameController);
-
+            
              model.setLoginController(loginController);
              model.setLobbyController(lobbyController);
              model.setGameController(gameController);
