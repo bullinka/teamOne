@@ -128,7 +128,7 @@ public class Frame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainPane, 600, 600, 600)
+                .addComponent(mainPane, 500, 500, 500)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
