@@ -160,7 +160,7 @@ public class ServerView extends javax.swing.JFrame {
        {
             startServer();
             //System.out.println("serverStarted");
-            startServerButton.setText("Stop Server");
+            startServerButton.setText("Exit Server");
             serverUp = true;
        }
        else

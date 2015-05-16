@@ -95,7 +95,7 @@ public class ServerController implements Runnable {
     {
         serverSocket = null;
         model.disconnect();
-        //System.exit(0);
+        System.exit(0);
     }
     
     /**
