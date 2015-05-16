@@ -89,7 +89,6 @@ public class Player implements Runnable {
 
         try {
             out.write(msg);
-            //System.out.println(new String(msg));
         } catch (IOException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -110,7 +109,6 @@ public class Player implements Runnable {
                 //len will be -1 if disconnected from the server
                 if (len > 0) {
                     msg = new String(b, 0, len);
-                    //System.out.println(msg);
                     sendMessage(processMessage(msg));
                     controller.postMessage(msg + "\n");
                 } else {
@@ -123,12 +121,9 @@ public class Player implements Runnable {
         } catch (SocketException e) {
             connected = false;
         } catch (NullPointerException | IOException e) {
-            //Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, e);
             connected = false;
         }
         controller.removePlayer(this);
-        // }
-        //controller.removeConnection(this);
     }
 
     /**
@@ -148,23 +143,21 @@ public class Player implements Runnable {
      */
     @SuppressWarnings("ConvertToStringSwitch")
     public String processMessage(String msg) {
-        System.out.println(msg);
-        //String msg = removeFormattingCharacters(mssg); 
+        controller.postMessage(msg);
         String[] message = msg.split(" ");
         if (message[0].equals(constant.REGISTER)) {
-            controller.sendMessageToAll(constant.ONLINE + " " + controller.getAllUserNames() + " " + message[1]);
             if (controller.registerPlayer(message[1], message[2])) {
+                controller.sendMessageToAll(constant.ONLINE + " " + controller.getAllUserNames() + " " + message[1]);
                 controller.addPlayer(username = message[1]);
                 addToMatchMaking(message[1], this);
-                //System.out.println(username);
                 controller.addPlayerToStats(message[1]);
                 return constant.SUCCESS + " " + controller.getAllUserNames();
             } else {
                 return constant.FAIL;
             }
         } else if (message[0].equals(constant.LOGIN)) {
-            controller.sendMessageToAll(constant.ONLINE + " " + controller.getAllUserNames() + " " + message[1]);
             if (controller.loginPlayer(message[1], message[2])) {
+                controller.sendMessageToAll(constant.ONLINE + " " + controller.getAllUserNames() + " " + message[1]);
                 controller.addPlayer(username = message[1]);
                 addToMatchMaking(message[1], this);
                 return constant.SUCCESS + " " + controller.getAllUserNames();
@@ -197,7 +190,14 @@ public class Player implements Runnable {
         {
             return controller.getAllStatistics();
         }
-        //MYCODE
+        else if (message[0].equals(constant.ANONYMOUS)) {
+            username = "Anonymous" + Integer.toString(controller.getAnonNum());
+            controller.sendMessageToAll(constant.ONLINE + " " + controller.getAllUserNames() + " " + username);
+            controller.addPlayer(username);
+            addToMatchMaking(username, this);
+            return constant.SUCCESS + " " + controller.getAllUserNames();
+        }
+        
 
         return constant.FAIL;
     }
@@ -219,17 +219,4 @@ public class Player implements Runnable {
     public void notAvailable() {
         inGame = true;
     }
-    /*
-     public String removeFormattingCharacters(final String toBeEscaped) {
-     StringBuilder escapedBuffer = new StringBuilder();
-     for (int i = 0; i < toBeEscaped.length(); i++) {
-     if ((toBeEscaped.charAt(i) != '\n') && (toBeEscaped.charAt(i) != '\r') && (toBeEscaped.charAt(i) != '\t')) {
-     escapedBuffer.append(toBeEscaped.charAt(i));
-     }
-     }
-     String s = escapedBuffer.toString();
-     return s;//
-     // Strings.replaceSubString(s, "\"", "")
-     }
-     */
 }
