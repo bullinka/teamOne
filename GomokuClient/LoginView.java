@@ -193,7 +193,6 @@ public class LoginView extends javax.swing.JPanel {
             if (usernameTF.getText().contains(" ") || new String(passwordTF.getPassword()).contains(" ")) {
                 displayErrorMessage("Username/password cannot contain spaces.");
             } else {
-                System.out.println("Executing else.");
                 controller.newConnection();
                 char[] passwordArray = passwordTF.getPassword();
                 String passwordinput = new String(passwordArray);
@@ -256,7 +255,6 @@ public class LoginView extends javax.swing.JPanel {
     public void setController(LoginController cont) {
         this.controller = cont;
 
-        System.out.println(controller);
     }
 
     public void setControllerView() {
