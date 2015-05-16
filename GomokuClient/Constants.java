@@ -13,9 +13,19 @@ public class Constants {
     public final String LEADERBOARD = "leaderboard";
     public final String  LOBBY = "lobby";
     public final String GAME = "game";
-    /*public final String  = "";
+    public final String  ANONYMOUS = "anonymous";
+    public final String LOGIN  = "login";
+    public final String SUCCESS = "success";
+    public final String  FAIL = "fail";
+    public final String  REGISTER = "register";
+   /* public final String  = "";
+    public final String  = "";
+    public final String  = "";
     public final String  = "";
     public final String  = "";
     public final String  = "";
     public final String  = "";*/
+    
+    
+    
 }

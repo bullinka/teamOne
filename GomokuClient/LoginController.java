@@ -31,9 +31,9 @@ public class LoginController {
     private int serverPort = 54321;
     String host = "127.0.0.1";
     int port = 54321;
+    private Constants consts = new Constants();
 
     public LoginController() {
-        System.out.println("This is a login controller.");
     }
 
     /**
@@ -80,12 +80,11 @@ public class LoginController {
 
         boolean waiting = true;
         user = user.toLowerCase();
-        String info = "login " + user + " " + password;
+        String info = consts.LOGIN + " " + user + " " + password;
 
         try {
             dataOut.write(info.getBytes());
             dataOut.flush();
-            System.out.println("String sent: " + info);
         } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -99,8 +98,7 @@ public class LoginController {
                     String[] msgArray;
                     msgArray = returnedMsg.split("[ ]+");
 
-                    if (msgArray[0].equals(success)) {
-                        //  System.out.println("success");
+                    if (msgArray[0].equals(consts.SUCCESS)) {
                         waiting = false;
                         model.setUsername(user);
                         model.setLoggedIn(true);
@@ -110,7 +108,7 @@ public class LoginController {
                         //view.usernameTF.setText("");
                         //  to lobby view.*/
                         return true;
-                    } else if (msgArray[0].equals(fail)) {
+                    } else if (msgArray[0].equals(consts.FAIL)) {
                         // System.out.println("Login failed.");
                         waiting = false;
                         view.displayErrorMessage("Username/password incorrect.");
@@ -141,7 +139,7 @@ public class LoginController {
 
 
         user = user.toLowerCase();
-        String info = "register " + user + " " + password; //string to send to server
+        String info = consts.REGISTER + " " + user + " " + password; //string to send to server
 
 
         try {
@@ -159,13 +157,13 @@ public class LoginController {
                     returnedMsg = new String(msg, 0, len);
                     String[] msgArray;
                     msgArray = returnedMsg.split("[ ]+");
-                    if (msgArray[0].equals(success)) {
+                    if (msgArray[0].equals(consts.SUCCESS)) {
                         waiting = false;
                         model.setLoggedIn(true);
                         model.loginLobbyTrans();
                         model.updateLobbyPlayers(msgArray);
                         return true;
-                    } else if (msgArray[0].equals(fail)) {
+                    } else if (msgArray[0].equals(consts.FAIL)) {
 
                         view.displayErrorMessage("Registration failed.  Username taken.");
 
@@ -192,7 +190,6 @@ public class LoginController {
     public void newConnection() {
         if (connected == false) {
             try {
-                System.out.println(model instanceof ClientModel);
                 model.newServerConnection();
 
                 connected = true;
@@ -216,4 +213,50 @@ public class LoginController {
 		model.aiGameTrans(difficulty);
 		
 	}
+        
+    public String loginAnon(){
+        
+        boolean waiting = true;
+        
+        String info = consts.LOGIN + " " + consts.ANONYMOUS;
+
+        try {
+            dataOut.write(info.getBytes());
+            dataOut.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            while (waiting) {
+                int len = dataIn.read(msg);
+
+                if (len > 0) {
+                    returnedMsg = new String(msg, 0, len);
+                    String[] msgArray;
+                    msgArray = returnedMsg.split("[ ]+");
+
+                    if (msgArray[0].equals(consts.SUCCESS)) {
+                        waiting = false;
+                        model.setUsername(msgArray[1]);
+                        model.setLoggedIn(true);
+                        model.loginLobbyTrans(); /*if login successful, transition*/
+                        model.updateLobbyPlayers(msgArray);
+                        
+                        return msgArray[1];
+                    } else if (msgArray[0].equals(consts.FAIL)) {
+                        waiting = false;
+                        view.displayErrorMessage("Unable to login.");
+                        return "";
+                    } else {
+                    }
+
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "";
+    
+    }
 }

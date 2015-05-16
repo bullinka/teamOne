@@ -30,6 +30,21 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="ipAddressL" min="-2" max="-2" attributes="0"/>
+                  <Component id="portL" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="portTF" pref="71" max="32767" attributes="0"/>
+                  <Component id="ipTF" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="quitB" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+          </Group>
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
@@ -56,32 +71,21 @@
                       <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                       <Component id="registerB" min="-2" pref="73" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="loginB" min="-2" pref="73" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="orL" min="-2" max="-2" attributes="0"/>
-                          <Component id="loginB" min="-2" pref="73" max="-2" attributes="0"/>
+                          <Component id="aiList" min="-2" pref="119" max="-2" attributes="0"/>
+                          <Component id="playAnonB" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
-                      <Component id="aiList" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="152" max="-2" attributes="0"/>
+                      <Component id="orL" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="102" max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="ipAddressL" min="-2" max="-2" attributes="0"/>
-                  <Component id="portL" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="portTF" pref="71" max="32767" attributes="0"/>
-                  <Component id="ipTF" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="quitB" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -105,11 +109,13 @@
                   <Component id="registerB" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="loginB" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+              <EmptySpace pref="43" max="32767" attributes="0"/>
+              <Component id="playAnonB" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="orL" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="aiList" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="63" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="ipTF" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ipAddressL" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -208,6 +214,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Quit"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="playAnonB">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Play Anonymously"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="playAnonBActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
