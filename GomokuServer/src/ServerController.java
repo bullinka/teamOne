@@ -84,11 +84,8 @@ public class ServerController implements Runnable {
      */
     public void getConnections()
     {
-        //System.out.println("lsdfkajshadfljk");
         worker = new Thread(this);
-        //System.out.println("worker initialized");
         worker.start();
-        //System.out.println("worker started");
     }
     
     /**
@@ -245,5 +242,14 @@ public class ServerController implements Runnable {
     public String getAllStatistics()
     {
         return model.getAllStatistics();
+    }
+    
+   /**
+     * returns the number assigned to the end of each anonymous user
+     * @return 
+     */ 
+    public int getAnonNum()
+    {
+        return model.getAnonNum();
     }
 }

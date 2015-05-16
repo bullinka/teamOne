@@ -27,9 +27,6 @@ public class GomokuServer {
         view.setController(controller);
         
         view.setVisible(true);
-        
-       PlayerStatistics p = new PlayerStatistics();
-       p.addWin("Joseph");
        
     }
 }
