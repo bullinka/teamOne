@@ -18,6 +18,7 @@ public class Constants {
     public final String SUCCESS = "success";
     public final String  FAIL = "fail";
     public final String  REGISTER = "register";
+    public final String QUIT = "quit";
    /* public final String  = "";
     public final String  = "";
     public final String  = "";
