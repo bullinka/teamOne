@@ -26,6 +26,7 @@ public class Constants {
     public final String VERTICAL = "v";
     public final String DIAGONALFOWARD = "df";
     public final String DIAGONALBACK = "db";
+
     
     
     

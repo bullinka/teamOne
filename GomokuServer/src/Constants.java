@@ -20,5 +20,4 @@ public class Constants {
     public final String WIN = "win";
     public final String  LOSE = "lose";
     public final String GAME = "game";
-    public final String ANONYMOUS = "anonymous";
 }

@@ -19,7 +19,7 @@ public class ServerModel {
    private ServerController controller;
    private final RegisteredPlayers registeredPlayers;
    private final MatchMaking matchmaker;
-   private int anonymousNumber = 0;
+   
    private final PlayerStatistics playerStats;
    /**
     * sets number of connections to 0
@@ -208,15 +208,5 @@ public class ServerModel {
     public String getAllStatistics()
     {
         return playerStats.getAllStats();
-    }
-    
-    /**
-     * Increments and returns the number assigned to the end of each anonymous user
-     * @return 
-     */
-    public int getAnonNum()
-    {
-        anonymousNumber++;
-        return anonymousNumber;
     }
 }
