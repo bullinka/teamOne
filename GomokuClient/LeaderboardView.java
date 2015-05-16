@@ -144,8 +144,8 @@ Object[][] data = {};
            }
            else
              winLoss = ((double)win/((double)win+loss))*100.0;
-           
-         model.insertRow(topTenTable.getRowCount(), new Object[]{m[i], m[i+1], m[i+2], winLoss});
+            String wlRatio = winLoss + "";
+         model.insertRow(topTenTable.getRowCount(), new Object[]{m[i], m[i+1], m[i+2], wlRatio.substring(0,3)});
         }
        RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
        topTenTable.setRowSorter(sorter);
