@@ -168,7 +168,7 @@ public class GameView extends javax.swing.JPanel {
     }
     
     private void quitBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitBActionPerformed
-        System.exit(0);
+        controller.quit();
     }//GEN-LAST:event_quitBActionPerformed
 
     private void resignBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resignBActionPerformed
@@ -219,6 +219,7 @@ public class GameView extends javax.swing.JPanel {
             }
         }
     }
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel game;
     private javax.swing.JLabel gameNotificationL;
