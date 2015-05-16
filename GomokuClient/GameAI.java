@@ -4,7 +4,6 @@ import java.util.Random;
 
  */
 public class GameAI {
-    private GameBoard board;
     private int difficulty;
     private GameModel model;
     private Constants consts = new Constants();
@@ -18,26 +17,17 @@ public class GameAI {
      */
     public GameAI(String diff, GameController gc)
     {
-    	System.out.println(diff);
-        if(diff.equals("Easy")){
+    	
+        if(diff.equals(consts.EASY)){
         	difficulty = 0;
-        }else if(diff.equals("Moderate")){
+        }else if(diff.equals(consts.MODERATE)){
         	difficulty = 1;
-        }else if(diff.equals("Hard")){
+        }else if(diff.equals(consts.HARD)){
         	difficulty = 2;
         }
         model = new GameModel();
         controller = gc;
         model.setTurnOrder(false);
-    }
-    
-	/**
-	 * associates game board with the GameAI class
-	 * @param board the game board
-	 */
-    public void setGameBoard(GameBoard board)
-    {
-        this.board = board;
     }
     
    
@@ -50,7 +40,6 @@ public class GameAI {
     public void makeMove(int x, int y)
     {
     	if(difficulty == 0){
-    		System.out.println("Easy difficulty selected");
 	        int i = randomGenerator.nextInt(30);
 	        int j = randomGenerator.nextInt(30);
 	        boolean flag = model.isValid(i, j);
@@ -85,21 +74,21 @@ public class GameAI {
 		int max = 0;
 		if(horizontalSearch(x,y)> max){
 			max = horizontalSearch(x,y);
-			direction = "h";
+			direction = consts.HORIZONTAL;
 		}
 		if(verticalSearch(x,y) > max) {
 			max = verticalSearch(x,y);
-			direction = "v";
+			direction = consts.VERTICAL;
 		}
 		if(diagonalFowardSearch(x,y)> max){
 			max = diagonalFowardSearch(x,y);
-			direction = "df";
+			direction = consts.DIAGONALFOWARD;
 		}
 		if(diagonalBackSearch(x,y)> max){
 			max = diagonalBackSearch(x,y);
-			direction = "db";
+			direction = consts.DIAGONALBACK;
 		}
-		System.out.println(direction);
+		
 		
 		
 		aiMakeMove(x,y,direction);
@@ -120,7 +109,7 @@ public class GameAI {
 	{
 		boolean flag = true;
 		int i = x - 1, j = y;
-		if(dir.equals("h")){
+		if(dir.equals(consts.HORIZONTAL)){
 			while ( i >= 0 && model.getBoardValue(i, y) == 1) {
 				i--;
         	}
@@ -143,7 +132,7 @@ public class GameAI {
 		}
 		i = x;
 		j = y-1;
-		if(dir.equals("v")){
+		if(dir.equals(consts.VERTICAL)){
 			while ( j >= 0 && model.getBoardValue(i, j) == 1) {
 				j--;
         	}
@@ -168,7 +157,7 @@ public class GameAI {
 		i = x +1;
 		j = y - 1;
 		
-		if(dir.equals("df")){
+		if(dir.equals(consts.DIAGONALFOWARD)){
 			while ( j >= 0 && i < 30 && model.getBoardValue(i, j) == 1) {
 				j--;
 				i++;
@@ -196,7 +185,7 @@ public class GameAI {
 		i = x - 1;
 		j = y - 1;
 		
-		if(dir.equals("db")){
+		if(dir.equals(consts.DIAGONALBACK)){
 			while ( j >= 0 && i >= 0 && model.getBoardValue(i, j) == 1) {
 				j--;
 				i--;
@@ -222,7 +211,6 @@ public class GameAI {
 		}
 		
 		if(flag){
-			System.out.println("Easy difficulty selected");
 	        i = randomGenerator.nextInt(30);
 	        j = randomGenerator.nextInt(30);
 	        boolean valid = model.isValid(i, j);
@@ -253,19 +241,19 @@ public class GameAI {
 		if(rand<3){
 			if(horizontalSearch(x,y)> max){
 				max = horizontalSearch(x,y);
-				direction = "h";
+				direction = consts.HORIZONTAL;
 			}
 			if(verticalSearch(x,y) > max) {
 				max = verticalSearch(x,y);
-				direction = "v";
+				direction = consts.VERTICAL;
 			}
 			if(diagonalFowardSearch(x,y)> max){
 				max = diagonalFowardSearch(x,y);
-				direction = "df";
+				direction = consts.DIAGONALFOWARD;
 			}
 			if(diagonalBackSearch(x,y)> max){
 				max = diagonalBackSearch(x,y);
-				direction = "db";
+				direction = consts.DIAGONALBACK;
 			}
 		}
 		
@@ -295,7 +283,6 @@ public class GameAI {
 	 */
 	 private int horizontalSearch(int x, int y) {
 	        int result = 1;
-	        boolean flag = false;
 	        int i = x - 1;
 
 	        while ( i >= 0 && model.getBoardValue(i, y) == 2) {
@@ -310,9 +297,6 @@ public class GameAI {
 	            i++;
 	        }
 
-	        if (result >= 5) {
-	            flag = true;
-	        }
 	        return result;
 	    }
 	 

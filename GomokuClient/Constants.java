@@ -19,13 +19,13 @@ public class Constants {
     public final String  FAIL = "fail";
     public final String  REGISTER = "register";
     public final String QUIT = "quit";
-   /* public final String  = "";
-    public final String  = "";
-    public final String  = "";
-    public final String  = "";
-    public final String  = "";
-    public final String  = "";
-    public final String  = "";*/
+    public final String EASY = "Easy";
+    public final String MODERATE = "Moderate";
+    public final String HARD = "Hard";
+    public final String HORIZONTAL  = "h";
+    public final String VERTICAL = "v";
+    public final String DIAGONALFOWARD = "df";
+    public final String DIAGONALBACK = "db";
     
     
     

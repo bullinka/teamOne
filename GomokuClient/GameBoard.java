@@ -1,4 +1,4 @@
-import java.util.Arrays;
+
 
 /**
  * Team One Gomoku CSCE 320 - Spring 2015 3/16/2015 Java - JVM Sources:
@@ -8,16 +8,13 @@ import java.util.Arrays;
 public class GameBoard {
 
     private final int[][] board;
-    private final int NOTPLAYED = 0;
-    private final int PLAYERONE = 1;
-    private final int PLAYERTWO = 2;
     private boolean turnOrder;
 
     /**
      * GameBoard constructor. Passes in dimensions of the board.
      *
-     * @param x
-     * @param y
+     * @param x The desired Horizontal Size
+     * @param y The desired Vertical Size
      */
     public GameBoard(int x, int y) {
         board = new int[x][y];
@@ -29,6 +26,10 @@ public class GameBoard {
         turnOrder = true;
     }
 
+    /**
+     * The Default constructor initializes the board array with dimensions
+     * 30X30 with 0 in every value initializes the turn order.
+     */
     public GameBoard() {
         board = new int[30][30];
         for (int i = 0; i < 30; i++) {
@@ -39,10 +40,18 @@ public class GameBoard {
         turnOrder = true;
     }
 
+    /**
+     * Sets turnOrder
+     * @param to The desired turn.
+     */
     public void setTurnOrder(boolean to) {
         turnOrder = to;
     }
 
+    /**
+     * Gets turn order
+     * @return turnorder
+     */
     public boolean getTurnOrder() {
         return turnOrder;
     }
@@ -74,16 +83,17 @@ public class GameBoard {
     /**
      * Returns the representation of the gameBoard
      *
-     * @return
+     * @return Returns the Board.
      */
     public int[][] getBoard() {
         return board;
     }
 
     /**
-     * Returns if there is a five in a row on the board.
+     * Returns if there is a five in a row on the board for
+     * the user.
      *
-     * @return
+     * @return true if there is five 1s in a row. False if not. 
      */
     public boolean isFiveInARowSelf(int x, int y) {
 
@@ -100,6 +110,12 @@ public class GameBoard {
         }
     }
 
+    /**
+     * Returns if there is a five in a row on the board for
+     * the opponent.
+     *
+     * @return true if there is five 2s in a row. False if not. 
+     */
     public boolean isFiveInARowOpponent(int x, int y) {
 
         if (horizontalSearch(x, y, 2)) {
@@ -115,6 +131,13 @@ public class GameBoard {
         }
     }
 
+    /**
+     * Checks diagonal from current coordinate for five zs in a row. 
+     * @param x Current horizontal coordinate
+     * @param y Current Vertical coordinate
+     * @param z Value checking for
+     * @return true if five zs in a row. false if not
+     */
     private boolean diagonalBackSearch(int x, int y, int z) {
         int count = 0;
         int result = 1;
@@ -143,6 +166,13 @@ public class GameBoard {
         return flag;
     }
 
+    /**
+     * Checks diagonal from current coordinate for five zs in a row. 
+     * @param x Current horizontal coordinate
+     * @param y Current Vertical coordinate
+     * @param z Value checking for
+     * @return true if five zs in a row. false if not
+     */
     private boolean diagonalFowardlSearch(int x, int y, int z) {
         int count = 0;
         int result = 1;
@@ -162,7 +192,6 @@ public class GameBoard {
             result++;
             i++;
             j--;
-            //System.out.println()
         }
 
         if (result >= 5) {
@@ -171,6 +200,13 @@ public class GameBoard {
         return flag;
     }
 
+    /**
+     * Checks vertical from current coordinate for five zs in a row. 
+     * @param x Current horizontal coordinate
+     * @param y Current Vertical coordinate
+     * @param z Value checking for
+     * @return true if five zs in a row. false if not
+     */
     private boolean verticalSearch(int x, int y, int z) {
         int count = 0;
         int result = 1;
@@ -196,6 +232,13 @@ public class GameBoard {
         return flag;
     }
 
+    /**
+     * Checks horizontal from current coordinate for five zs in a row. 
+     * @param x Current horizontal coordinate
+     * @param y Current Vertical coordinate
+     * @param z Value checking for
+     * @return true if five zs in a row. false if not
+     */
     private boolean horizontalSearch(int x, int y, int z) {
         int count = 0;
         int result = 1;
@@ -221,20 +264,11 @@ public class GameBoard {
         return flag;
     }
 
-    public void printBoard() {
-        for (int i = 0; i < 30; i++) {
-            for (int k = 0; k < 30; k++) {
-                System.out.print(board[i][k]);
-            }
-            System.out.println();
-        }
-    }
-
     /**
      * Checks to see if a selected move is a valid move.
      *
-     * @param x
-     * @param y
+     * @param x inputed horizontal component
+     * @param y inputed vertical component
      */
     public boolean validate(int x, int y) {
         if (board[x][y] == 0) {
@@ -244,6 +278,9 @@ public class GameBoard {
         }
     }
 
+    /**
+     * Resets board by setting all values to 0.
+     */
     public void resetBoard() {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
@@ -252,18 +289,29 @@ public class GameBoard {
         }
     }
     
+    /**
+     * Checks if value at coordinates is 0.
+     * 
+     * @param x inputed horizontal component
+     * @param y inputed vertical component
+     * @return true if value at coordinates is 0, false if not.
+     */
     public boolean isValid(int x, int y) {
-		//System.out.println("Checking Validty" + board[x][y]);
 		if(board[x][y] == 0){
-			//System.out.println("Is Valid");
 			return true;
 		}else{
 		return false;
 		}
     }
 
+	/**
+	 * Gets the value of the board at specified coordinates. 
+	 * 
+	 * @param x inputed horizontal component
+     * @param y inputed vertical component
+	 * @return The value of the board at the coordinates. 
+	 */
 	public int getBoardValue(int x, int y) {
-		// TODO Auto-generated method stub
 		return board[x][y];
 	}
 }
