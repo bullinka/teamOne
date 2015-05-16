@@ -32,7 +32,10 @@ public class LoginController {
     String host = "127.0.0.1";
     int port = 54321;
     private Constants consts = new Constants();
-
+    
+    /**
+     * Default constructor.
+     */
     public LoginController() {
     }
 
@@ -102,15 +105,12 @@ public class LoginController {
                         waiting = false;
                         model.setUsername(user);
                         model.setLoggedIn(true);
-                        model.loginLobbyTrans(/*view.usernameTF.getText()*/); /*if login successful, transition*/
+                        model.loginLobbyTrans(); /*if login successful, transition*/
                         model.updateLobbyPlayers(msgArray);
-                        //view.passwordTF.setText("");
-                        //view.usernameTF.setText("");
-                        //  to lobby view.*/
+                        
                         return true;
                     } else if (msgArray[0].equals(consts.FAIL)) {
-                        // System.out.println("Login failed.");
-                        waiting = false;
+                                               waiting = false;
                         view.displayErrorMessage("Username/password incorrect.");
                         return false;
                     } else {
@@ -218,7 +218,8 @@ public class LoginController {
         
         boolean waiting = true;
         
-        String info = consts.LOGIN + " " + consts.ANONYMOUS;
+        String info = consts.ANONYMOUS;
+        
 
         try {
             dataOut.write(info.getBytes());

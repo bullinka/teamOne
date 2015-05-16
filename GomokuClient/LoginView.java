@@ -222,7 +222,6 @@ public class LoginView extends javax.swing.JPanel {
         if (usernameTF.getText().length() < 1 || passwordTF.getPassword().length < 1) {
             displayErrorMessage("Please enter a username and password.");
         } else {
-            System.out.println(controller);
             controller.newConnection();
             char[] passwordArray = passwordTF.getPassword();
             String passwordinput = new String(passwordArray);
@@ -242,6 +241,9 @@ public class LoginView extends javax.swing.JPanel {
         if (!portTF.getText().equals("")) {
             controller.port = Integer.parseInt(portTF.getText());
         }
+        
+        controller.newConnection();
+
         String userTemp = controller.loginAnon();
         controller.setUsername(userTemp);
     }//GEN-LAST:event_playAnonBActionPerformed
