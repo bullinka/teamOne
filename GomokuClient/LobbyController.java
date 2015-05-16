@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
  * Team One Gomoku CSCE 320 - Spring 2015 3/16/2015 Java - JVM Sources:
  *
  * Revisions: 3/14/2015 - Class created by Karen Bullinger.
+ * 5/15/2015 - Commenting code -- Karen Bullinger
  */
 public class LobbyController implements Runnable {
 
@@ -30,14 +31,13 @@ public class LobbyController implements Runnable {
     private Thread worker;
     private byte[] msg = new byte[1024];
     private String receivedMsg;
-    //Message processing constants
-    final private String ONLINE = "online";
-    final private String CHALLENGE = "challenge";
-    final private String STATS = "stats";
-    final private String ACCEPT = "accept";
-    final private String REJECT = "reject";
-    final private String RESCIND = "rescind";
     private boolean connected = true;
+    final private String CHALLENGE = "challenge";
+    final private String ONLINE = "online";
+    final private String ACCEPT = "accept";
+    final private String RESCIND = "rescind";
+    final private String REJECT = "reject";
+    private Constants consts = new Constants();
 
     /**
      * Sets model in controller.
@@ -48,7 +48,7 @@ public class LobbyController implements Runnable {
     }
 
     /**
-     *
+     * Associate lobby view with controller.
      * @param v
      */
     public void setLobbyView(LobbyView v) {
@@ -56,7 +56,11 @@ public class LobbyController implements Runnable {
         this.lobby = v;
 
     }
-
+    
+    /**
+     * Create new AI game with given difficulty.
+     * @param difficulty 
+     */
     public void aiGame(String difficulty) {
 		model.aiGameTrans(difficulty);
 		
@@ -135,7 +139,6 @@ public class LobbyController implements Runnable {
                 challengeReceived(name);
                 break;
             case ACCEPT:
-                System.out.println("Challenge accepted.");
                 challengeAccepted(msg[2]);
                 break;
             case REJECT:
@@ -209,7 +212,7 @@ public class LobbyController implements Runnable {
     public void sendChallenge(String challengee) {
 
         try {
-            String send = CHALLENGE + " " + challengee + " " + model.username;
+            String send = consts.CHALLENGE + " " + challengee + " " + model.username;
             dataOut.write(send.getBytes());
             dataOut.flush();
         } catch (IOException ex) {
@@ -229,7 +232,7 @@ public class LobbyController implements Runnable {
     public void sendAcceptResponse(String challengee) {
 
         try {
-            String accept = ACCEPT + " " + challengee + " " + model.username;
+            String accept = consts.ACCEPT + " " + challengee + " " + model.username;
             dataOut.write(accept.getBytes());
             dataOut.flush();
             model.createGameView();
@@ -251,7 +254,7 @@ public class LobbyController implements Runnable {
     public void sendRejectResponse(String challengee) {
 
         try {
-            String reject = REJECT + " " + challengee + " " + model.username;
+            String reject = consts.REJECT + " " + challengee + " " + model.username;
             dataOut.write(reject.getBytes());
             dataOut.flush();
             lobby.removeFromReceivedChallenges(challengee);
@@ -286,7 +289,7 @@ public class LobbyController implements Runnable {
     public void sendRescindResponse(DefaultListModel<String> sentModel) {
         try {
             while (!sentModel.isEmpty()) {
-                String reject = RESCIND + " " + sentModel.getElementAt(0) + " " + model.username;
+                String reject = consts.RESCIND + " " + sentModel.getElementAt(0) + " " + model.username;
                 dataOut.write(reject.getBytes());
                 dataOut.flush();
                 lobby.rescindFromSentChallenges(sentModel.getElementAt(0));
@@ -299,6 +302,9 @@ public class LobbyController implements Runnable {
 
     }
     
+    /**
+     * Triggers transition from lobby to leaderboard.
+     */
     public void lobbyLeaderTrans(){
         model.lobbyLeaderTrans();
         

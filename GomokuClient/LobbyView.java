@@ -1,17 +1,15 @@
 
+/**
+ * This class manages the lobby view.
+ * 
+ * Revisions:
+ * 5/16/2015 - Commenting code -- Karen Bullinger
+ */
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author Karen
- */
 public class LobbyView extends javax.swing.JPanel {
 
     DefaultListModel<String> onlineModel;
@@ -23,6 +21,7 @@ public class LobbyView extends javax.swing.JPanel {
 
     /**
      * Creates new form LobbyView
+     * Sets up list models for use in managing view data.
      */
     public LobbyView() {
 
@@ -30,17 +29,11 @@ public class LobbyView extends javax.swing.JPanel {
         receivedModel = new DefaultListModel<String>();
         sentModel = new DefaultListModel<String>();
 
-
         initComponents();
-
-        //onlinePlayersList.setPrototypeCellValue("Index 123567");
-        //challengesReceivedList.setPrototypeCellValue("Index 1234567");
-        //challengesSentList.setPrototypeCellValue("Index 1234567");
 
         onlinePlayersList.setModel(onlineModel);
         challengesReceivedList.setModel(receivedModel);
         challengesSentList.setModel(sentModel);
-
 
         onlinePlayersList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -53,8 +46,6 @@ public class LobbyView extends javax.swing.JPanel {
                 challengesReceivedListValueChanged(evt);
             }
         });
-
-
 
     }
 
@@ -79,12 +70,12 @@ public class LobbyView extends javax.swing.JPanel {
         onlineModel.clear();
         for (int i = 1; i < online.length; i++) {
             onlineModel.addElement(online[i]);
-            if(!receivedModel.contains(online[i-1])&&!receivedModel.isEmpty()){
-            	receivedModel.remove(i-1);
+            if (!receivedModel.contains(online[i - 1]) && !receivedModel.isEmpty()) {
+                receivedModel.remove(i - 1);
             }
-            
-            if(!sentModel.contains(online[i-1])&& !sentModel.isEmpty()){
-            	sentModel.remove(i-1);
+
+            if (!sentModel.contains(online[i - 1]) && !sentModel.isEmpty()) {
+                sentModel.remove(i - 1);
             }
         }
 
@@ -253,7 +244,11 @@ public class LobbyView extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * If a user is selected in the online players list, a challenge is sent
+     * to that player through the server.
+     * @param evt 
+     */
     private void challengeBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_challengeBActionPerformed
         if (userSelected.equals(null)) {
             //return;
@@ -275,9 +270,10 @@ public class LobbyView extends javax.swing.JPanel {
      */
     private void acceptBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptBActionPerformed
         String temp = userSelectedReceived;
-    	if(!temp.isEmpty()){
+        if (!temp.isEmpty()) {
         controller.sendAcceptResponse(temp);    }//GEN-LAST:event_acceptBActionPerformed
-}
+    }
+
     /**
      * Action listener for rejectB. Sends reject challenge response to server
      * via LobbyController.
@@ -296,11 +292,19 @@ public class LobbyView extends javax.swing.JPanel {
     private void quitBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitBActionPerformed
         System.exit(0);
     }//GEN-LAST:event_quitBActionPerformed
-
+    /**
+     * Transitions user from lobby view to leaderboard view where player
+     * statistics for all players can be seen.
+     * @param evt 
+     */
     private void leaderboardBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaderboardBActionPerformed
         controller.lobbyLeaderTrans();
     }//GEN-LAST:event_leaderboardBActionPerformed
 
+    /**
+     * Launches new AI game based on difficulty selected from drop down list.
+     * @param evt 
+     */
     private void aiListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aiListActionPerformed
         String difficulty = (String) aiList.getSelectedItem();
         if (!difficulty.equals("Select Difficulty")) {
