@@ -9,9 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 
 
 /**
@@ -19,6 +17,8 @@ import javax.swing.JOptionPane;
  *
  * Revisions: 3/14/2015 - Class created by Karen Bullinger.
  * 5/15/2015 - Commenting code -- Karen Bullinger
+ * 5/18/2015 - Commenting code, removing unused imports/variables, remove
+ *              print statements. -- Karen Bullinger
  */
 public class LobbyController implements Runnable {
 
@@ -88,7 +88,8 @@ public class LobbyController implements Runnable {
 
 
         } catch (IOException ex) {
-            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+            // Add error handling
         }
     }
 
@@ -104,7 +105,6 @@ public class LobbyController implements Runnable {
 
                 if (len > 0) {
                     receivedMsg = new String(msg, 0, len);
-                    //System.out.println("Message from server in LobbyController: " + receivedMsg);
                     String[] msgArray;
                     msgArray = receivedMsg.split("[ ]+");
 
@@ -216,7 +216,7 @@ public class LobbyController implements Runnable {
             dataOut.write(send.getBytes());
             dataOut.flush();
         } catch (IOException ex) {
-            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
             //need to add error handling
         }
     }
@@ -240,7 +240,8 @@ public class LobbyController implements Runnable {
             newChallengeGame();
             sendRescindResponse(lobby.getSentList());
         } catch (IOException ex) {
-            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+            // Add error handling
         }
     }
 
@@ -260,7 +261,7 @@ public class LobbyController implements Runnable {
             lobby.removeFromReceivedChallenges(challengee);
 
         } catch (IOException ex) {
-            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+           // Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
             //Add error handling
         }
 
@@ -296,7 +297,7 @@ public class LobbyController implements Runnable {
             }
 
         } catch (IOException ex) {
-            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+           // Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
             //Add error handling
         }
 
