@@ -382,7 +382,6 @@ public class GameController implements Runnable {
      */
     @Override
     public void run() {
-        System.out.println("Thread started");
         while (true) {
             try {
                 int len = dataIn.read(msg);
