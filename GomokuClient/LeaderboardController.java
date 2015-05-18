@@ -7,87 +7,82 @@ import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 /**
- * Team One Gomoku CSCE 320 - Spring 2015 3/16/2015 Java - JVM Sources:
+ * Team One Gomoku CSCE 320 - Spring 2015 3/16/2015 Java - JVM 
  *
  * Revisions: 3/14/2015 - Class created by Karen Bullinger.
+ * 5/9/2015 - Add getStats(), setupIOStreams(). -- Karen Bullinger
+ * 5/12/2015 - Create view transition method. -- Carl Derline
+ * 5/18/2015 - Commented code, removed print statements. -- Karen Bullinger
  */
-public class LeaderboardController implements Runnable {
+
+/**
+ * This class is responsibly for managing the leaderboard view and data.
+ */
+
+public class LeaderboardController {
 
     private LeaderboardView leaderboard;
     private ClientModel model;
-    private DataInputStream dataIn;
     private DataOutputStream dataOut;
-    private byte[] msg = new byte[1024];
-    private String receivedMsg;
-    private boolean waiting = true;
+    private DataInputStream dataIn;
 
+    /**
+     * Associates view with controller.
+     *
+     * @param view
+     */
     public void setView(LeaderboardView view) {
         this.leaderboard = view;
     }
 
+    /**
+     * Associates controller with model
+     *
+     * @param m
+     */
     public void setModel(ClientModel m) {
         this.model = m;
     }
 
+    /**
+     * Sets up input and output streams for contacting server.
+     *
+     * @param s
+     * @param o
+     */
     public void setIOStreams(InputStream s, OutputStream o) {
-        System.out.println("setting io streams in leader");
         dataIn = new DataInputStream(s);
-        System.out.println(dataIn);
         dataOut = new DataOutputStream(o);
     }
 
+    /**
+     * Request stats from server.
+     */
     public void getStats() {
         try {
             dataOut.write("stats".getBytes());
             dataOut.flush();
-            System.out.println("Waiting for incoming message");
-         
-            /*while (waiting) {
-            int len = dataIn.read(msg);
-            System.out.println("Receive message");
-
-                if (len > 0) {
-                    receivedMsg = new String(msg, 0, len);
-                    
-                    String[] stats;
-                    stats = receivedMsg.split("[ ]+");
-                    
-                    //updateStatsBoard(stats);
-                    for( int i = 1; i < stats.length; i=i+3){
-                         System.out.println( stats[i] + " " + stats[i+1] + " " + stats[i+2]);
-                    }
-                waiting = false;
-                }
-            }*/
-            }
-            
-        
-                  catch (IOException ex) {
-            Logger.getLogger(LeaderboardController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            //Logger.getLogger(LeaderboardController.class.getName()).log(Level.SEVERE, null, ex);
+            //Add error handling
         }
     }
-    
 
-
-    @Override
-        public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
-    public void updateStatsBoard(String[] m){
-        for( int i = 1; i < m.length; i=i+3){
-            System.out.println( m[i] + " " + m[i+1] + " " + m[i+2]);
-            
-            
-        }
+    /**
+     * Triggers Leaderboard update.
+     *
+     * @param m
+     */
+    public void updateStatsBoard(String[] m) {
         leaderboard.updateTable(m);
-        
     }
-    
-    public void statsLobbyTrans()
-    {
-    	model.statsLobbytrans();
+
+    /**
+     * Transitions user from Leaderboard view to Lobby view.
+     */
+    public void statsLobbyTrans() {
+        model.statsLobbytrans();
     }
 }
