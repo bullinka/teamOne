@@ -1,17 +1,28 @@
+
 /**
  * This class manages the card layout and all necessary views.
+ * 
+ * Revision history
+ * 
+ * 5/7/2015 - added leaderboard view to constructor, attempted groupLayout
+ * and BorderLayout. Scrapped them for cardLayout.
+ * 5/9/2015 - adjusted sizes of mainPane and gameView.
+ * 5/11/2015 - changed resetGame() to newGame(), and had it reset the board
+ * rather than creating a new gameView.
+ * 5/16/2015 - adjusted main panel size.
+ * 5/18/2015 - added method comments, resized leaderboard view.
  */
 
 import java.awt.CardLayout;
-
-/**
- *
- * @author Karen
- */
 public class Frame extends javax.swing.JFrame {
-    
+
     /**
-     * Creates new form frame
+     * Creates new form frame to hold all panels.
+     *
+     * @param login the login view
+     * @param lobby the lobby view
+     * @param game the game view
+     * @param leader the leaderboard view
      */
     public Frame(LoginView login, LobbyView lobby, GameView game, LeaderboardView leader) {
         loginView1 = login;
@@ -22,7 +33,6 @@ public class Frame extends javax.swing.JFrame {
         this.setTitle("Gomoku");
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -142,23 +152,35 @@ public class Frame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-     public void updateView(String l) {
-        CardLayout card = (CardLayout)mainPane.getLayout();
+    /**
+     * Updates the view with the panel that is passed in.
+     *
+     * @param l the name of the card that is passed in.
+     */
+    public void updateView(String l) {
+        CardLayout card = (CardLayout) mainPane.getLayout();
         card.show(mainPane, l);
-        
     }
 
+    /**
+     * Updates the list of online players.
+     *
+     * @param online the array of online players.
+     */
     void updateOnlinePlayers(String[] online) {
         lobbyView1.updateOnlinePlayerList(online);
     }
-    
-    public void newGame()
-    {
+
+    /**
+     * Calls resetBoard in gameView, which resets the board to its original
+     * state.
+     */
+    public void newGame() {
         //gameView1 = new GameView(30, 30);
         gameView1.resetBoard();
     }
- 
-   
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel PanThree;
     private javax.swing.JPanel gamePanel;
@@ -171,6 +193,5 @@ public class Frame extends javax.swing.JFrame {
     private GameView gameView1;
     private LeaderboardView leaderView1;
     private javax.swing.JPanel leaderPanel;
-	
-  
+
 }
