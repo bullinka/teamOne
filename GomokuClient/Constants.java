@@ -1,4 +1,8 @@
-
+/**
+ * Constants class. Manages all key terms sent and received by the server,
+ * key terms sent and received by the peer to peer connection, and any keywords
+ * we used in our code.
+ */
 public class Constants {
 
     public final String MOVE = "move";
@@ -29,10 +33,4 @@ public class Constants {
     public final String DIAGONALBACK = "db";
     public final String ONLINE = "online";
     public final String RESCIND = "rescind";
-    /* public final String  = "";
-     public final String  = "";
-     public final String  = "";
-     public final String  = "";
-     public final String  = "";
-     */
 }
