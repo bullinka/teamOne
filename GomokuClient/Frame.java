@@ -109,14 +109,14 @@ public class Frame extends javax.swing.JFrame {
             leaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leaderPanelLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
-				.addComponent(leaderView1, 400,400,400)
+				.addComponent(leaderView1, 450,450,450)
                 .addContainerGap(551, Short.MAX_VALUE))
         );
         leaderPanelLayout.setVerticalGroup(
             leaderPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leaderPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(leaderView1, 400,400,400)
+                .addComponent(leaderView1, 500,500,500)
                 .addContainerGap(375, Short.MAX_VALUE))
         );
 
