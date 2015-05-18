@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
  * JVM
  *
  * Revisions: 3/14/2015 - View created by Karen Bullinger.
+ * 5/9/2015 - Edited layout of view. Added action listener to quitB. -- Karen Bullinger
  * 5/16/2015 - Added play anonymous feature. - Karen Bullinger
  * 5/18/2015 - Adjusted view to maintain layout and removed unused imports.
  *                  - Karen Bullinger
