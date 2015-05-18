@@ -7,8 +7,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
 
@@ -16,6 +14,10 @@ import javax.swing.DefaultListModel;
  * Team One Gomoku CSCE 320 - Spring 2015 3/16/2015 Java - JVM Sources:
  *
  * Revisions: 3/14/2015 - Class created by Karen Bullinger.
+ * 5/5/2015 - Added array bounds checking to processMessage method.  -- Karen Bullinger
+ * 5/7/2015 - Added stats handling in proccessMessage method. -- Karen Bullinger
+ * 5/9/2015 - Added aiGame() to facilitate playing against ai. - Jon Julius
+ * 5/9/2015 - Add handling for when server goes off line  in run(). -- Karen Bullinger
  * 5/15/2015 - Commenting code -- Karen Bullinger
  * 5/18/2015 - Commenting code, removing unused imports/variables, remove
  *              print statements. -- Karen Bullinger
