@@ -1,30 +1,34 @@
 
 import java.awt.event.ActionEvent;
-
 import javax.swing.JTable;
-import javax.swing.JViewport;
 import javax.swing.RowSorter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 /**
- * Team One
- * GUI Implementation
- * Gomoku
- * CSCE 320 - Spring 2015
- * 3/16/2015
- * Java - JVM
- * Sources:
- * 
- * Revisions:
- * 3/14/2015 - View created by Karen Bullinger.
+ * Team One GUI Implementation Gomoku CSCE 320 - Spring 2015 3/16/2015 Java -
+ * JVM Sources:
+ *
+ * Revisions: 3/14/2015 - View created by Karen Bullinger.
+ * 5/6/2015 - Added updateTable() method, formatted view, added JTable and model. -- Karen Bullinger
+ * 5/8/2015 - Added win/loss % column to table with calculation. -- Karen Bullinger
+ * 5/8/2015 - Fixed win/loss calculation.  Added action listeners to buttons. -- Carl Derline
+ * 5/12/2015 - Resolved duplicate entries in JTable.
+ * 5/16/2015 - Truncated calculated win/loss%. -- Jon Julius.
+ * 5/18/2015 - Commenting, removed unused variables/imports. -- Karen Bullinger
+ */
+
+/*
+ * This class is responsible for arranging and maintain the leaderboard view.
  */
 public class LeaderboardView extends javax.swing.JPanel {
-DefaultTableModel model;
-LeaderboardController controller;
-String[] columnNames = {"Username","Wins","Losses", "Win/Loss %"};
-Object[][] data = {};
+
+    DefaultTableModel model;
+    LeaderboardController controller;
+    String[] columnNames = {"Username", "Wins", "Losses", "Win/Loss %"};
+    Object[][] data = {};
+
     /**
      * Creates new form LeaderboardView
      */
@@ -56,14 +60,12 @@ Object[][] data = {};
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 quitBActionPerformed(evt);
             }
-
-			
         });
-        
+
         model = new DefaultTableModel(data, columnNames);
         topTenTable = new JTable(model);
 
-        
+
         topTenTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         topTenTable.setRowHeight(25);
         topTenTable.setShowHorizontalLines(true);
@@ -72,7 +74,7 @@ Object[][] data = {};
         topTenTable.setUpdateSelectionOnSort(false);
         topTenTable.setVerifyInputWhenFocusTarget(false);
         board.getViewport().add(topTenTable);
-        
+
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("Leaderboard");
@@ -88,29 +90,28 @@ Object[][] data = {};
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(quitB)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lobbyB))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(board, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
+                .addGroup(layout.createSequentialGroup()
+                .addComponent(quitB)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lobbyB))
+                .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(board, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap()));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
                 .addGap(8, 8, 8)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -119,40 +120,61 @@ Object[][] data = {};
                 .addComponent(board, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(quitB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lobbyB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
+                .addComponent(quitB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lobbyB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))));
     }// </editor-fold>//GEN-END:initComponents
-    
+
+    /**
+     * Lobby Button action performed. Transitions user to lobby view when
+     * clicked.
+     *
+     * @param evt
+     */
     private void lobbyBActionPerformed(ActionEvent evt) {
-		controller.statsLobbyTrans();	
-	}
-    
-    private void quitBActionPerformed(ActionEvent evt) {
-		System.exit(0);
-		
-	}
-    
-    public void updateTable(String[] m){
-    	    model.setRowCount(0);
-        double winLoss;
-       for(int i = 1; i < m.length ; i+=3){
-           int win = Integer.parseInt(m[i+1]);
-           int loss = Integer.parseInt(m[i+2]);
-           if(win == 0 && loss == 0){
-            winLoss = 0.0;
-           }
-           else
-             winLoss = ((double)win/((double)win+loss))*100.0;
-            String wlRatio = winLoss + "";
-         model.insertRow(topTenTable.getRowCount(), new Object[]{m[i], m[i+1], m[i+2], wlRatio.substring(0,3)});
-        }
-       RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
-       topTenTable.setRowSorter(sorter);
-    
+        controller.statsLobbyTrans();
     }
-    public void setController(LeaderboardController cont){
-     this.controller = cont;
+
+    /**
+     * Quit Button action performed. Closes application when clicked.
+     *
+     * @param evt
+     */
+    private void quitBActionPerformed(ActionEvent evt) {
+        System.exit(0);
+
+    }
+
+    /**
+     * Updates leaderboard table with data in the supplied strng array.
+     *
+     * @param m
+     */
+    public void updateTable(String[] m) {
+        model.setRowCount(0);
+        double winLoss;
+        for (int i = 1; i < m.length; i += 3) {
+            int win = Integer.parseInt(m[i + 1]);
+            int loss = Integer.parseInt(m[i + 2]);
+            if (win == 0 && loss == 0) {
+                winLoss = 0.0;
+            } else {
+                winLoss = ((double) win / ((double) win + loss)) * 100.0;
+            }
+            String wlRatio = winLoss + "";
+            model.insertRow(topTenTable.getRowCount(), new Object[]{m[i], m[i + 1], m[i + 2], wlRatio.substring(0, 3)});
+        }
+        RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
+        topTenTable.setRowSorter(sorter);
+
+    }
+    
+    /**
+     * Associates view with controller.
+     * @param cont 
+     */
+
+    public void setController(LeaderboardController cont) {
+        this.controller = cont;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
