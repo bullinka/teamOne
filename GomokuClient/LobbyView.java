@@ -1,15 +1,20 @@
- 
-/**
- * This class manages the lobby view.
- * 
- * Revisions:
- * 5/16/2015 - Commenting code -- Karen Bullinger
- */
+
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 
+/**
+ * This class manages the lobby view.
+ * 
+ * Revisions:
+ * 5/4/2015 - Add Leaderboard button and action listener. -- Karen Bullinger
+ * 5/9/2015 - Removed unused imports.  Commented code.  Changed design. -- Karen Bullinger
+ * 5/9/2015 - Fix bug that allows user to challenge previously selected player even if not online.  -- Jon Julius
+ * 5/9/2015 - Add AI select drop down list. -- Karen Bullinger
+ * 5/12/2015 - Changed wording in AI list.  Edited AI list action performed.
+ * 5/16/2015 - Commenting code -- Karen Bullinger
+ */
 public class LobbyView extends javax.swing.JPanel {
 
     DefaultListModel<String> onlineModel;
@@ -20,8 +25,8 @@ public class LobbyView extends javax.swing.JPanel {
     String userSelectedReceived = "";
 
     /**
-     * Creates new form LobbyView
-     * Sets up list models for use in managing view data.
+     * Creates new form LobbyView Sets up list models for use in managing view
+     * data.
      */
     public LobbyView() {
 
@@ -244,10 +249,12 @@ public class LobbyView extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
     /**
-     * If a user is selected in the online players list, a challenge is sent
-     * to that player through the server.
-     * @param evt 
+     * If a user is selected in the online players list, a challenge is sent to
+     * that player through the server.
+     *
+     * @param evt
      */
     private void challengeBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_challengeBActionPerformed
         if (userSelected.equals(null)) {
@@ -295,7 +302,8 @@ public class LobbyView extends javax.swing.JPanel {
     /**
      * Transitions user from lobby view to leaderboard view where player
      * statistics for all players can be seen.
-     * @param evt 
+     *
+     * @param evt
      */
     private void leaderboardBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaderboardBActionPerformed
         controller.lobbyLeaderTrans();
@@ -303,7 +311,8 @@ public class LobbyView extends javax.swing.JPanel {
 
     /**
      * Launches new AI game based on difficulty selected from drop down list.
-     * @param evt 
+     *
+     * @param evt
      */
     private void aiListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aiListActionPerformed
         String difficulty = (String) aiList.getSelectedItem();
@@ -389,6 +398,11 @@ public class LobbyView extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, errorMessage);
     }
 
+    /**
+     * Returns list model for sentList..
+     *
+     * @return
+     */
     public DefaultListModel<String> getSentList() {
         return sentModel;
     }
