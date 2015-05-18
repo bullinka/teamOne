@@ -19,15 +19,12 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author PLUCSCE
+ * @author Joseph Bowley
  */
 public class PlayerStatistics {
     
-    private final Map<String, String> stats = new HashMap<String, String>();
+    private final Map<String, String> stats = new HashMap<>();
     private final File f = new File("stats.gmk");
-    private FileWriter fw;
-    private PrintWriter pw;
-    private String data;
     
     /**
      * PlayerStatistics constructor

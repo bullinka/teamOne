@@ -2,12 +2,12 @@
 
 /*
  * A view that represents the server classes
- * Displays messages sent to server for debuggin purposes
+ * Displays messages sent to server for debugging purposes
  */
 
 /**
  *
- * @author PLUCSCE
+ * @author Joseph Bowley
  */
 public class ServerView extends javax.swing.JFrame {
     
@@ -84,7 +84,6 @@ public class ServerView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollBar1 = new javax.swing.JScrollBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         playersTA = new javax.swing.JTextArea();
         startServerButton = new javax.swing.JButton();
@@ -102,6 +101,7 @@ public class ServerView extends javax.swing.JFrame {
 
         startServerButton.setText("Start Server");
         startServerButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startServerButtonActionPerformed(evt);
             }
@@ -176,7 +176,6 @@ public class ServerView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField playerNumberTF;
     private javax.swing.JTextArea playersTA;

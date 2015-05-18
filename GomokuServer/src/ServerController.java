@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author PLUCSCE
+ * @author Joseph Bowley
  */
 public class ServerController implements Runnable {
     //fields

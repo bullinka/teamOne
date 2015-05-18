@@ -16,6 +16,10 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * 
+ * @author Carl Derline
+ */
 public class RegisteredPlayers 
 {
     @SuppressWarnings("Convert2Diamond")

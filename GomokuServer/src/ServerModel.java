@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author PLUCSCE
+ * @author Joseph Bowley
  */
 public class ServerModel {
    private final Constants constant = new Constants(); 
@@ -110,7 +110,7 @@ public class ServerModel {
     */
    public void disconnect()
    {
-       allPlayers = new ArrayList<Player>();
+       allPlayers = new ArrayList<>();
        numConnections = 0;
    }
    
@@ -121,10 +121,9 @@ public class ServerModel {
    public String getAllUsernames()
    {
        String allNames = new String();
-       for(int i = 0; i<allPlayers.size();i++)
-       {
-           if(allPlayers.get(i).getUsername() != null){
-                allNames = allNames + " " + allPlayers.get(i).getUsername();
+       for (Player allPlayer : allPlayers) {
+           if (allPlayer.getUsername() != null) {
+               allNames = allNames + " " + allPlayer.getUsername();
            }
        }
        return allNames;

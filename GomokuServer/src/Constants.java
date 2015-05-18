@@ -4,7 +4,7 @@
 
 /**
  *
- * @author PLUCSCE
+ * @author Joseph Bowley
  */
 public class Constants {
     public final String REGISTER = "register";
@@ -18,7 +18,7 @@ public class Constants {
     public final String RESCIND = "rescind";
     public final String STATS = "stats";
     public final String WIN = "win";
-    public final String  LOSE = "lose";
+    public final String LOSE = "lose";
     public final String GAME = "game";
     public final String ANONYMOUS = "anonymous";
 }
