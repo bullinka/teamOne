@@ -6,15 +6,20 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 /**
+ * 
  * Team One Gomoku CSCE 320 - Spring 2015 3/16/2015 Java - JVM Sources:
  *
- * Revisions: 3/14/2015 - Class created by Karen Bullinger. 4/5/2015 -
- * Implemented login and register methods 4/11/2015 - Corrected login method to
- * not create a new connection when one is already established. Added string
+ * Revisions: 3/14/2015 - Class created by Karen Bullinger. 
+ * 4/5/2015 - Implemented login and register methods 
+ * 4/11/2015 - Corrected login method to not create a new connection when one is already established. Added string
  * constants for Login/Register methods.
- * 5/16/205 - Added play anonymous feature
+ * 5/16/2015 - Added play anonymous feature -- Karen Bullinger
+ * 5/18/2015 - Commenting, removed unused imports and variables.
+ */
+
+/*
+ * This class is responsible for controlling login and registration processes.
  */
 public class LoginController {
 
@@ -26,8 +31,6 @@ public class LoginController {
     private DataOutputStream dataOut;
     private byte[] msg = new byte[1024];
     private String returnedMsg;
-    private String success = "success";
-    private String fail = "fail";
     public boolean connected = false;
     private int serverPort = 54321;
     String host = "127.0.0.1";
@@ -42,14 +45,17 @@ public class LoginController {
 
     /**
      * Associates model with controller.
-     * @param m     ClientModel
+     *
+     * @param m ClientModel
      */
     public void setModel(ClientModel m) {
         model = m;
     }
+
     /**
      * Associates view with controller
-     * @param v    LoginView
+     *
+     * @param v LoginView
      */
     public void setView(LoginView v) {
         view = v;
@@ -119,8 +125,10 @@ public class LoginController {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            // Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            //add error handling
         }
+
         return false;
     }
 
@@ -146,7 +154,8 @@ public class LoginController {
             dataOut.write(info.getBytes()); //send registration to server
             dataOut.flush();
         } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            //Add error handling
         }
 
         while (waiting) {
@@ -176,7 +185,8 @@ public class LoginController {
 
                 }
             } catch (IOException ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                // Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                // Add error handling
             }
         }
 
@@ -200,7 +210,8 @@ public class LoginController {
                 dataOut = new DataOutputStream(outStream);
 
             } catch (IOException ex) {
-                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                // Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                // Add error handling
             }
         }
 
@@ -213,9 +224,11 @@ public class LoginController {
         model.aiGameTrans(difficulty);
 
     }
+
     /**
-     * Logs in user with anonymous username and no password.
-     * Returns string with anonymous username.
+     * Logs in user with anonymous username and no password. Returns string with
+     * anonymous username.
+     *
      * @return username
      */
     public String loginAnon() {
@@ -259,7 +272,8 @@ public class LoginController {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            // Add error handling
         }
         return "";
 
