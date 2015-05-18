@@ -1,4 +1,4 @@
-
+ 
 /**
  * This class manages the lobby view.
  * 
@@ -25,9 +25,9 @@ public class LobbyView extends javax.swing.JPanel {
      */
     public LobbyView() {
 
-        onlineModel = new DefaultListModel<String>();
-        receivedModel = new DefaultListModel<String>();
-        sentModel = new DefaultListModel<String>();
+        onlineModel = new DefaultListModel<>();
+        receivedModel = new DefaultListModel<>();
+        sentModel = new DefaultListModel<>();
 
         initComponents();
 
@@ -92,11 +92,11 @@ public class LobbyView extends javax.swing.JPanel {
 
         gomokuL = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        onlinePlayersList = new javax.swing.JList();
+        onlinePlayersList = new javax.swing.JList<String>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        challengesReceivedList = new javax.swing.JList();
+        challengesReceivedList = new javax.swing.JList<String>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        challengesSentList = new javax.swing.JList();
+        challengesSentList = new javax.swing.JList<String>();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -105,7 +105,7 @@ public class LobbyView extends javax.swing.JPanel {
         rejectB = new javax.swing.JButton();
         quitB = new javax.swing.JButton();
         leaderboardB = new javax.swing.JButton();
-        aiList = new javax.swing.JComboBox();
+        aiList = new javax.swing.JComboBox<String>();
 
         gomokuL.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         gomokuL.setText("Gomoku");
@@ -160,7 +160,7 @@ public class LobbyView extends javax.swing.JPanel {
             }
         });
 
-        aiList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select Difficulty", "Easy", "Moderate", "Hard" }));
+        aiList.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select Difficulty", "Easy", "Medium", "Hard" }));
         aiList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 aiListActionPerformed(evt);
@@ -404,10 +404,10 @@ public class LobbyView extends javax.swing.JPanel {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton acceptB;
-    private javax.swing.JComboBox aiList;
+    private javax.swing.JComboBox<String> aiList;
     private javax.swing.JButton challengeB;
-    private javax.swing.JList challengesReceivedList;
-    private javax.swing.JList challengesSentList;
+    private javax.swing.JList<String> challengesReceivedList;
+    private javax.swing.JList<String> challengesSentList;
     private javax.swing.JLabel gomokuL;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -416,7 +416,7 @@ public class LobbyView extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton leaderboardB;
-    private javax.swing.JList onlinePlayersList;
+    private javax.swing.JList<String> onlinePlayersList;
     private javax.swing.JButton quitB;
     private javax.swing.JButton rejectB;
     // End of variables declaration//GEN-END:variables
