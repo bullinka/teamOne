@@ -17,6 +17,17 @@ import java.util.logging.Logger;
  * Revisions: 3/14/2015 - Class created by Karen Bullinger. 
  * 4/5/2015 - Added createFrame() method. -- Karen Bullinger 
  * 4/11/2015 - Updated newServerConnection to return boolean -- Karen Bullinger
+ * 5/1/2015 - Fixed board reset by calling newGame on gameController. -- Karen Bullinger
+ * 5/2/2015 - Fixed turn order setting for game play. -- Jon Julius
+ * 5/2/2015 - Added setSocket() and setServerSocket() method calls on gameController. -- Karen Bullinger
+ * 5/5/2015 - Added instance of leaderboard controller, altered createFrame to accept leaderboardView. -- Karen Bullinger
+ * 5/5/2015 - Added setLeaderboardController, corrected turn order, facilitated aiGameTrans. -- Jon Julius
+ * 5/9/2015 - Added setUsername method, edited loginLobbyTrans to set title of frame. -- Karen Bullinger
+ * 5/9/2015 -- Added leaderboard to lobby transition method. -- Carl Derline
+ * 5/9/2015 - Fixed game play board reset in gameLobbyTrans(). -- Jon Julius
+ * 5/9/2015 - Added methods to support resign functionality in game play. -- Karen Bullinger
+ * 5/9/2015 - Add method to handle lostConnection over peer to peer connection. -- Karen Bullinger
+ * 5/12/2015 - Bug fixes. -- Jon Julius
  * 5/16/2015 - Commenting code. -- Karen Bullinger
  * 5/18/2015 - Updating variable names to be more readable, commented code, removed unused imports. -- Karen Bullinger
  * 
