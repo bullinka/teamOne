@@ -37,7 +37,7 @@ public class GameController implements Runnable {
 	private DataInputStream dataInOp, mainServerIn;
 	private DataOutputStream dataOutOp, mainServerOut;
 	private Constants consts = new Constants();
-	private Socket captainCarl;
+	private Socket opponent;
 	private ServerSocket ss;
 	private boolean server;
 	public boolean aiGame; // if true it is an ai game. If false it is not.
@@ -53,17 +53,13 @@ public class GameController implements Runnable {
 	}
 
 	public void setSocket(Socket sock) {
-		this.captainCarl = sock;
-
+		this.opponent = sock;
 		server = false;
-		System.out.println("SetSocket Method: " + server);
 	}
 
 	public void setServerSocket(ServerSocket sock) {
 		this.ss = sock;
-
 		server = true;
-		System.out.println("SetServerSocket: " + server);
 	}
 
 	/**
@@ -71,7 +67,6 @@ public class GameController implements Runnable {
 	 * @param s the inputStream
 	 */
 	public void setInputStream(InputStream s) {
-		System.out.println(" Set Input Stream");
 		dataIn = new DataInputStream(s);
 	}
 
@@ -80,7 +75,6 @@ public class GameController implements Runnable {
 	 * @param s the inputStream
 	 */
 	public void setOutputStream(OutputStream o) {
-		System.out.println("Set Output Stream");
 		dataOut = new DataOutputStream(o);
 	}
 
@@ -175,7 +169,6 @@ public class GameController implements Runnable {
 	public void sendWin() {
 		try {
 			String win = consts.GAME + " " + model.username + " " + consts.WIN;
-			System.out.println(win);
 			mainServerOut.write(win.getBytes());
 			dataOut.flush();
 		} catch (IOException ex) {
@@ -187,7 +180,6 @@ public class GameController implements Runnable {
 	public void sendLose() {
 		try {
 			String lose = consts.GAME + " " + model.username + " " + consts.LOSE;
-			System.out.println(lose);
 			mainServerOut.write(lose.getBytes());
 			dataOut.flush();
 		} catch (IOException ex) {
@@ -221,7 +213,6 @@ public class GameController implements Runnable {
 	public void sendMove(int x, int y) {
 		try {
 			String move = consts.MOVE + " " + x + " " + y;
-			System.out.println("Send move: " + move);
 			dataOut.write(move.getBytes());
 			view.updateTurnNotification(false);
 			dataOut.flush();
@@ -262,7 +253,7 @@ public class GameController implements Runnable {
 								Level.SEVERE, null, ex);
 					}
 				} else {
-					captainCarl.close();
+					opponent.close();
 				}
 
 				model.gameLobbyTrans();
@@ -284,7 +275,7 @@ public class GameController implements Runnable {
 								Level.SEVERE, null, ex);
 					}
 				} else {
-					captainCarl.close();
+					opponent.close();
 				}
 
 				model.gameLobbyTrans();
@@ -305,7 +296,6 @@ public class GameController implements Runnable {
 
 				if (len > 0) {
 					returnedMsg = new String(msg, 0, len);
-					System.out.println("Msg received: " + returnedMsg);
 					String[] msgArray;
 					msgArray = returnedMsg.split("[ ]+");
 					processMessage(msgArray);
@@ -377,7 +367,7 @@ public class GameController implements Runnable {
 			}
 		} else
 			try {
-				captainCarl.close();
+				opponent.close();
 
 			} catch (IOException ex) {
 				// Logger.getLogger(GameController.class.getName()).log(Level.SEVERE,
@@ -392,7 +382,6 @@ public class GameController implements Runnable {
 		} else if (validatedMove.equals(consts.WIN)) {
 			view.displayMove(x, y);
 			view.lose();
-			System.out.println("Game controller aiMove lose");
 		}
 	}
 
