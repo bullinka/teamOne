@@ -24,7 +24,7 @@ public class RegisteredPlayers
 {
     @SuppressWarnings("Convert2Diamond")
     private static final Map<String, String> users = new HashMap<String, String>();
-    private final File f = new File("users.txt");
+    private final File f = new File("users.gmk");
     private FileWriter fw;
     private PrintWriter pw;
     
