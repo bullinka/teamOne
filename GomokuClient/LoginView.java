@@ -44,8 +44,7 @@ public class LoginView extends javax.swing.JPanel {
         quitB = new javax.swing.JButton();
         playAnonB = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 255, 255));
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         gomokuL.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         gomokuL.setText("Gomoku");
