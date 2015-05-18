@@ -1,14 +1,24 @@
 import java.util.Random;
 
-/**
+import javax.swing.DefaultListModel;
 
- */
-public class GameAI {
+/**
+ * Team One Gomoku CSCE 320 - Spring 2015 3/16/2015 Java - JVM Sources:
+ *
+ * Revisions: 5/5/2015 - Class created by Jon Julius and Carl Derline.
+ * Implemented Easy AI, specifically make move and send move methods.
+ * 5/6/2015 - Created analyze game board for hard. 
+ * 5/8/2015 - Finished analyze game board for hard, and
+ * finalized hard ai and moderate ai. Revised easy AI for efficiency.
+ * 5/11/2015 - Commented and clean up code. 
+ * 
+ */ class GameAI {
     private int difficulty;
     private GameModel model;
     private Constants consts = new Constants();
     private Random randomGenerator = new Random();
     private GameController controller;
+    private DefaultListModel<String> validMoves;
     
     /**
      * Game AI Constructor
@@ -28,6 +38,7 @@ public class GameAI {
         model = new GameModel();
         controller = gc;
         model.setTurnOrder(false);
+        validMoves = new DefaultListModel<String>();
     }
     
    
@@ -39,19 +50,15 @@ public class GameAI {
      */
     public void makeMove(int x, int y)
     {
+    	updateValidMoveList();
+    	String[] move;
     	if(difficulty == 0){
-	        int i = randomGenerator.nextInt(30);
-	        int j = randomGenerator.nextInt(30);
-	        boolean flag = model.isValid(i, j);
-	        while(!flag){
-	        	i = randomGenerator.nextInt(30);
-	            j = randomGenerator.nextInt(30);
-	            flag = model.isValid(i, j);
-	        }
-	        
-	        model.makeMove(i,j);
-	        controller.aiMove(i, j);
-	     
+	      int k = randomGenerator.nextInt(validMoves.getSize()+1);
+	     move = validMoves.getElementAt(k).split(" ");
+	     int i = Integer.parseInt(move[0]);
+	     int j = Integer.parseInt(move[1]);
+	     model.makeMove(i,j);
+	     controller.aiMove(i,j);
     	}
     	if (difficulty == 1){
     		analyzeGameboardMedium(x, y);
@@ -209,19 +216,14 @@ public class GameAI {
 			}
 		
 		}
-		
+		String[] move;
 		if(flag){
-	        i = randomGenerator.nextInt(30);
-	        j = randomGenerator.nextInt(30);
-	        boolean valid = model.isValid(i, j);
-	        while(!valid){
-	        	i = randomGenerator.nextInt(30);
-	            j = randomGenerator.nextInt(30);
-	            valid = model.isValid(i, j);
-	        }
-	        
-	        model.makeMove(i,j);
-	        controller.aiMove(i, j);
+			 int k = randomGenerator.nextInt(validMoves.getSize());
+		     move = validMoves.getElementAt(k).split(" ");
+		     int a = Integer.parseInt(move[0]);
+		     int b = Integer.parseInt(move[1]);
+		     model.makeMove(a,b);
+		     controller.aiMove(a,b);
 		}
 		
 	}
@@ -266,8 +268,8 @@ public class GameAI {
 	 * @param int y the y coordinate
 	 */
 	public void sendMove(int x, int y) {
-		String jonsajerk = model.validateOpponent(x, y);
-		if(jonsajerk.equals(consts.VALID)){
+		String validatedMove = model.validateOpponent(x, y);
+		if(validatedMove.equals(consts.VALID)){
 			makeMove(x,y);
 		}
 	}
@@ -390,5 +392,21 @@ public class GameAI {
 	        }  
 
 	        return result;
+	    }
+	    
+	    
+	    /**
+	     * Sets validMoves as a list of all valid moves on gameboard.
+	     */
+	    private void updateValidMoveList(){
+	    	
+	    	validMoves.clear();
+	    	for (int i = 0; i < 30; i++) {
+	             for (int k = 0; k < 30; k++) {
+	                 if(model.isValid(i, k)){
+	                	 validMoves.addElement(i + " " + k);
+	                 }
+	             }
+	         }
 	    }
 }

@@ -3,7 +3,16 @@
 /**
  * Team One Gomoku CSCE 320 - Spring 2015 3/16/2015 Java - JVM Sources:
  *
- * Revisions: 3/14/2015 - Class created by Joseph Bowley.
+ * Revisions: 3/14/2015 - Class created by Joseph Bowley and Jon Julius.
+ * 5/1/2015 - Added default constructor, method to update board, and
+ * method to check if board space is valid move. 
+ * 5/2/2015 - Added methods to check for win conditions.
+ * 5/2/2015 - Bug fixed checking for win conditions by changing loop
+ * conditions and variable incrementing.  
+ * 5/5/2015 - Added getBoardValue method to get value at specific location to aid
+ * with gameAI.
+ * 5/16/2015 - Added comments and cleaned up code.  
+ * 
  */
 public class GameBoard {
 
@@ -289,20 +298,6 @@ public class GameBoard {
         }
     }
     
-    /**
-     * Checks if value at coordinates is 0.
-     * 
-     * @param x inputed horizontal component
-     * @param y inputed vertical component
-     * @return true if value at coordinates is 0, false if not.
-     */
-    public boolean isValid(int x, int y) {
-		if(board[x][y] == 0){
-			return true;
-		}else{
-		return false;
-		}
-    }
 
 	/**
 	 * Gets the value of the board at specified coordinates. 

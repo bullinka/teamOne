@@ -1,12 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 /**
+ * Team One Gomoku CSCE 320 - Spring 2015 3/16/2015 Java - JVM Sources:
  *
- * @author PLUCSCE
+ * Revisions: 5/1/2015 - Class created by Jon Julius. Began with implementing
+ * setter for gameboard and validate methods for opponent and self. 
+ * 5/2/2015 - Added more to validate methods, not checks for win conditions
+ * and turn order. 
+ * 5/5/2015 - Added methods isValid, getBoardValue, makeMove to aid in AI implementation. 
+ * 5/9/2015 - Added method restBoard to reset gameboard after game. 
+ * 5/16/2015 - Added comments and cleaned up code.  
+ * 
  */
 public class GameModel {
 
@@ -101,7 +105,7 @@ public class GameModel {
      * @return true if gameboard at coordinate is 0, false if not. 
      */
     public boolean isValid(int x, int y){
-    	return board.isValid( x,  y);
+    	return board.validate( x,  y);
     	
     }
 
