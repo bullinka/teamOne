@@ -1,14 +1,20 @@
 
-import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
 /**
  * Team One GUI Implementation Gomoku CSCE 320 - Spring 2015 3/16/2015 Java -
- * JVM Sources:
+ * JVM
  *
  * Revisions: 3/14/2015 - View created by Karen Bullinger.
- * 5/16/2015 - Added play anonymous feature.
+ * 5/16/2015 - Added play anonymous feature. - Karen Bullinger
+ * 5/18/2015 - Adjusted view to maintain layout and removed unused imports.
+ *                  - Karen Bullinger
  */
+
+/*
+ * This class is responsible for managing the Login View.
+ */
+
 public class LoginView extends javax.swing.JPanel {
 
     /**
@@ -174,10 +180,11 @@ public class LoginView extends javax.swing.JPanel {
     private LoginController controller;
     byte[] input = new byte[1024];
     char[] passwordArray;
-    
+
     /**
      * Launches AI game when difficult is selected from drop down list.
-     * @param evt 
+     *
+     * @param evt
      */
     private void aiListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aiListActionPerformed
         String difficulty = (String) aiList.getSelectedItem();
@@ -186,7 +193,8 @@ public class LoginView extends javax.swing.JPanel {
         }    }//GEN-LAST:event_aiListActionPerformed
     /**
      * Initializes registration process when Register button is clicked.
-     * @param evt 
+     *
+     * @param evt
      */
     private void registerBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerBActionPerformed
         if (!ipTF.getText().equals("")) {
@@ -229,7 +237,6 @@ public class LoginView extends javax.swing.JPanel {
             displayErrorMessage("Please enter a username and password.");
         } else {
             controller.newConnection();
-            char[] passwordArray = passwordTF.getPassword();
             String passwordinput = new String(passwordArray);
             controller.login(usernameTF.getText(), passwordinput.hashCode());
             controller.setUsername(usernameTF.getText());
@@ -237,14 +244,17 @@ public class LoginView extends javax.swing.JPanel {
     }//GEN-LAST:event_loginBActionPerformed
     /**
      * Closes application when quit button is pressed.
-     * @param evt 
+     *
+     * @param evt
      */
     private void quitBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitBActionPerformed
         System.exit(0);
     }//GEN-LAST:event_quitBActionPerformed
     /**
-     * Logs user in as an anonymous player when Play Anonymous button is pressed.
-     * @param evt 
+     * Logs user in as an anonymous player when Play Anonymous button is
+     * pressed.
+     *
+     * @param evt
      */
     private void playAnonBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playAnonBActionPerformed
         if (!ipTF.getText().equals("")) {
@@ -253,7 +263,7 @@ public class LoginView extends javax.swing.JPanel {
         if (!portTF.getText().equals("")) {
             controller.port = Integer.parseInt(portTF.getText());
         }
-        
+
         controller.newConnection();
 
         String userTemp = controller.loginAnon();
@@ -270,11 +280,12 @@ public class LoginView extends javax.swing.JPanel {
 
     }
 
+    /**
+     * Associates controller with view.
+     */
     public void setControllerView() {
         controller.setView(this);
     }
-
-   
 
     /**
      * Error message pop up box.
